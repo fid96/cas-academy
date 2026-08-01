@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="IA Atelier — levier Data Analyst après maîtrise : prompts, vérification des chiffres, données sensibles, limites." />
+  <title>IA Atelier — Levier Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #2c3e6b;
+      --forest: #1c2a4a;
+      --mint: #7f93c4;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #3d5a8a;
+    }
+    .brand-mark { background: linear-gradient(135deg, #2c3e6b, #c17f2a); }
+    .prompt-card {
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .prompt-card pre {
+      margin: 0.5rem 0 0;
+      padding: 0.75rem;
+      background: #122633;
+      color: #d7e8f2;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+    .traffic {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .traffic article {
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(14,36,51,0.1);
+      background: #fff;
+    }
+    .traffic .go { border-left: 5px solid #1f7a4d; }
+    .traffic .slow { border-left: 5px solid #c17f2a; }
+    .traffic .stop { border-left: 5px solid #b23a3a; }
+    .check-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      padding: 0.55rem 0.2rem; border-bottom: 1px solid #e6eef3;
+      font-size: 0.95rem;
+    }
+    .lab-selects {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.75rem 0 1rem;
+    }
+    .lab-selects select, .lab-selects button {
+      font: inherit; padding: 0.55rem 0.75rem; border-radius: 10px; border: 1px solid #c5d4df;
+    }
+    .sensitive-box {
+      background: #fff5f5;
+      border: 1px solid #e8b4b4;
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      margin: 0.75rem 0;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">IA Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="labo">Labo prompts</button>
+        <button type="button" data-nav="checklist">Checklist</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer class="site-footer">
+    <p><strong>IA Atelier</strong> — levier après maîtrise. Règle d’or : vérifier tout chiffre avant de publier.</p>
+    <p class="footer-note">Levier du pack (en dernier) : Collecte → SQL → Excel → Stats → Python → Power BI → Storytelling → <strong>IA</strong>.</p>
+  </footer>
+  <script src="js/content.js"></script>
+  <script src="js/prompt-lab.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

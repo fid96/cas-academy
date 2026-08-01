@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+node_modules/
+.vscode/
+.idea/
+*.tmp
+_rebrand_attest.py
+.vercel
+.netlify

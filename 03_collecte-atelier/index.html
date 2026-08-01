@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Collecte Atelier — collecter des données propres pour l’analyse : Kobo/ODK, formulaires, contrôles, export vers la chaîne Data Analyst." />
+  <title>Collecte Atelier — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #0f5c4c;
+      --forest: #0a3f35;
+      --mint: #5fafa0;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #2a7a6a;
+    }
+    .brand-mark { background: linear-gradient(135deg, #0f5c4c, #c17f2a); }
+    .form-studio {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .form-studio { grid-template-columns: 1fr; } }
+    .form-panel, .preview-panel {
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 16px;
+      padding: 1rem;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr auto;
+      gap: 0.4rem;
+      margin-bottom: 0.45rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+    .field-row input, .field-row select {
+      font: inherit;
+      padding: 0.45rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid #c5d4df;
+      width: 100%;
+    }
+    .preview-q {
+      border: 1px solid #d7e3ea;
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      margin-bottom: 0.65rem;
+      background: #f8fbfc;
+    }
+    .preview-q .name {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #5a7184;
+    }
+    .quality-list li { margin: 0.35rem 0; }
+    .chain-mini {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 1rem;
+    }
+    .chain-mini span {
+      background: #fff; border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 999px; padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700;
+    }
+    .chain-mini span.on { background: #e7f6f2; border-color: #0f5c4c; color: #0a3f35; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Collecte Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="studio">Studio formulaire</button>
+        <button type="button" data-nav="kobo">Kobo / ODK</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer class="site-footer">
+    <p><strong>Collecte Atelier</strong> — qualité à la source pour un Data Analyst terrain. Méthode Voir → Comprendre → Pratiquer → Vérifier.</p>
+    <p class="footer-note"><strong>Collecte</strong> → SQL/Excel → Stats → Python → Power BI → Storytelling.</p>
+  </footer>
+  <script src="js/content.js"></script>
+  <script src="js/form-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

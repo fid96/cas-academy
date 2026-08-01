@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Power BI Atelier — tableaux de bord et design dashboard professionnel : disposition, hiérarchie, choix des visuels, storytelling." />
+  <title>Power BI Atelier — Tableaux de bord</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #1f4e79;
+      --forest: #163a5a;
+      --mint: #5b8fb9;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #2f6f9f;
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, #1f4e79, #c17f2a);
+    }
+
+    /* Studio dashboard */
+    .dash-canvas {
+      background: #eef2f6;
+      border: 1px solid rgba(14, 36, 51, 0.12);
+      border-radius: 16px;
+      padding: 0.85rem;
+      min-height: 520px;
+    }
+    .dash-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .dash-grid {
+      display: grid;
+      gap: 0.65rem;
+      min-height: 440px;
+    }
+    .dash-grid.layout-executive {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto 1fr;
+      grid-template-areas:
+        "k1 k2 k3 k4"
+        "main main side side"
+        "main main bottom bottom";
+    }
+    .dash-grid.layout-analytical {
+      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      grid-template-areas:
+        "k1 k2 k3"
+        "main main side"
+        "table table bottom";
+    }
+    .dash-grid.layout-chaos {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        "main k1 side"
+        "k2 bottom k3"
+        "table k4 side";
+    }
+    .dash-tile {
+      background: #fff;
+      border: 1px solid #d7e0e8;
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      min-height: 88px;
+      box-shadow: 0 1px 0 rgba(14, 36, 51, 0.04);
+    }
+    .dash-tile h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #5a7184;
+      font-weight: 700;
+    }
+    .dash-tile .kpi {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      color: var(--forest);
+      line-height: 1.1;
+    }
+    .dash-tile .kpi-sub {
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+    }
+    .dash-tile.area-k1 { grid-area: k1; }
+    .dash-tile.area-k2 { grid-area: k2; }
+    .dash-tile.area-k3 { grid-area: k3; }
+    .dash-tile.area-k4 { grid-area: k4; }
+    .dash-tile.area-main { grid-area: main; min-height: 220px; }
+    .dash-tile.area-side { grid-area: side; min-height: 180px; }
+    .dash-tile.area-bottom { grid-area: bottom; min-height: 140px; }
+    .dash-tile.area-table { grid-area: table; min-height: 140px; }
+    .dash-tile.is-bad {
+      border-color: #e2a0a0;
+      background: #fff7f7;
+    }
+    .dash-tile.is-good {
+      border-color: #9ec9b0;
+    }
+    .mini-bars, .mini-lines {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.35rem;
+      height: 120px;
+      margin-top: 0.5rem;
+    }
+    .mini-bars span {
+      flex: 1;
+      background: linear-gradient(180deg, var(--leaf), var(--mint));
+      border-radius: 4px 4px 0 0;
+      min-width: 12px;
+      position: relative;
+    }
+    .mini-bars span::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 50%;
+      bottom: -1.2rem;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      color: #5a7184;
+      white-space: nowrap;
+    }
+    .mini-lines {
+      align-items: stretch;
+      border-left: 1px solid #d0dae3;
+      border-bottom: 1px solid #d0dae3;
+      padding: 0.25rem 0 1.1rem 0.25rem;
+    }
+    .mini-lines svg { width: 100%; height: 100%; }
+    .design-score {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+    .score-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid rgba(14,36,51,0.1);
+      padding: 0.8rem 0.9rem;
+    }
+    .score-card strong { display: block; font-size: 1.2rem; color: var(--forest); }
+    .chooser-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .chooser-card {
+      text-align: left;
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+    }
+    .chooser-card[aria-pressed="true"] {
+      border-color: var(--leaf);
+      box-shadow: 0 0 0 2px rgba(31, 78, 121, 0.15);
+    }
+    .chooser-card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; }
+    .wire-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0.75rem;
+      align-items: center;
+      margin: 0.55rem 0;
+      font-size: 0.92rem;
+    }
+    .wire-box {
+      height: 42px;
+      border: 2px dashed #9aafc0;
+      border-radius: 8px;
+      background: repeating-linear-gradient(45deg, #f4f7fa, #f4f7fa 6px, #e8eef3 6px, #e8eef3 12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5a7184;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    @media (max-width: 800px) {
+      .dash-grid.layout-executive,
+      .dash-grid.layout-analytical,
+      .dash-grid.layout-chaos {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "k1 k2"
+          "k3 k4"
+          "main main"
+          "side side"
+          "bottom bottom"
+          "table table";
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Power BI Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="studio">Studio dashboard</button>
+        <button type="button" data-nav="visuels">Choix des visuels</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="site-footer">
+    <p><strong>Power BI Atelier</strong> — tableaux de bord et design professionnel. Méthode Voir → Comprendre → Pratiquer → Vérifier.</p>
+    <p class="footer-note">Complète SQL, Excel, Python et Statistiques. Données métier dans <code>data/</code> pour Power BI Desktop.</p>
+  </footer>
+
+  <script src="js/content.js"></script>
+  <script src="js/dash-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAS Academy — Campus Analyse &amp; Suivi</title>
+  <meta name="description" content="CAS Academy : plateforme de formation professionnelle. Choisissez Data Analyst ou Expert S&E, suivez le parcours guidé, obtenez votre attestation." />
+  <meta name="theme-color" content="#0f2a24" />
+  <link rel="icon" href="platform/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="platform/css/platform.css" />
+</head>
+<body class="is-campus">
+  <a class="skip-link" href="#app">Aller au contenu</a>
+
+  <header class="topbar" id="site-header">
+    <a class="topbar-brand" href="#/" aria-label="CAS Academy — accueil">
+      <img class="logo-mark" src="platform/assets/logo-cas.svg" width="44" height="44" alt="" />
+      <div class="brand-text">
+        <div class="name">CAS Academy</div>
+        <div class="tag">Campus Analyse &amp; Suivi</div>
+      </div>
+    </a>
+
+    <div id="topbar-context" class="topbar-context" hidden></div>
+
+    <nav class="topbar-nav" id="topbar-nav" aria-label="Navigation principale">
+      <a class="is-active" href="#/">Formations</a>
+      <a href="#/#methode">Méthode</a>
+      <a href="#/#catalogue">Catalogue</a>
+      <a href="#/a-propos">À propos</a>
+    </nav>
+
+    <div id="topbar-progress" class="topbar-progress" aria-live="polite"></div>
+
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <nav aria-label="Menu mobile" id="mobile-nav-links"></nav>
+  </div>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="site-footer" id="site-footer">
+    <!-- rempli dynamiquement -->
+  </footer>
+
+  <script src="platform/js/catalog.js"></script>
+  <script src="platform/js/progress.js"></script>
+  <script src="platform/js/app.js"></script>
+</body>
+</html>

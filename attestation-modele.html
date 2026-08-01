@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attestation de réussite — CAS Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    @page { size: A4 landscape; margin: 0; }
+
+    :root {
+      --teal: #3d5a61;
+      --teal-dark: #2f474d;
+      --navy: #1e2f3d;
+      --mist: #8a9aa3;
+      --ink: #1a242c;
+      --muted: #3a474f;
+      --gold: #b08930;
+      --gold-light: #d4b15a;
+      --gold-dark: #6e5418;
+      --stamp: #0a5a28;
+      --page-w: 297mm;
+      --page-h: 210mm;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: Montserrat, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #2a3136;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .toolbar {
+      width: var(--page-w);
+      max-width: 100%;
+      margin: 12px auto;
+      padding: 0 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: #eef2f5;
+      font-size: 12px;
+    }
+
+    .toolbar p { margin: 0; opacity: 0.9; }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #1a1408;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-link {
+      background: transparent;
+      color: #eef2f5;
+      box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.28);
+    }
+
+    .gate-screen {
+      min-height: 70vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .gate-box {
+      max-width: 420px;
+      background: #fff;
+      color: var(--ink);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .gate-box h1 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      color: var(--navy);
+    }
+
+    .gate-box p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .gate-box .btn { margin: 0 auto; }
+
+    .page {
+      width: var(--page-w);
+      height: var(--page-h);
+      margin: 0 auto 24px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .certificate {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      padding: 17mm 23mm 12mm;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(79, 111, 117, 0.045) 0%, transparent 58%),
+        linear-gradient(165deg, #fbfcfd 0%, #f4f7f8 48%, #eef3f5 100%);
+    }
+
+    /* Filigrane discret — lisibilité préservée */
+    .certificate::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Ccircle cx='110' cy='110' r='96' fill='none' stroke='%232c3e50' stroke-width='3'/%3E%3Ccircle cx='110' cy='110' r='78' fill='none' stroke='%232c3e50' stroke-width='1.5'/%3E%3Ctext x='110' y='122' text-anchor='middle' font-family='Georgia,serif' font-size='42' font-weight='700' fill='%232c3e50'%3EADA%3C/text%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center 46%;
+      background-size: 118mm 118mm;
+    }
+
+    .frame {
+      position: absolute;
+      inset: 9mm;
+      border: 1px solid #7a8d96;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .geo {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .geo.tl { top: 0; left: 0; width: 90mm; height: 44mm; }
+    .geo.tr { top: 0; right: 0; width: 90mm; height: 44mm; }
+    .geo.bl { bottom: 0; left: 0; width: 90mm; height: 44mm; }
+    .geo.br { bottom: 0; right: 0; width: 90mm; height: 44mm; }
+    .geo svg { width: 100%; height: 100%; display: block; }
+
+    .dots {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.32;
+    }
+
+    .dots.tr { top: 13mm; right: 13mm; width: 26mm; height: 20mm; }
+    .dots.bl { bottom: 13mm; left: 13mm; width: 26mm; height: 20mm; transform: scale(-1); }
+
+    .content {
+      position: relative;
+      z-index: 4;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto auto;
+      text-align: center;
+    }
+
+    .top-row {
+      display: grid;
+      grid-template-columns: 58mm 1fr 30mm;
+      align-items: center;
+      column-gap: 5mm;
+      min-height: 24mm;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      text-align: left;
+      justify-self: start;
+    }
+
+    .logo-mark {
+      width: 16mm;
+      height: 16mm;
+      flex-shrink: 0;
+    }
+
+    .brand .wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6mm;
+    }
+
+    .brand .org {
+      margin: 0;
+      font-size: 9.5pt;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--navy);
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .brand .tag {
+      margin: 0;
+      font-size: 6.5pt;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .titles { justify-self: center; }
+
+    .titles h1 {
+      margin: 0;
+      font-size: 27pt;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--teal);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .titles .of {
+      margin: 2mm 0 0;
+      font-size: 10.5pt;
+      font-weight: 600;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-left: 0.36em;
+    }
+
+    .medal {
+      width: 26mm;
+      height: 32mm;
+      justify-self: end;
+      align-self: center;
+    }
+
+    .medal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center top;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3mm;
+      padding: 1mm 0;
+      min-height: 0;
+    }
+
+    .presented {
+      margin: 0;
+      font-size: 12pt;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .name {
+      margin: 0;
+      font-family: "Great Vibes", cursive;
+      font-size: 34pt;
+      color: var(--teal);
+      line-height: 1.05;
+    }
+
+    .flourish {
+      width: 110mm;
+      display: flex;
+      align-items: center;
+      gap: 2.5mm;
+    }
+
+    .flourish i {
+      flex: 1;
+      height: 0.4mm;
+      background: var(--mist);
+    }
+
+    .flourish svg {
+      width: 12mm;
+      height: 6mm;
+      flex-shrink: 0;
+    }
+
+    .narrative {
+      margin: 0;
+      max-width: 210mm;
+      font-size: 11.5pt;
+      line-height: 1.48;
+      color: var(--muted);
+    }
+
+    .narrative strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .skills {
+      margin: 0.5mm 0 0;
+      max-width: 225mm;
+      width: 100%;
+      padding: 2.5mm 0 2mm;
+      border-top: 0.35mm solid rgba(79, 111, 117, 0.25);
+      border-bottom: 0.35mm solid rgba(79, 111, 117, 0.25);
+      text-align: left;
+    }
+
+    .skills .label {
+      margin: 0 0 2mm;
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      text-align: center;
+    }
+
+    .skills .list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, auto);
+      grid-auto-flow: column;
+      column-gap: 8mm;
+      row-gap: 1.4mm;
+      counter-reset: skill;
+    }
+
+    .skills .list li {
+      position: relative;
+      padding-left: 6mm;
+      font-size: 9.2pt;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--navy);
+      text-align: left;
+      counter-increment: skill;
+    }
+
+    .skills .list li::before {
+      content: counter(skill) ".";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 700;
+      color: var(--teal);
+      min-width: 4.5mm;
+    }
+
+    .date {
+      margin: 0.5mm 0 0;
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Signature centrée + cachet tampon superposé (transparence) */
+    .auth-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 2mm auto 0;
+      min-height: 44mm;
+      position: relative;
+      z-index: 5;
+    }
+
+    .auth-cluster {
+      position: relative;
+      width: 95mm;
+      min-height: 42mm;
+    }
+
+    .sign {
+      text-align: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sign .ink {
+      height: 24mm;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 0.8mm;
+      background: transparent;
+    }
+
+    .sign .ink img {
+      width: 88mm;
+      height: 24mm;
+      object-fit: contain;
+      object-position: center bottom;
+      display: block;
+      background: transparent;
+      /* fond noir de l’image → invisible sur le document clair */
+      mix-blend-mode: screen;
+      filter: contrast(1.15) saturate(1.2) brightness(1.05);
+    }
+
+    .sign .line {
+      border-top: 1.2px solid var(--teal);
+      padding-top: 2mm;
+      margin-top: 0.5mm;
+    }
+
+    .sign .who {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .sign .role {
+      margin-top: 1mm;
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    /* Cachet encre réel : chevauche signature, grain tampon */
+    .stamp {
+      position: absolute;
+      right: -8mm;
+      bottom: -1mm;
+      width: 44mm;
+      height: 44mm;
+      transform: rotate(-17deg);
+      opacity: 0.78;
+      z-index: 3;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      /* léger flou + contraste = pression inégale d’un tampon */
+      filter: contrast(1.12) saturate(0.85) blur(0.15px);
+    }
+
+    .stamp svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .footer-ref {
+      margin: 2mm 0 0;
+      font-size: 8pt;
+      color: #4a5560;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 980px) {
+      body { padding: 0 8px; }
+      .page { width: 100%; height: auto; aspect-ratio: 297 / 210; }
+      .certificate { height: auto; min-height: calc((100vw - 16px) * 210 / 297); }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .toolbar, .gate-screen { display: none !important; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: 297mm;
+        height: 210mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar" id="attest-toolbar">
+    <p id="toolbar-msg">A4 paysage · Impression : <strong>A4</strong> · <strong>Paysage</strong> · marges <strong>Aucune</strong> · <strong>100 %</strong></p>
+    <div class="toolbar-actions">
+      <a class="btn btn-link" href="index.html#/attestation">← Plateforme</a>
+      <button class="btn" type="button" id="btn-print" onclick="window.print()">Imprimer / PDF</button>
+    </div>
+  </div>
+
+  <div class="page" id="cert-page">
+    <article class="certificate">
+      <div class="frame" aria-hidden="true"></div>
+
+      <div class="geo tl" aria-hidden="true">
+        <svg viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polygon points="0,0 380,0 310,32 0,32" fill="#c5d0d6"/>
+          <polygon points="0,0 290,0 210,62 0,62" fill="#a8b8c0"/>
+          <polygon points="0,0 200,0 110,105 0,105" fill="#6b7c85"/>
+          <polygon points="0,0 120,0 0,120" fill="#3d585e"/>
+          <polygon points="0,0 55,0 0,55" fill="#2c3e50"/>
+        </svg>
+      </div>
+      <div class="geo tr" aria-hidden="true">
+        <svg viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polygon points="380,0 0,0 70,32 380,32" fill="#c5d0d6"/>
+          <polygon points="380,0 90,0 170,62 380,62" fill="#a8b8c0"/>
+          <polygon points="380,0 180,0 270,105 380,105" fill="#6b7c85"/>
+          <polygon points="380,0 260,0 380,120" fill="#3d585e"/>
+          <polygon points="380,0 325,0 380,55" fill="#2c3e50"/>
+        </svg>
+      </div>
+      <div class="geo bl" aria-hidden="true">
+        <svg viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polygon points="0,190 380,190 310,158 0,158" fill="#c5d0d6"/>
+          <polygon points="0,190 290,190 210,128 0,128" fill="#a8b8c0"/>
+          <polygon points="0,190 200,190 110,85 0,85" fill="#6b7c85"/>
+          <polygon points="0,190 120,190 0,70" fill="#3d585e"/>
+          <polygon points="0,190 55,190 0,135" fill="#2c3e50"/>
+        </svg>
+      </div>
+      <div class="geo br" aria-hidden="true">
+        <svg viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polygon points="380,190 0,190 70,158 380,158" fill="#c5d0d6"/>
+          <polygon points="380,190 90,190 170,128 380,128" fill="#a8b8c0"/>
+          <polygon points="380,190 180,190 270,85 380,85" fill="#6b7c85"/>
+          <polygon points="380,190 260,190 380,70" fill="#3d585e"/>
+          <polygon points="380,190 325,190 380,135" fill="#2c3e50"/>
+        </svg>
+      </div>
+
+      <svg class="dots tr" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="#7a9aa3">
+          <circle cx="70" cy="8" r="1.2"/><circle cx="60" cy="8" r="1.2"/><circle cx="50" cy="8" r="1.2"/><circle cx="40" cy="8" r="1.2"/>
+          <circle cx="70" cy="16" r="1.2"/><circle cx="60" cy="16" r="1.2"/><circle cx="50" cy="16" r="1.2"/>
+          <circle cx="70" cy="24" r="1.2"/><circle cx="60" cy="24" r="1.2"/>
+          <circle cx="70" cy="32" r="1.2"/><circle cx="70" cy="40" r="1.2"/><circle cx="70" cy="48" r="1.2"/>
+        </g>
+      </svg>
+      <svg class="dots bl" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="#7a9aa3">
+          <circle cx="70" cy="8" r="1.2"/><circle cx="60" cy="8" r="1.2"/><circle cx="50" cy="8" r="1.2"/><circle cx="40" cy="8" r="1.2"/>
+          <circle cx="70" cy="16" r="1.2"/><circle cx="60" cy="16" r="1.2"/><circle cx="50" cy="16" r="1.2"/>
+          <circle cx="70" cy="24" r="1.2"/><circle cx="60" cy="24" r="1.2"/>
+          <circle cx="70" cy="32" r="1.2"/><circle cx="70" cy="40" r="1.2"/><circle cx="70" cy="48" r="1.2"/>
+        </g>
+      </svg>
+
+      <div class="content">
+        <header class="top-row">
+          <!-- Logo pro : monogramme + signal data -->
+          <div class="brand">
+            <svg class="logo-mark" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="Logo CAS Academy">
+              <defs>
+                <linearGradient id="logoFill" x1="12" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#1f4a3e"/>
+                  <stop offset="100%" stop-color="#0f2a24"/>
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="72" height="72" rx="18" fill="url(#logoFill)"/>
+              <rect x="4" y="4" width="72" height="72" rx="18" fill="none" stroke="#c4a35a" stroke-width="2"/>
+              <rect x="20" y="44" width="8" height="16" rx="2" fill="#e8d5a3"/>
+              <rect x="32" y="34" width="8" height="26" rx="2" fill="#f0e0b0"/>
+              <rect x="44" y="26" width="8" height="34" rx="2" fill="#e8d5a3"/>
+              <path d="M22 28 C30 18, 50 16, 58 26 C64 34, 62 46, 54 52" fill="none" stroke="#f7f3e8" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M54 52 L50 44 L58 46 Z" fill="#c4a35a"/>
+              <text x="40" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="1.5" fill="#c4a35a">CAS</text>
+            </svg>
+            <div class="wordmark">
+              <p class="org">CAS Academy</p>
+              <p class="tag">Formation professionnelle</p>
+            </div>
+          </div>
+
+          <div class="titles">
+            <h1>Attestation</h1>
+            <p class="of">de réussite</p>
+          </div>
+
+          <!-- Symbole fourni par le client (sceau or + rubans) -->
+          <div class="medal">
+            <img
+              src="file:///C:/Users/FIDELE/.cursor/projects/c-Users-FIDELE-Projects-python-atelier/assets/c__Users_FIDELE_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_image-c569bb3b-619e-4286-9d92-5af5f5f112c4.png"
+              alt="Sceau officiel"
+              onerror="this.onerror=null;this.src='file:///C:/Users/FIDELE/.cursor/projects/c-Users-FIDELE-Projects-python-atelier/assets/sceau-rubans.png';"
+            />
+          </div>
+        </header>
+
+        <section class="body">
+          <p class="presented">La présente attestation est décernée à</p>
+          <p class="name" id="cert-name">—</p>
+
+          <div class="flourish" aria-hidden="true">
+            <i></i>
+            <svg viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 12 C10 4, 16 4, 20 10 C24 16, 30 16, 36 8" stroke="#4f6f75" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <i></i>
+          </div>
+
+          <p class="narrative" id="cert-narrative">
+            pour avoir validé avec succès le
+            <strong id="cert-program">parcours de formation professionnelle Data Analyst</strong>,
+            dispensé en ligne par <strong>CAS Academy</strong> — Campus Analyse &amp; Suivi.
+            <span id="cert-program-blurb">Ce parcours couvre la chaîne complète du métier : de la collecte terrain
+            à la décision, jusqu’à l’usage responsable de l’IA comme levier après maîtrise.</span>
+          </p>
+
+          <div class="skills">
+            <p class="label">Compétences professionnelles attestées</p>
+            <ol class="list" id="cert-skills">
+              <li>Analyse &amp; préparation des données avec Excel</li>
+              <li>Analyse statistique appliquée à la décision</li>
+              <li>Conception de collecte &amp; contrôle qualité avec KoboToolbox</li>
+              <li>Interrogation &amp; agrégation avec SQL</li>
+              <li>Automatisation &amp; analyse approfondie avec Python</li>
+              <li>Visualisation décisionnelle &amp; tableaux de bord avec Power BI</li>
+              <li>Storytelling data &amp; note de décision</li>
+              <li>Usage responsable de l’IA comme levier d’analyse</li>
+            </ol>
+          </div>
+
+          <p class="date" id="cert-date">Date : —</p>
+        </section>
+
+        <div class="auth-row">
+          <div class="auth-cluster">
+            <div class="sign">
+              <div class="ink">
+                <img
+                  src="file:///C:/Users/FIDELE/.cursor/projects/c-Users-FIDELE-Projects-python-atelier/assets/c__Users_FIDELE_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_sign_DA-46b66b55-174f-443e-b4a9-012815466b4b.png"
+                  alt="Signature Direction pédagogique"
+                />
+              </div>
+              <div class="line">
+                <div class="who">Direction pédagogique</div>
+                <div class="role">CAS Academy</div>
+              </div>
+            </div>
+
+            <div class="stamp" aria-label="Cachet tampon">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Grain + bords irréguliers d’un tampon encre -->
+                  <filter id="inkStamp" x="-15%" y="-15%" width="130%" height="130%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="4" seed="11" result="noise"/>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.1" xChannelSelector="R" yChannelSelector="G" result="warped"/>
+                    <feTurbulence type="fractalNoise" baseFrequency="1.35" numOctaves="3" seed="5" result="grain"/>
+                    <feColorMatrix in="grain" type="matrix"
+                      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.42 0" result="grainAlpha"/>
+                    <feComposite in="warped" in2="grainAlpha" operator="out" result="eaten"/>
+                    <feBlend in="warped" in2="eaten" mode="normal"/>
+                  </filter>
+                </defs>
+
+                <g filter="url(#inkStamp)" fill="#0a5a28" stroke="#0a5a28">
+                  <!--
+                    Références cachet :
+                    C3 = anneau extérieur épais (r≈93)
+                    C2 = bord extérieur du lit (r≈85)
+                    C1 = bord intérieur du lit / autour logo (r≈38)
+                    L  = ligne d’assise du texte (r ci-dessous)
+                    Lit = bande entre C1 et C2
+                  -->
+                  <g fill="none">
+                    <circle cx="100" cy="100" r="93" stroke-width="4.4" stroke-opacity="0.9"/>
+                    <circle cx="100.8" cy="99.2" r="85" stroke-width="1.6" stroke-opacity="0.7"/>
+                    <circle cx="99.5" cy="100.5" r="38" stroke-width="1.45" stroke-opacity="0.85"/>
+                  </g>
+
+                  <!-- L = ligne d’assise du texte -->
+                  <path id="arcTop" d="M30,102 a70,70 0 1,1 140,0" fill="none"/>
+                  <path id="arcBot" d="M170,102 a70,70 0 1,1 -140,0" fill="none"/>
+                  <text fill="#0a5a28" fill-opacity="0.88" font-family="Montserrat, Arial, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.1">
+                    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">CAS ACADEMY</textPath>
+                  </text>
+                  <text fill="#0a5a28" fill-opacity="0.88" font-family="Montserrat, Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="1.8">
+                    <textPath href="#arcBot" startOffset="50%" text-anchor="middle">FORMATION EN LIGNE</textPath>
+                  </text>
+                  <circle cx="38" cy="100" r="2.4" fill="#0a5a28" fill-opacity="0.8"/>
+                  <circle cx="162" cy="100" r="2.4" fill="#0a5a28" fill-opacity="0.8"/>
+
+                  <!-- Motif logo (barres + courbe), même que coin haut-gauche -->
+                  <g transform="translate(100 102) scale(0.88) translate(-40 -40)" fill="#0a5a28" stroke="#0a5a28">
+                    <rect x="22" y="42" width="6" height="16" rx="0.8" fill-opacity="0.82"/>
+                    <rect x="31" y="34" width="6" height="24" rx="0.8" fill-opacity="0.92"/>
+                    <rect x="40" y="28" width="6" height="30" rx="0.8" fill-opacity="0.86"/>
+                    <rect x="49" y="36" width="6" height="22" rx="0.8" fill-opacity="0.9"/>
+                    <path d="M20 48 C28 40, 36 30, 44 26 C52 22, 58 30, 62 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-opacity="0.9"/>
+                    <circle cx="62" cy="24" r="2.5" fill-opacity="0.9"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <p class="footer-ref" id="cert-number">N° —</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="gate-screen" id="gate-screen" hidden>
+    <div class="gate-box">
+      <h1>Attestation non disponible</h1>
+      <p id="gate-reason">Le parcours doit être entièrement terminé et l’identité du participant saisie depuis la plateforme.</p>
+      <a class="btn" href="index.html#/attestation">Aller à la plateforme</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE_V2 = "ada-platform-v2";
+      var STORAGE_V1 = "ada-platform-v1";
+      var DA_IDS = [
+        "01-excel", "02-stats", "03-collecte", "04-sql",
+        "05-python", "06-powerbi", "07-storytelling", "08-ia"
+      ];
+      var SE_IDS = [
+        "se-01-metier", "se-02-cadre", "se-03-indicateurs", "se-04-plan",
+        "se-05-collecte", "se-06-qualite", "se-07-reporting", "se-08-evaluation"
+      ];
+
+      function loadRoot() {
+        try {
+          var v2 = localStorage.getItem(STORAGE_V2);
+          if (v2) return JSON.parse(v2);
+          var v1 = localStorage.getItem(STORAGE_V1);
+          if (!v1) return null;
+          var legacy = JSON.parse(v1);
+          return {
+            activePackId: "data-analyst",
+            packs: {
+              "data-analyst": {
+                completed: legacy.completed || {},
+                attestation: legacy.attestation || null,
+                participantName: legacy.participantName || ""
+              }
+            }
+          };
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function packComplete(completed, ids) {
+        if (!completed) return false;
+        return ids.every(function (id) { return completed[id] === true; });
+      }
+
+      var root = loadRoot();
+      var packId = (root && root.activePackId) || "data-analyst";
+      var pState = root && root.packs && root.packs[packId] ? root.packs[packId] : null;
+      var ids = packId === "se" ? SE_IDS : DA_IDS;
+      var attest = pState && pState.attestation;
+      var ok = pState && packComplete(pState.completed, ids) && attest && attest.fullName && attest.number && attest.dateLabel;
+
+      var page = document.getElementById("cert-page");
+      var gate = document.getElementById("gate-screen");
+      var btnPrint = document.getElementById("btn-print");
+
+      if (!ok) {
+        if (page) page.hidden = true;
+        if (gate) gate.hidden = false;
+        if (btnPrint) btnPrint.disabled = true;
+        var reason = document.getElementById("gate-reason");
+        if (reason) {
+          if (!pState || !packComplete(pState.completed, ids)) {
+            reason.textContent = "Les modules du pack actif ne sont pas tous marqués comme terminés.";
+          } else {
+            reason.textContent = "Parcours terminé : saisissez d’abord le nom du participant sur la plateforme (#/attestation).";
+          }
+        }
+        return;
+      }
+
+      document.getElementById("cert-name").textContent = attest.fullName;
+      document.getElementById("cert-date").textContent = "Date : " + attest.dateLabel;
+      document.getElementById("cert-number").textContent = "N° " + attest.number;
+      document.title = "Attestation — " + attest.fullName + " — CAS Academy";
+
+      var program = document.getElementById("cert-program");
+      var blurb = document.getElementById("cert-program-blurb");
+      var skills = document.getElementById("cert-skills");
+      var effectivePack = attest.packId || packId;
+
+      if (effectivePack === "se") {
+        if (program) program.textContent = "parcours de formation professionnelle Expert S&E";
+        if (blurb) {
+          blurb.textContent =
+            "Ce parcours forme à concevoir et faire vivre un système de Suivi & Évaluation opérationnel standard, " +
+            "exercé sur un cas humanitaire public (Nutrition & WASH), avec une méthode transférable à d’autres secteurs.";
+        }
+        if (skills) {
+          skills.innerHTML =
+            "<li>Positionner le S&amp;E dans le pilotage de projet</li>" +
+            "<li>Construire un cadre de résultats cohérent</li>" +
+            "<li>Définir et documenter des indicateurs (baseline / cible)</li>" +
+            "<li>Établir un plan de suivi opérationnel</li>" +
+            "<li>Concevoir une collecte reliée aux indicateurs</li>" +
+            "<li>Assurer qualité des données et analyse décisionnelle</li>" +
+            "<li>Produire un reporting de pilotage actionnable</li>" +
+            "<li>Préparer une évaluation et un dossier S&amp;E défendable</li>";
+        }
+        if (document.querySelector(".brand .tag")) {
+          document.querySelector(".brand .tag").textContent = "Expert S&E";
+        }
+      }
+
+      var msg = document.getElementById("toolbar-msg");
+      if (msg) {
+        msg.innerHTML = "Attestation de <strong>" + attest.fullName.replace(/</g, "&lt;") +
+          "</strong> · " + attest.number +
+          " · Impression : <strong>A4</strong> · <strong>Paysage</strong> · marges <strong>Aucune</strong>";
+      }
+    })();
+  </script>
+</body>
+</html>

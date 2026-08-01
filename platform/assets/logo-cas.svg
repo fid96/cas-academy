@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="CAS Academy">
+  <defs>
+    <linearGradient id="casFill" x1="12" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1f4a3e"/>
+      <stop offset="100%" stop-color="#0f2a24"/>
+    </linearGradient>
+  </defs>
+  <!-- Mark: analysis bars + monitoring arc = Analyse & Suivi -->
+  <rect x="4" y="4" width="72" height="72" rx="18" fill="url(#casFill)"/>
+  <rect x="4" y="4" width="72" height="72" rx="18" fill="none" stroke="#c4a35a" stroke-width="2"/>
+  <!-- Bars (Analyse) -->
+  <rect x="20" y="44" width="8" height="16" rx="2" fill="#e8d5a3"/>
+  <rect x="32" y="34" width="8" height="26" rx="2" fill="#f0e0b0"/>
+  <rect x="44" y="26" width="8" height="34" rx="2" fill="#e8d5a3"/>
+  <!-- Monitoring loop (Suivi) -->
+  <path d="M22 28 C30 18, 50 16, 58 26 C64 34, 62 46, 54 52"
+        fill="none" stroke="#f7f3e8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M54 52 L50 44 L58 46 Z" fill="#c4a35a"/>
+  <!-- Wordmark hint -->
+  <text x="40" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif"
+        font-size="9" font-weight="700" letter-spacing="1.5" fill="#c4a35a">CAS</text>
+</svg>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Statistiques Atelier — comprendre les chiffres pour décider : moyennes, pourcentages, comparaisons, pièges, KPI métier." />
+  <title>Statistiques Atelier — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #3a4d7a;
+      --forest: #2a3758;
+      --mint: #7f95c4;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #4a6496;
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, #3a4d7a, #c17f2a);
+    }
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin: 1rem 0 1.25rem;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid rgba(14, 36, 51, 0.1);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+    }
+    .stat-card .label { display: block; font-size: 0.8rem; color: var(--ink-soft); font-weight: 600; }
+    .stat-card .value { display: block; margin-top: 0.25rem; font-family: var(--font-display); font-size: 1.45rem; color: var(--forest); }
+    .lab-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: end;
+      margin: 1rem 0;
+    }
+    .lab-controls label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; color: var(--ink-soft); font-size: 0.9rem; }
+    .lab-controls select, .lab-controls input {
+      min-width: 160px;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #c5d4df;
+      font-family: var(--font-body);
+    }
+    .bar-chart { display: grid; gap: 0.55rem; margin-top: 1rem; }
+    .bar-row { display: grid; grid-template-columns: 120px 1fr 70px; gap: 0.5rem; align-items: center; font-size: 0.9rem; }
+    .bar-track { height: 12px; background: #e7eef3; border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--leaf), var(--amber)); border-radius: 999px; }
+    .pitfall {
+      border-left: 4px solid var(--amber);
+      background: #fff8ef;
+      padding: 0.85rem 1rem;
+      border-radius: 0 12px 12px 0;
+      margin: 0.75rem 0;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Statistiques Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="playground">Labo chiffres</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="pieges">Pièges</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="site-footer">
+    <p><strong>Statistiques Atelier</strong> — lire les chiffres pour décider. Méthode Voir → Comprendre → Pratiquer → Vérifier.</p>
+    <p class="footer-note">Complète SQL, Excel et Python Atelier. Données métier <code>ventes</code> / <code>clients</code>.</p>
+  </footer>
+
+  <script src="js/content.js"></script>
+  <script src="js/stats-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

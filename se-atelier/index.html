@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Atelier S&E — former un Expert Suivi & Évaluation opérationnel standard. Cas fil rouge humanitaire Kalunga (Nutrition & WASH)." />
+  <title>Atelier S&E — Expert Suivi & Évaluation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../08_ia-atelier/css/styles.css" />
+  <style>
+    :root {
+      --leaf: #1f5c4a;
+      --forest: #143d33;
+      --mint: #7eb89f;
+      --amber: #b08930;
+      --amber-deep: #6e5418;
+      --sky: #3d5a61;
+    }
+    .brand-mark { background: linear-gradient(135deg, #1f5c4a, #b08930); }
+    .case-banner {
+      background: linear-gradient(135deg, #143d33, #1e2f3d);
+      color: #e8f2ee;
+      border-radius: 16px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .case-banner strong { color: #f0d78a; }
+    .studio-card, .dossier-card {
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.85rem;
+    }
+    .studio-card h3, .dossier-card h3 { margin: 0 0 0.4rem; }
+    .studio-card pre, .dossier-card pre {
+      margin: 0.5rem 0 0;
+      padding: 0.75rem;
+      background: #122633;
+      color: #d7e8f2;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+    .ph {
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 14px;
+      background:
+        linear-gradient(145deg, rgba(31,92,74,0.2), rgba(176,137,48,0.15)),
+        #d9e4df;
+      display: grid;
+      place-items: center;
+      color: #3d5a61;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .check-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      padding: 0.55rem 0.2rem; border-bottom: 1px solid #e6eef3;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Atelier S&amp;E</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="studio">Studio S&amp;E</button>
+        <button type="button" data-nav="donnees">Données Kalunga</button>
+        <button type="button" data-nav="dossier">Checklist dossier</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer class="site-footer">
+    <p><strong>Atelier S&amp;E</strong> — former un Expert S&amp;E opérationnel standard. Les outils servent le pilotage, pas l’inverse.</p>
+    <p class="footer-note">Cas fil rouge (exercice) : projet humanitaire fictif <strong>Kalunga</strong> — Nutrition &amp; WASH. Pack Atelier Data Analyst recommandé en amont.</p>
+  </footer>
+  <script src="js/content.js"></script>
+  <script src="js/se-lab.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Storytelling Atelier — transformer KPI et dashboards en récit clair et recommandations actionnables pour décideurs." />
+  <title>Storytelling Atelier — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #6b3a2a;
+      --forest: #4a261c;
+      --mint: #c4a484;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #8a5a3b;
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, #6b3a2a, #c17f2a);
+    }
+    .story-chain {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .story-chain span {
+      display: block;
+      text-align: center;
+      padding: 0.7rem 0.5rem;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.1);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--forest);
+    }
+    .note-builder {
+      display: grid;
+      gap: 0.85rem;
+      background: #fff;
+      border: 1px solid rgba(14,36,51,0.12);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+    }
+    .note-builder label {
+      display: grid;
+      gap: 0.35rem;
+      font-weight: 700;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+    .note-builder input, .note-builder textarea, .note-builder select {
+      font: inherit;
+      padding: 0.7rem 0.8rem;
+      border-radius: 10px;
+      border: 1px solid #c5d4df;
+      width: 100%;
+    }
+    .note-builder textarea { min-height: 72px; resize: vertical; }
+    .note-preview {
+      margin-top: 1rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fffdf8, #f7f1e8);
+      border: 1px solid #e6d3b8;
+    }
+    .note-preview h2 {
+      font-family: var(--font-display);
+      margin: 0 0 0.75rem;
+      font-size: 1.45rem;
+      color: var(--forest);
+    }
+    .note-preview .block { margin: 0.75rem 0; }
+    .note-preview .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 800;
+      color: #8a5a3b;
+    }
+    .insight-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0.75rem 0 1rem;
+    }
+    .insight-pills button {
+      border: 1px solid #d7c4ae;
+      background: #fff;
+      border-radius: 999px;
+      padding: 0.4rem 0.75rem;
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .insight-pills button:hover { border-color: var(--leaf); }
+    .rubric {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+    }
+    .rubric .score-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid rgba(14,36,51,0.1);
+      padding: 0.75rem 0.85rem;
+    }
+    .rubric strong { display: block; font-size: 1.15rem; color: var(--forest); margin-top: 0.2rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Storytelling Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="atelier">Atelier note</button>
+        <button type="button" data-nav="chaine">Chaîne DA</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="site-footer">
+    <p><strong>Storytelling Atelier</strong> — du chiffre à la décision. Dernière marche du pack Data Analyst.</p>
+    <p class="footer-note">SQL → Excel → Stats → Python → Power BI → <strong>Storytelling</strong>.</p>
+  </footer>
+
+  <script src="js/content.js"></script>
+  <script src="js/story-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Python Atelier — de zéro à Data Analyst Python : logique, Python, CSV/Excel, pandas, visualisation, projet métier." />
+  <title>Python Atelier — Devenir Data Analyst Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Retour à l'accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Python Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="playground">Atelier code</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="labo">Labo Anaconda</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression globale">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="site-footer">
+    <p><strong>Python Atelier</strong> — de zéro à Data Analyst Python. Méthode Voir → Comprendre → Pratiquer → Vérifier.</p>
+    <p class="footer-note">Progrès enregistrés localement. Données d’entraînement dans le dossier <code>data/</code>.</p>
+  </footer>
+
+  <script src="js/content.js"></script>
+  <script src="js/content-data.js"></script>
+  <script src="js/content-bilan.js"></script>
+  <script src="js/editor-assist.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

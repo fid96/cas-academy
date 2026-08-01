@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Excel Atelier — apprendre Excel depuis zéro jusqu’au niveau Data Analyst : formules, tableaux croisés, graphiques, projet métier." />
+  <title>Excel Atelier — Devenir Data Analyst Excel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    :root {
+      --leaf: #1f5c3a;
+      --forest: #163f28;
+      --mint: #6fbf8a;
+      --amber: #c17f2a;
+      --amber-deep: #9a6218;
+      --sky: #2f6b4f;
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, #1f5c3a, #c17f2a);
+    }
+    .sheet-wrap { overflow: auto; border-radius: 12px; border: 1px solid rgba(14,36,51,0.12); background: #fff; }
+    .sheet-table { border-collapse: collapse; width: max-content; min-width: 100%; font-family: var(--font-mono); font-size: 0.82rem; }
+    .sheet-table th, .sheet-table td { border: 1px solid #d5dee6; padding: 0.35rem 0.55rem; min-width: 72px; text-align: right; }
+    .sheet-table th { background: #eef3f6; color: var(--ink-soft); font-weight: 600; text-align: center; position: sticky; top: 0; }
+    .sheet-table td.row-head, .sheet-table th.corner { background: #eef3f6; text-align: center; color: var(--ink-soft); font-weight: 600; position: sticky; left: 0; }
+    .sheet-table td.editable { text-align: left; background: #fbfffc; cursor: text; }
+    .sheet-table td.editable:focus { outline: 2px solid var(--leaf); outline-offset: -2px; }
+    .formula-bar { display: flex; gap: 0.5rem; align-items: center; margin: 0.75rem 0 1rem; }
+    .formula-bar label { font-weight: 700; color: var(--ink-soft); }
+    .formula-bar input { flex: 1; min-width: 0; padding: 0.7rem 0.85rem; border-radius: 10px; border: 1px solid #c5d4df; font-family: var(--font-mono); font-size: 0.95rem; }
+    .excel-examples { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .excel-examples h3 { margin: 0 0.5rem 0 0; font-size: 1rem; }
+    .formula-result { margin-top: 0.75rem; padding: 0.85rem 1rem; border-radius: 12px; background: #122633; color: #d7e8f2; font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button type="button" class="brand" data-nav="home" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Excel Atelier</span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <button type="button" data-nav="home">Accueil</button>
+        <button type="button" data-nav="parcours">Parcours</button>
+        <button type="button" data-nav="methode">Méthode</button>
+        <button type="button" data-nav="playground">Atelier formules</button>
+        <button type="button" data-nav="carnet">Carnet</button>
+        <button type="button" data-nav="bilan">Quiz bilan</button>
+        <button type="button" data-nav="donnees">Données</button>
+        <button type="button" data-nav="glossaire">Glossaire</button>
+      </nav>
+      <div class="header-progress" title="Progression">
+        <span class="progress-label">Progression</span>
+        <div class="progress-track"><div class="progress-fill" id="global-progress-fill"></div></div>
+        <span class="progress-value" id="global-progress-value">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="site-footer">
+    <p><strong>Excel Atelier</strong> — de zéro à Data Analyst Excel. Méthode Voir → Comprendre → Pratiquer → Vérifier.</p>
+    <p class="footer-note">Complément de SQL Atelier (extraire) et Python Atelier (automatiser). Fichiers CSV dans <code>data/</code>.</p>
+  </footer>
+
+  <script src="js/content.js"></script>
+  <script src="js/formula-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
