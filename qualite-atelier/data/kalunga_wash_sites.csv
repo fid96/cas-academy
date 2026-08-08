@@ -1,0 +1,11 @@
+site_id,aire_sante,type_ouvrage,statut,menages_desservis,fonctionnel,date_visite,remarques
+W01,Nord,forage,rehabilite,420,oui,2025-06-02,
+W02,Nord,puits_protege,neuf,180,oui,2025-06-03,
+W03,Sud,forage,rehabilite,350,non,2025-06-04,pompe en panne
+W04,Sud,kiosque,neuf,220,oui,2025-06-04,
+W05,Est,forage,rehabilite,500,oui,2025-06-05,
+W06,Est,puits_protege,rehabilite,160,oui,2025-06-05,
+W07,Nord,forage,rehabilite,420,oui,2025-06-02,
+W08,Sud,forage,neuf,90,oui,2025-06-06,menages_desservis douteux
+W09,Est,kiosque,rehabilite,210,oui,2025-06-07,
+W10,Nord,forage,rehabilite,0,oui,2025-06-08,valeur aberrante possibles

@@ -39,6 +39,7 @@ index.html                 ← entrée campus
 platform/                  ← coque LMS (css, js, assets)
 01_…08_*/                  ← ateliers Data Analyst
 sig-atelier/               ← SIG (parcours DA | S&E via ?pack=)
+qualite-atelier/           ← Qualité & gouvernance (parcours DA | S&E via ?pack=)
 se-atelier/                ← atelier Expert S&E
 attestation-modele.html    ← certificat dynamique
 ```

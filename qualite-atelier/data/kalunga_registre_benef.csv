@@ -1,0 +1,16 @@
+benef_id,aire_sante,sexe,age_mois,date_admission,statut,poids_kg,telephone,enqueteur
+B001,Nord,F,18,2025-03-01,en_cours,7.2,,ENQ-01
+B002,Nord,M,24,2025-03-02,gueri,8.1,0999000001,ENQ-01
+B003,Sud,F,12,2025-03-02,en_cours,6.4,,ENQ-02
+B004,Sud,M,30,2025-03-03,abandon,9.0,0999000002,ENQ-02
+B005,Est,F,15,2025-03-03,gueri,7.8,,ENQ-03
+B006,Est,M,20,2025-03-04,en_cours,8.5,,ENQ-03
+B002,Nord,M,24,2025-03-02,gueri,8.1,0999000001,ENQ-01
+B007,Ouest,F,10,2025-03-05,en_cours,5.9,,ENQ-04
+B008,Nord,X,16,2025-03-05,en_cours,7.0,,ENQ-01
+B009,Sud,F,-3,2025-03-06,en_cours,6.8,,ENQ-02
+B010,Est,M,22,2025-13-01,gueri,8.2,,ENQ-03
+B011,Nord,F,19,,en_cours,7.4,,ENQ-01
+B012,Sud,M,28,2025-03-08,deces,45.0,,ENQ-02
+B013,Est,F,14,2025-03-08,gueri,,0999000003,ENQ-03
+B014,Nord,M,21,2025-03-09,en_cours,7.6,0999111222,ENQ-99
