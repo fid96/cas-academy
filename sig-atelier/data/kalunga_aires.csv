@@ -1,0 +1,5 @@
+aire_code,aire_sante,population,menages_estimes,cible_couverture_pct,lat_centroide,lon_centroide
+AS-N,Nord,18500,3200,80,-8.9120,24.4310
+AS-S,Sud,14200,2450,80,-9.0450,24.3980
+AS-E,Est,21000,3600,80,-8.9750,24.5200
+AS-O,Ouest,9800,1700,80,-8.9600,24.3500

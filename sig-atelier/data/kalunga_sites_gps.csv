@@ -1,0 +1,16 @@
+site_id,aire_code,aire_sante,type_ouvrage,statut,menages_desservis,fonctionnel,lat,lon,date_visite,remarques
+W01,AS-N,Nord,forage,rehabilite,420,oui,-8.9102,24.4285,2025-06-02,
+W02,AS-N,Nord,puits_protege,neuf,180,oui,-8.9188,24.4351,2025-06-03,
+W03,AS-S,Sud,forage,rehabilite,350,non,-9.0412,24.4010,2025-06-04,pompe en panne
+W04,AS-S,Sud,kiosque,neuf,220,oui,-9.0488,24.3922,2025-06-04,
+W05,AS-E,Est,forage,rehabilite,500,oui,-8.9721,24.5188,2025-06-05,
+W06,AS-E,Est,puits_protege,rehabilite,160,oui,-8.9810,24.5255,2025-06-05,
+W07,AS-N,Nord,forage,rehabilite,420,oui,-8.9102,24.4285,2025-06-02,possible doublon de W01
+W08,AS-S,Sud,forage,neuf,90,oui,-9.0520,24.4055,2025-06-06,menages_desservis douteux
+W09,AS-E,Est,kiosque,rehabilite,210,oui,-8.9688,24.5120,2025-06-07,
+W10,AS-N,Nord,forage,rehabilite,0,oui,-8.9055,24.4220,2025-06-08,menages=0 si fonctionnel=oui
+W11,AS-O,Ouest,puits_protege,neuf,140,oui,-8.9550,24.3488,2025-06-09,
+W12,AS-E,Est,forage,rehabilite,300,oui,24.5201,-8.9700,2025-06-10,lat/lon probablement inversés
+W13,AS-S,Sud,kiosque,neuf,110,oui,,,2025-06-11,GPS manquant
+W14,AS-N,Nord,forage,neuf,95,oui,0,0,2025-06-12,coordonnées nulles
+W15,AS-O,Ouest,forage,rehabilite,200,oui,-4.3200,15.3100,2025-06-13,hors zone Kalunga (Kinshasa ?)

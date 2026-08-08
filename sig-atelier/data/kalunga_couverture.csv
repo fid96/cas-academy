@@ -1,0 +1,5 @@
+aire_code,aire_sante,menages_desservis_valides,menages_estimes,couverture_pct,cible_couverture_pct,ecart_pp,sites_fonctionnels,sites_hors_service
+AS-N,Nord,600,3200,18.8,80,-61.2,3,0
+AS-S,Sud,420,2450,17.1,80,-62.9,2,1
+AS-E,Est,870,3600,24.2,80,-55.8,3,0
+AS-O,Ouest,340,1700,20.0,80,-60.0,2,0
