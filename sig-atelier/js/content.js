@@ -842,7 +842,7 @@ window.SIG_CONTENT = (function () {
     const modules = modulesSocle.concat(isSe ? modulesSe : modulesDa);
     return {
       packId: isSe ? "se" : "data-analyst",
-      moduleId: isSe ? "se-10-sig" : "09-sig",
+      moduleId: isSe ? "se-09-sig" : "08-sig",
       brand: isSe ? "SIG Atelier · S&E" : "SIG Atelier · Data Analyst",
       shortBrand: "SIG",
       mission: isSe

@@ -304,8 +304,8 @@
           </article>
           <article class="about-block">
             <h2>Deux formations, un même campus</h2>
-            <p><strong>Data Analyst</strong> couvre la chaîne Excel → Stats → Collecte → SQL → Python → Power BI → Storytelling → IA.</p>
-            <p><strong>Expert S&amp;E</strong> structure le métier Suivi &amp; Évaluation : cadre de résultats, indicateurs, plan, collecte, qualité, reporting et évaluation.</p>
+            <p><strong>Data Analyst</strong> : Excel → Stats → Collecte → SQL → Python → Power BI → Storytelling → SIG → Qualité → IA → Éthique.</p>
+            <p><strong>Expert S&amp;E</strong> : métier → cadre → indicateurs → plan → collecte → qualité → reporting → maîtrise → SIG → Qualité → évaluation → Éthique.</p>
           </article>
           <article class="about-block">
             <h2>Ce que vous emportez</h2>

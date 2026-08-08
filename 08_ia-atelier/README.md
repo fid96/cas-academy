@@ -29,4 +29,4 @@ Atelier **responsable** : l’IA comme **levier Data Analyst après maîtrise**,
 
 ## Place dans le pack
 
-Collecte → SQL → Excel → Stats → Python → Power BI → Storytelling → **IA (levier après maîtrise)**
+Excel → Stats → Collecte → SQL → Python → Power BI → Storytelling → SIG → Qualité → **IA** → Éthique

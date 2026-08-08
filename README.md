@@ -39,10 +39,10 @@ Campus (#/)  — CAS Academy
 ```
 index.html                 ← entrée campus
 platform/                  ← coque LMS (css, js, assets)
-01_…08_*/                  ← ateliers Data Analyst
+01_…08_*/                  ← ateliers Data Analyst (ordre campus : … Storytelling → SIG → Qualité → IA → Éthique)
 sig-atelier/               ← SIG (parcours DA | S&E via ?pack=)
 qualite-atelier/           ← Qualité & gouvernance (parcours DA | S&E via ?pack=)
 ethique-atelier/           ← Éthique & protection des données (parcours DA | S&E via ?pack=)
-se-atelier/                ← atelier Expert S&E
+se-atelier/                ← atelier Expert S&E (campus : … Maîtrise → SIG → Qualité → Évaluation → Éthique)
 attestation-modele.html    ← certificat dynamique
 ```

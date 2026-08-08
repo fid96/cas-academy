@@ -40,7 +40,7 @@ window.ATELIER = {
       },
       {
         title: "Levier après maîtrise, pas fondation",
-        text: "L’impact peut être fort — mais seulement si SQL/Excel/Stats/Storytelling sont déjà là. Sinon l’IA accélère surtout les erreurs."
+        text: "L’impact peut être fort — seulement si Excel/Stats/SQL/Python/Power BI/Storytelling/SIG et le go/no-go Qualité sont déjà là. Sinon l’IA accélère surtout les erreurs."
       }
     ]
   },

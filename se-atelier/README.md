@@ -21,9 +21,10 @@ La méthode est **transférable** à d’autres secteurs (épreuve carnet D).
 6. Qualité & analyse  
 7. Reporting & pilotage  
 8. **Maîtrise S&E** (échantillon, indicateur utile, éval légère / go-no-go)  
-9. Évaluation & dossier  
+9. Évaluation & dossier *(dans l’atelier ; sur le campus : après SIG & Qualité)*  
 
-Puis modules partagés plateforme : SIG · Qualité · Éthique (`?pack=se`).
+Enchaînement campus (spécialisation S&E) :  
+`… → Maîtrise → SIG → Qualité → Évaluation & dossier → Éthique` (`?pack=se`).
 
 ## Barre de maîtrise
 

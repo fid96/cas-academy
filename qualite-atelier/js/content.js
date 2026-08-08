@@ -664,7 +664,7 @@ window.QUALITE_CONTENT = (function () {
     const modules = modulesSocle.concat(isSe ? modulesSe : modulesDa);
     return {
       packId: isSe ? "se" : "data-analyst",
-      moduleId: isSe ? "se-11-qualite" : "10-qualite",
+      moduleId: isSe ? "se-10-qualite" : "09-qualite",
       brand: isSe ? "Qualité Atelier · S&E" : "Qualité Atelier · Data Analyst",
       shortBrand: "Qualité",
       mission: isSe

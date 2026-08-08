@@ -23,8 +23,8 @@ window.ATELIER = {
     {
       id: "operationnel",
       title: "S&E opérationnel",
-      subtitle: "Collecte, qualité, reporting, évaluation.",
-      goal: "Faire vivre le système jusqu’au dossier défendable.",
+      subtitle: "Collecte, qualité, reporting, maîtrise, évaluation.",
+      goal: "Faire vivre le système jusqu’au dossier défendable (SIG & Qualité plateforme avant le dossier sur le campus).",
     },
   ],
   method: {
