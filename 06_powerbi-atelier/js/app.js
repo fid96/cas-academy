@@ -445,10 +445,34 @@
 
   function renderDashboardCanvas() {
     const bad = state.layout === "chaos";
+    const transfer = state.layout === "transfer";
+    const gridLayout = transfer ? "executive" : state.layout;
     const k = D.KPIS;
     const tileClass = bad ? "is-bad" : "is-good";
+    if (transfer) {
+      return `
+      <div class="dash-grid layout-executive">
+        <article class="dash-tile area-k1 ${tileClass}"><h4>Volume total</h4><div class="kpi">${k.n}</div><div class="kpi-sub">lignes commandes</div></article>
+        <article class="dash-tile area-k2 ${tileClass}"><h4>Qté manquante</h4><div class="kpi">${k.missingQty}</div><div class="kpi-sub">risque stock / données</div></article>
+        <article class="dash-tile area-k3 ${tileClass}"><h4>Top produit</h4><div class="kpi" style="font-size:1.2rem">${escapeHtml(D.BY_PRODUIT[0].name)}</div><div class="kpi-sub">par CA (proxy volume)</div></article>
+        <article class="dash-tile area-k4 ${tileClass}"><h4>CA lié</h4><div class="kpi" style="font-size:1.1rem">${k.total.toLocaleString("fr-FR")}</div><div class="kpi-sub">CDF (contexte)</div></article>
+        <article class="dash-tile area-main ${tileClass}">
+          <h4>Volumes / CA par produit — héros logistique</h4>
+          ${renderMiniBars(D.BY_PRODUIT)}
+          <p class="kpi-sub">Transfert : le héros n’est plus « CA par ville »</p>
+        </article>
+        <article class="dash-tile area-side ${tileClass}">
+          <h4>Évolution mensuelle</h4>
+          ${renderMiniLine()}
+        </article>
+        <article class="dash-tile area-bottom ${tileClass}">
+          <h4>Répartition villes (secondaire)</h4>
+          ${renderMiniBars(D.BY_VILLE)}
+        </article>
+      </div>`;
+    }
     return `
-      <div class="dash-grid layout-${state.layout}">
+      <div class="dash-grid layout-${gridLayout}">
         <article class="dash-tile area-k1 ${tileClass}"><h4>Total CA</h4><div class="kpi">${k.total.toLocaleString("fr-FR")}</div><div class="kpi-sub">CDF · n=${k.n}</div></article>
         <article class="dash-tile area-k2 ${tileClass}"><h4>Moyenne vente</h4><div class="kpi">${k.mean.toLocaleString("fr-FR")}</div><div class="kpi-sub">CDF</div></article>
         <article class="dash-tile area-k3 ${tileClass}"><h4>Top ville</h4><div class="kpi" style="font-size:1.35rem">${escapeHtml(k.topVille)}</div><div class="kpi-sub">${k.topShare} % du CA</div></article>
@@ -486,11 +510,12 @@
     return `
       <div class="wrap">
         <h1 class="section-title">Studio dashboard</h1>
-        <p class="section-lead">Comparez les architectures. Observez disposition, tailles, hiérarchie — puis reproduisez dans Power BI Desktop.</p>
+        <p class="section-lead">Comparez les architectures, puis passez au layout <strong>Transfert</strong> (brief logistique) pour l’épreuve de maîtrise.</p>
         <div class="dash-toolbar">
           <button type="button" class="btn btn-small ${state.layout === "executive" ? "btn-dark" : "btn-ghost"}" data-layout="executive">Layout exécutif</button>
           <button type="button" class="btn btn-small ${state.layout === "analytical" ? "btn-dark" : "btn-ghost"}" data-layout="analytical">Layout analytique</button>
           <button type="button" class="btn btn-small ${state.layout === "chaos" ? "btn-dark" : "btn-ghost"}" data-layout="chaos">Layout chaos</button>
+          <button type="button" class="btn btn-small ${state.layout === "transfer" ? "btn-dark" : "btn-ghost"}" data-layout="transfer">Transfert (épreuve)</button>
           <a class="btn btn-small btn-primary" href="data/ventes.csv" download>CSV ventes</a>
           <a class="btn btn-small btn-ghost" href="data/clients.csv" download>CSV clients</a>
         </div>
@@ -513,7 +538,8 @@
         </div>
         <div class="phase-actions">
           <button class="btn btn-ghost" data-nav-inline="visuels">Choisir les visuels</button>
-          <button class="btn btn-primary" data-open-lesson="m2-l1">Leçon architecture</button>
+          <button class="btn btn-secondary" data-nav-inline="carnet">Carnet D — épreuve</button>
+          <button class="btn btn-primary" data-open-lesson="m7-l1">Modèle &amp; DAX</button>
         </div>
       </div>`;
   }

@@ -103,6 +103,13 @@ window.DashData = (function () {
       score: { hierarchy: 28, clarity: 35, density: 40, consistency: 30 },
       critique:
         "Pas de zone KPI stable, tailles incohérentes, œil perdu. C’est le piège classique « j’ai mis tous les graphiques »."
+    },
+    transfer: {
+      id: "transfer",
+      label: "Transfert — brief logistique",
+      score: { hierarchy: 88, clarity: 86, density: 80, consistency: 84 },
+      critique:
+        "Épreuve : public = responsable logistique / stocks. Même données, autre décision (ruptures, volumes par produit, qualité quantité). Reconcevez KPI et héros — puis carnet D."
     }
   };
 

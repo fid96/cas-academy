@@ -2,7 +2,8 @@
 
 window.ATELIER = {
   brand: "Excel Atelier",
-  mission: "Devenir un Data Analyst Excel digne et complet — en partant de zéro.",
+  mission:
+    "Maîtriser Excel en autonomie junior — formules fiables, jointures, nettoyage, TCD, livrable défendable.",
   tracks: [
     {
       id: "fondations",
@@ -13,8 +14,8 @@ window.ATELIER = {
     {
       id: "data-analyst",
       title: "Data Analyst Excel",
-      subtitle: "Le cœur du métier, pas un bonus.",
-      goal: "Nettoyer, pivoter, visualiser et recommander."
+      subtitle: "Autonomie : refs, RECHERCHEX, Power Query, TCD, épreuve.",
+      goal: "Nettoyer, joindre, pivoter, visualiser et recommander sans guide."
     }
   ],
   method: {
@@ -51,12 +52,16 @@ window.ATELIER = {
     { term: "Fonction", def: "Outil nommé dans une formule : SOMME, MOYENNE, SI…" },
     { term: "Référence relative", def: "B2 qui se décale quand on recopie la formule." },
     { term: "Référence absolue", def: "$B$2 qui ne bouge pas à la recopie." },
+    { term: "Référence mixte", def: "$B2 ou B$2 : une partie fixe, l’autre relative." },
+    { term: "RECHERCHEX / XLOOKUP", def: "Joint une clé (ex. client_id) pour ramener un attribut depuis une autre table." },
+    { term: "Power Query", def: "Outil d’import/transformation (CSV sale → table propre, étapes rejouables)." },
     { term: "Tableau Excel", def: "Plage structurée (Insertion > Tableau) avec filtres et colonnes nommées." },
     { term: "TCD", def: "Tableau croisé dynamique : résume des données par catégories." },
     { term: "Filtre", def: "Masque temporairement des lignes selon un critère." },
     { term: "KPI", def: "Indicateur clé (total, moyenne, top ville…)." },
     { term: "Valeur vide / NULL", def: "Case sans donnée — à traiter avant les totaux." },
-    { term: "Graphique", def: "Représentation visuelle d’un tableau pour convaincre." }
+    { term: "Graphique", def: "Représentation visuelle d’un tableau pour convaincre." },
+    { term: "Transfert", def: "Réussir un brief / fichier nouveau sans refaire le tutoriel guidé." }
   ],
   modules: [
     {
@@ -627,23 +632,188 @@ window.ATELIER = {
       ]
     },
     {
+      id: "m8",
+      title: "Autonomie analyste",
+      track: "data-analyst",
+      level: "Maîtrise",
+      image: "assets/illu-conditions.jpg",
+      summary: "Réfs absolues, RECHERCHEX, Power Query, TCD multi-champs — avant l’épreuve.",
+      lessons: [
+        {
+          id: "m8-l1",
+          title: "Références absolues et mixtes",
+          goal: "Figer une cellule avec $ pour recopier sans casser le calcul.",
+          image: "assets/illu-donnees.jpg",
+          caption: "Sans $, la recopie décale tout — parfois à tort.",
+          voir: {
+            paragraphs: [
+              "Relatif : =B2*$E$1 si E1 est un taux unique à ne pas décaler.",
+              "Mixte : $B2 fige la colonne ; B$2 fige la ligne — utile dans les grilles."
+            ],
+            analogy: {
+              title: "Analogie du clou et du chariot",
+              text: "Le clou ($E$1) reste planté ; le chariot (B2) avance d’une case à chaque copie."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Gestes :"],
+            bullets: [
+              "F4 (Windows) alterne relatif / absolu / mixte",
+              "$E$1 = cellule totalement figée",
+              "Tester la recopie sur 2–3 lignes",
+              "Atelier formules : essayez =B2*$E$1 si vous placez un taux en E1"
+            ],
+            code: {
+              label: "ex",
+              lines: "E1 = 1,16 (taux)\nD2 = =B2*$E$1\nRecopier D2 → D3 : B3*$E$1"
+            },
+            annotation: "Maîtrise = choisir volontairement ce qui bouge."
+          },
+          pratiquer: {
+            prompt: "Écrivez une formule avec une ref absolue (ex. =B2*$E$1) et dites en 1 ligne pourquoi le $.",
+            placeholder: "=…\nPourquoi : …",
+            hint: "$",
+            checkType: "keywords",
+            keywords: ["$"],
+            success: "Référence contrôlée.",
+            fail: "Incluez au moins un $."
+          },
+          verifier: {
+            question: "$E$1 dans une formule…",
+            options: ["Se décale toujours à la recopie", "Reste fixé à E1", "Supprime Excel", "Remplace un TCD"],
+            answer: 1,
+            explain: "Absolu."
+          },
+          retenir: [
+            "$ fige.",
+            "Tester la recopie.",
+            "Mixte si besoin."
+          ]
+        },
+        {
+          id: "m8-l2",
+          title: "RECHERCHEX — joindre une table",
+          goal: "Ramener un attribut client (ex. type) via client_id.",
+          image: "assets/illu-variables.jpg",
+          caption: "Excel joint comme un VLOOKUP moderne / un JOIN SQL.",
+          voir: {
+            paragraphs: [
+              "RECHERCHEX(valeur; plage_recherche; plage_renvoi) ramène la valeur alignée.",
+              "Cas : dans ventes, colonne type_client depuis la feuille clients sur client_id."
+            ],
+            analogy: {
+              title: "Analogie du badge et du dossier",
+              text: "Le badge (client_id) ouvre le bon dossier (ligne clients) pour lire le type."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Checklist :"],
+            bullets: [
+              "Clé unique côté table de recherche",
+              "Même type de données (texte vs nombre)",
+              "Gérer #N/A (absent) — ne pas le cacher",
+              "Équivalent SQL : LEFT JOIN clients ON …",
+              "Éviter de tout coller à la main"
+            ],
+            code: {
+              label: "recherchex",
+              lines: "=RECHERCHEX([@client_id]; clients[client_id]; clients[type_client])\n(ou plages A:A / B:B selon votre feuille)"
+            },
+            annotation: "Pratiquez sur data/ventes.csv + clients.csv dans Excel réel."
+          },
+          pratiquer: {
+            prompt: "Décrivez en 4 lignes : clé, table source, valeur ramenée, que faire si #N/A.",
+            placeholder: "1) Clé : …\n2) Source : …\n3) Valeur : …\n4) #N/A : …",
+            hint: "client_id / RECHERCHEX",
+            checkType: "keywords",
+            keywords: ["client"],
+            success: "Jointure mentale OK.",
+            fail: "Mentionnez la clé client."
+          },
+          verifier: {
+            question: "RECHERCHEX sert surtout à…",
+            options: ["Changer la police", "Joindre une information via une clé", "Créer un PDF", "Supprimer les TCD"],
+            answer: 1,
+            explain: "Jointure."
+          },
+          retenir: [
+            "Clé propre.",
+            "Plage recherche / renvoi.",
+            "Traiter #N/A."
+          ]
+        },
+        {
+          id: "m8-l3",
+          title: "Power Query + TCD multi-champs",
+          goal: "Passer d’un fichier sale à un TCD à 2 dimensions.",
+          image: "assets/illu-analyste.jpg",
+          caption: "Importer → nettoyer (étapes) → Tableau → TCD ville × produit.",
+          voir: {
+            paragraphs: [
+              "Power Query (Données > À partir d’un fichier) enregistre des étapes : types, colonnes inutiles, lignes vides.",
+              "TCD multi-champs : Lignes = ville, Colonnes = produit (ou l’inverse), Valeurs = somme montant."
+            ],
+            analogy: {
+              title: "Analogie de la laverie puis du tri postal",
+              text: "On lave le linge (Query) avant de le trier par casiers (évite les TCD sur du sale)."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Pipeline junior :"],
+            bullets: [
+              "Import CSV via Power Query (ou équivalent)",
+              "Types corrects + supprimer colonnes fusionnées / vides",
+              "Charger en Tableau Excel",
+              "TCD : 2 champs de catégorie + 1 mesure",
+              "Actualiser après nouvelles lignes source"
+            ],
+            code: {
+              label: "pipeline",
+              lines: "CSV sale\n→ Power Query (étapes)\n→ Tableau\n→ TCD ville × produit\n→ Graphique + note"
+            },
+            annotation: "Carnet D : épreuve fichier sale → livrable."
+          },
+          pratiquer: {
+            prompt: "Plan en 5 lignes : import Query → 2 nettoyages → Tableau → TCD 2 champs → actualisation.",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            hint: "Query / TCD",
+            checkType: "minLines",
+            minLines: 5,
+            success: "Pipeline autonomie.",
+            fail: "5 étapes."
+          },
+          verifier: {
+            question: "Un TCD ville × produit place surtout…",
+            options: ["Deux mesures en lignes seulement", "Une catégorie en lignes, une en colonnes, mesure en valeurs", "Uniquement des couleurs", "Aucune agrégation"],
+            answer: 1,
+            explain: "Matrice croisée."
+          },
+          retenir: [
+            "Nettoyer avant pivoter.",
+            "TCD multi-champs.",
+            "Actualiser la source."
+          ]
+        }
+      ]
+    },
+    {
       id: "m7",
       title: "Projet Data Analyst Excel",
       track: "data-analyst",
       level: "Projet",
       image: "assets/illu-analyste.jpg",
-      summary: "Brief complet : préparer, résumer, visualiser, recommander.",
+      summary: "Brief complet : préparer, joindre, résumer, visualiser, recommander.",
       lessons: [
         {
           id: "m7-l1",
           title: "Mission ventes santé",
-          goal: "Enchaîner contrôle → KPI → TCD → recommandation.",
+          goal: "Enchaîner contrôle → jointure → KPI → TCD → recommandation (autonomie).",
           image: "assets/hero-atelier.jpg",
           caption: "Même jeu de données que SQL et Python Atelier.",
           voir: {
             paragraphs: [
-              "Fichiers dans data/ : ventes.csv et clients.csv (à ouvrir dans Excel : Données > À partir d’un fichier texte/CSV).",
-              "Votre mission : produire 3 KPI, un résumé par ville ou produit, et 3 recommandations."
+              "Fichiers data/ventes.csv et clients.csv — import Query recommandé.",
+              "Mission : 3 KPI, RECHERCHEX type client (ou équivalent), TCD multi-champs, 3 reco, justifications."
             ],
             analogy: {
               title: "Analogie du briefing",
@@ -651,27 +821,29 @@ window.ATELIER = {
             }
           },
           comprendre: {
-            paragraphs: ["Livrables attendus :"],
+            paragraphs: ["Livrables maîtrise junior :"],
             bullets: [
-              "Contrôle qualité (vides, doublons évidents)",
-              "KPI : total montant, nombre de lignes, moyenne",
-              "TCD ou formules : par ville ou par produit",
-              "3 recommandations actionnables"
+              "Contrôle qualité + Query",
+              "Jointure client",
+              "KPI + TCD 2 champs",
+              "Graphique titre-constat",
+              "3 reco + 3 justifications",
+              "Carnet D (transfert fichier sale)"
             ],
             code: {
               label: "plan",
-              lines: "1. Importer CSV\n2. Tableau Excel + filtres\n3. SOMME / TCD\n4. Graphique\n5. Note de 5 lignes"
+              lines: "1. Import Query\n2. Tableau + RECHERCHEX\n3. KPI / TCD\n4. Graphique\n5. Note + justifications"
             },
-            annotation: "Excel clôt le récit que SQL a extrait."
+            annotation: "Quiz bilan seuil 80 %."
           },
           pratiquer: {
-            prompt: "Rédigez votre plan de mission en 5 lignes (import → KPI → TCD → graphique → reco).",
-            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            prompt: "Plan de mission en 6 lignes (import → jointure → KPI → TCD → graphique → reco).",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …\n6) …",
             hint: "Une action par ligne",
             checkType: "minLines",
-            minLines: 5,
-            success: "Plan d’analyste clair. Passez au quiz bilan quand vous êtes prêt.",
-            fail: "Il faut 5 étapes minimum."
+            minLines: 6,
+            success: "Plan junior. Carnet D puis quiz bilan.",
+            fail: "Il faut 6 étapes minimum."
           },
           verifier: {
             question: "Excel, SQL et Python ensemble…",
@@ -681,8 +853,8 @@ window.ATELIER = {
           },
           retenir: [
             "Données → KPI → récit.",
-            "Le décideur veut des actions.",
-            "Passez le quiz bilan pour valider."
+            "Joindre puis pivoter.",
+            "Quiz ≥ 80 %."
           ]
         }
       ]
@@ -690,7 +862,7 @@ window.ATELIER = {
   ],
   carnet: {
     title: "Carnet d’exercices — Excel Atelier",
-    subtitle: "Entraînement imprimable (feuille Pratique + fichiers data/)",
+    subtitle: "Feuille pratique + data/ + épreuve de maîtrise",
     sections: [
       {
         title: "A. Fondations",
@@ -705,12 +877,12 @@ window.ATELIER = {
       {
         title: "B. Data Analyst",
         exercises: [
-          { id: "eB1", prompt: "Importer data/ventes.csv dans Excel." },
+          { id: "eB1", prompt: "Importer data/ventes.csv (idéalement Power Query)." },
           { id: "eB2", prompt: "Créer un Tableau Excel sur les ventes." },
           { id: "eB3", prompt: "TCD : somme des montants par ville." },
-          { id: "eB4", prompt: "TCD : nombre de lignes par produit." },
-          { id: "eB5", prompt: "Graphique en barres + titre-constat." },
-          { id: "eB6", prompt: "3 recommandations métier." }
+          { id: "eB4", prompt: "TCD multi-champs : ville × produit." },
+          { id: "eB5", prompt: "RECHERCHEX type_client depuis clients." },
+          { id: "eB6", prompt: "Graphique en barres + titre-constat + 3 reco." }
         ]
       },
       {
@@ -720,13 +892,40 @@ window.ATELIER = {
           { id: "eC2", prompt: "Quand préférez-vous Excel plutôt que SQL ?" },
           { id: "eC3", prompt: "Quand passerez-vous le relais à Python ?" }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          {
+            id: "eD1",
+            prompt:
+              "Prenez (ou simulez) un export « sale » : 1 colonne fusionnée, 2 lignes vides, 1 type faux. Pipeline Query → Tableau propre. Listez les étapes."
+          },
+          {
+            id: "eD2",
+            prompt: "Justifiez 3 choix : (1) une ref $ utilisée, (2) RECHERCHEX vs copier-coller, (3) champs du TCD multi."
+          },
+          {
+            id: "eD3",
+            prompt:
+              "Détectez 2 erreurs : « TCD sur plage avec titres fusionnés ; =B2*E1 recopié sans $ alors que E1 est un taux unique ; #N/A ignorés. »"
+          },
+          {
+            id: "eD4",
+            prompt: "Livrable : 3 KPI + TCD ville×produit + 1 graphique + note 6 lignes — sans rouvrir les leçons guidées."
+          },
+          {
+            id: "eD5",
+            prompt: "Auto-éval (0–2) : transfert · justification · détection erreurs · quiz ≥80 %."
+          }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Data Analyst Excel",
-    subtitle: "20 questions pour mesurer vos acquis Excel orientés métier.",
-    passScore: 70,
+    subtitle: "26 questions — formules, jointures, Query, TCD, maîtrise junior (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "bases", themeLabel: "Bases", question: "Une formule Excel commence par…", options: ["#", "=", "@", "?"], answer: 1, explain: "Le = lance le calcul." },
       { id: "b2", theme: "bases", themeLabel: "Bases", question: "C5 désigne…", options: ["Ligne C colonne 5", "Colonne C ligne 5", "Une feuille", "Un TCD"], answer: 1, explain: "Lettre puis numéro." },
@@ -747,7 +946,13 @@ window.ATELIER = {
       { id: "b17", theme: "prep", themeLabel: "Préparation", question: "Avant un TCD, évitez surtout…", options: ["Des en-têtes clairs", "Des colonnes fusionnées dans la source", "Des noms de colonnes", "Un fichier CSV"], answer: 1, explain: "Fusion = source fragile." },
       { id: "b18", theme: "fonctions", themeLabel: "Fonctions", question: "NB / COUNT compte surtout…", options: ["Les cellules numériques", "Les couleurs", "Les feuilles cachées", "Les mots de passe"], answer: 0, explain: "Nombres." },
       { id: "b19", theme: "viz", themeLabel: "Visualisation", question: "Un bon titre de graphique…", options: ["Dit Graphique 1", "Porte déjà le constat", "Cache l’unité", "Multiplie les messages"], answer: 1, explain: "Insight dans le titre." },
-      { id: "b20", theme: "metier", themeLabel: "Métier", question: "Excel Atelier avec SQL et Python…", options: ["S’oppose à eux", "Complète le parcours Data Analyst", "Les remplace totalement", "Sert uniquement au dessin"], answer: 1, explain: "Trio extract / explore / automate." }
+      { id: "b20", theme: "metier", themeLabel: "Métier", question: "Excel Atelier avec SQL et Python…", options: ["S’oppose à eux", "Complète le parcours Data Analyst", "Les remplace totalement", "Sert uniquement au dessin"], answer: 1, explain: "Trio extract / explore / automate." },
+      { id: "b21", theme: "refs", themeLabel: "Références", question: "$E$1…", options: ["Se décale toujours", "Reste fixé à E1 à la recopie", "Efface la feuille", "Remplace RECHERCHEX"], answer: 1, explain: "Absolu." },
+      { id: "b22", theme: "lookup", themeLabel: "Jointure", question: "RECHERCHEX sert à…", options: ["Joindre via une clé", "Créer un pivot 3D", "Supprimer Query", "Changer le thème"], answer: 0, explain: "Lookup." },
+      { id: "b23", theme: "query", themeLabel: "Power Query", question: "Power Query sert surtout à…", options: ["Décorer", "Importer/transformer avec étapes rejouables", "Remplacer le métier", "Interdire les TCD"], answer: 1, explain: "ETL léger." },
+      { id: "b24", theme: "tcd", themeLabel: "TCD", question: "TCD ville × produit…", options: ["Impossible", "Catégorie en lignes, autre en colonnes, mesure en valeurs", "Deux fichiers PDF", "Sans agrégation"], answer: 1, explain: "Multi-champs." },
+      { id: "b25", theme: "maitrise", themeLabel: "Maîtrise", question: "L’épreuve transfert Excel…", options: ["Recopie le tutoriel", "Nettoie un fichier sale et livre sans guide", "Interdit les formules", "Ignore #N/A"], answer: 1, explain: "Autonomie." },
+      { id: "b26", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz bilan…", options: ["50 %", "70 %", "80 %", "10 %"], answer: 2, explain: "80 %." }
     ]
   },
   sampleVentesPreview: [

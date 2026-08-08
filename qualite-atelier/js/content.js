@@ -568,7 +568,17 @@ window.QUALITE_CONTENT = (function () {
           { id: "C2", prompt: "5 règles QC répétables pour le prochain cycle." },
           { id: "C3", prompt: "Note de limites (½ page) jointe au dashboard." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Dataset inconnu : appliquez 5 règles QC et produisez un go/no-go." },
+          { id: "D2", prompt: "Justifiez 3 choix de règles (complétude, unicité, validité)." },
+          { id: "D3", prompt: "Détectez 2 erreurs dans un journal QC volontairement mauvais." },
+          { id: "D4", prompt: "Livrable clean + 5 lignes de gouvernance (versions / responsables)." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
@@ -599,14 +609,24 @@ window.QUALITE_CONTENT = (function () {
           { id: "C2", prompt: "Checklist S&E qualité cochée." },
           { id: "C3", prompt: "Message à la coordination si no-go (5 lignes)." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Seuils S&E sur dataset inconnu : go/no-go redevabilité + 2 actions." },
+          { id: "D2", prompt: "Justifiez 3 seuils d’acceptation." },
+          { id: "D3", prompt: "Détectez 2 erreurs : publier sans journal ; seuil non documenté." },
+          { id: "D4", prompt: "Note décisionnelle qualité 6 lignes." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
   const bilanDa = {
     title: "Quiz bilan — Qualité Data Analyst",
     subtitle: "10 questions — dictionnaire, QC, traçabilité.",
-    passScore: 75,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour un DA, la qualité sert surtout à…", options: ["Remplacer SQL", "Rendre les données fiables et traçables", "Éviter le storytelling", "Supprimer Kobo"], answer: 1, explain: "Fiabilité + traçabilité." },
       { id: "b2", theme: "dim", themeLabel: "Dimensions", question: "Un doublon d’ID est un problème d’…", options: ["Unicité", "Actualité seule", "SCR", "Storytelling"], answer: 0, explain: "Unicité." },
@@ -624,7 +644,7 @@ window.QUALITE_CONTENT = (function () {
   const bilanSe = {
     title: "Quiz bilan — Qualité Expert S&E",
     subtitle: "10 questions — seuils, go/no-go, redevabilité.",
-    passScore: 75,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour le S&E, la qualité sert surtout à…", options: ["Décorer les annexes", "Garantir des chiffres dignes de piloter et rendre compte", "Remplacer le cadre de résultats", "Éviter les indicateurs"], answer: 1, explain: "Pilotage & redevabilité." },
       { id: "b2", theme: "seuil", themeLabel: "Seuils", question: "Un seuil d’acceptation…", options: ["Est inutile", "Cadre le go/no-go objectivement", "Remplace AAP", "Est un type de GPS"], answer: 1, explain: "Go/no-go." },

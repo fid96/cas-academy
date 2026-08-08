@@ -5,8 +5,8 @@
 
   window.ATELIER.bilan = {
     title: "Quiz bilan — Data Analyst Python",
-    subtitle: "Évaluez vos acquis : fondations, fichiers, pandas, qualité, visualisation et posture métier.",
-    passScore: 70,
+    subtitle: "Quiz approfondi — maîtrise junior (seuil 80 %).",
+    passScore: 80,
     questions: [
       {
         id: "q1",
@@ -262,7 +262,9 @@
         ],
         answer: 1,
         explain: "Anaconda + Jupyter + dossier du projet = labo professionnel."
-      }
+      },
+      { id: "b-mastery-1", theme: "maitrise", themeLabel: "Maîtrise", question: "Un merge pandas non contrôlé peut…", options: ["Toujours être sans risque", "Dupliquer des lignes (cardinalité)", "Remplacer groupby", "Corriger les dtypes"], answer: 1, explain: "Cardinalité." },
+      { id: "b-mastery-2", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz bilan maîtrise…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." }
     ]
   };
 
@@ -373,6 +375,16 @@
           prompt: "Expliquez à un non-informaticien la différence entre moyenne et médiane (4 phrases max)."
         }
       ]
+    },
+    {
+      title: "G. Épreuve de maîtrise (transfert)",
+      exercises: [
+        { id: "cG1", prompt: "Sans guide : chargez un CSV « sale » (séparateur/typage). Listez dtypes, NA, et 3 corrections pandas." },
+        { id: "cG2", prompt: "Justifiez 3 choix : merge how=, groupby agrégat, gestion NA." },
+        { id: "cG3", prompt: "Détectez 2 pièges : merge many-to-many non contrôlé ; groupby sur object mal typé ; fillna(0) silencieux." },
+        { id: "cG4", prompt: "Notebook transfert : KPI + 1 merge + 1 groupby + note 6 lignes." },
+        { id: "cG5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+      ],
     }
   ];
 

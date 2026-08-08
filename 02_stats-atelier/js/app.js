@@ -14,7 +14,8 @@
     labMode: "overview",
     groupField: "ville",
     compareA: "Kinshasa",
-    compareB: "Goma"
+    compareB: "Goma",
+    filterMonth: "2024-03"
   };
 
   function loadProgress() {
@@ -465,6 +466,33 @@
         </div>`;
     }
 
+    if (state.labMode === "transfer") {
+      const t = S.transferBrief(state.filterMonth);
+      const o = t.overview;
+      const fragileList = t.fragile.map((g) => `${g.name} (n=${g.n})`).join(", ") || "aucun groupe ville avec n&lt;5";
+      return `
+        <div class="pitfall">
+          <strong>Épreuve transfert — ${escapeHtml(t.ym)}</strong><br />
+          Brief : vous ne connaissez que ce mois. Produisez KPI + comparaison + limite d’échantillon sans rouvrir les leçons.
+          Puis complétez le <strong>carnet D</strong>.
+        </div>
+        <p class="section-lead">Portrait filtré (${o.n} lignes) — montants CDF.</p>
+        <div class="stats-cards">
+          <div class="stat-card"><span class="label">Effectif n</span><span class="value">${o.n}</span></div>
+          <div class="stat-card"><span class="label">Total montant</span><span class="value">${S.formatNumber(o.totalMontant)}</span></div>
+          <div class="stat-card"><span class="label">Moyenne</span><span class="value">${S.formatNumber(o.meanMontant)}</span></div>
+          <div class="stat-card"><span class="label">Médiane</span><span class="value">${S.formatNumber(o.medianMontant)}</span></div>
+          <div class="stat-card"><span class="label">Part Kinshasa</span><span class="value">${S.formatPct(o.shareKinshasa)}</span></div>
+          <div class="stat-card"><span class="label">Quantités manquantes</span><span class="value">${o.nQtyMissing}</span></div>
+          <div class="stat-card"><span class="label">Ville leader (total)</span><span class="value" style="font-size:1.1rem">${
+            t.leader ? escapeHtml(t.leader.name) : "—"
+          }</span><span class="label">n=${t.leader ? t.leader.n : "—"}</span></div>
+          <div class="stat-card"><span class="label">Groupes fragiles</span><span class="value" style="font-size:0.95rem">${fragileList}</span></div>
+        </div>
+        ${renderBars(t.groups)}
+        <p class="hint">Go/no-go : une alerte « ville en échec » n’est recevable que si n ≥ 5 et la mesure est comparable.</p>`;
+    }
+
     const o = S.overview();
     return `
       <p class="section-lead">Portrait global des ${o.n} ventes (montants en CDF).</p>
@@ -485,19 +513,27 @@
 
   function renderPlayground() {
     const villes = S.unique("ville");
+    const monthList = S.months();
     const options = (selected) =>
       villes.map((v) => `<option value="${escapeHtml(v)}"${v === selected ? " selected" : ""}>${escapeHtml(v)}</option>`).join("");
+    const monthOptions = monthList
+      .map((m) => `<option value="${escapeHtml(m)}"${m === state.filterMonth ? " selected" : ""}>${escapeHtml(m)}</option>`)
+      .join("");
     return `
       <div class="wrap">
         <h1 class="section-title">Labo chiffres</h1>
-        <p class="section-lead">Calculez sur le jeu <code>ventes</code> : vue d’ensemble, groupes, comparaison.</p>
+        <p class="section-lead">Vue d’ensemble, groupes, comparaison, puis <strong>transfert</strong> (mois filtré) pour la maîtrise.</p>
         <div class="lab-controls">
           <label>Mode
             <select id="lab-mode">
               <option value="overview"${state.labMode === "overview" ? " selected" : ""}>Vue d’ensemble</option>
               <option value="groups"${state.labMode === "groups" ? " selected" : ""}>Par groupe</option>
               <option value="compare"${state.labMode === "compare" ? " selected" : ""}>Comparer</option>
+              <option value="transfer"${state.labMode === "transfer" ? " selected" : ""}>Transfert (épreuve)</option>
             </select>
+          </label>
+          <label>Mois (transfert)
+            <select id="lab-month">${monthOptions}</select>
           </label>
           <label>Grouper par
             <select id="lab-group">
@@ -516,7 +552,8 @@
         <div id="lab-body">${renderLabBody()}</div>
         <div class="phase-actions">
           <button class="btn btn-ghost" data-nav-inline="pieges">Voir les pièges</button>
-          <button class="btn btn-primary" data-open-lesson="m7-l1">Mission note de décision</button>
+          <button class="btn btn-secondary" data-nav-inline="carnet">Carnet D — épreuve</button>
+          <button class="btn btn-primary" data-open-lesson="m8-l1">Approfondissement</button>
         </div>
       </div>`;
   }
@@ -730,7 +767,7 @@
         state.groupField = document.getElementById("lab-group").value;
         state.compareA = document.getElementById("lab-a").value;
         state.compareB = document.getElementById("lab-b").value;
-        // Keep compare options aligned when grouping by produit/categorie
+        state.filterMonth = document.getElementById("lab-month")?.value || state.filterMonth;
         const values = S.unique(state.groupField);
         const selA = document.getElementById("lab-a");
         const selB = document.getElementById("lab-b");
@@ -746,7 +783,7 @@
         state.compareB = selB.value;
         document.getElementById("lab-body").innerHTML = renderLabBody();
       };
-      ["lab-mode", "lab-group", "lab-a", "lab-b"].forEach((id) => {
+      ["lab-mode", "lab-group", "lab-a", "lab-b", "lab-month"].forEach((id) => {
         document.getElementById(id)?.addEventListener("change", refresh);
       });
     }

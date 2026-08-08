@@ -2,7 +2,8 @@
 
 window.ATELIER = {
   brand: "Power BI Atelier",
-  mission: "Construire des tableaux de bord clairs, utiles et professionnels.",
+  mission:
+    "Maîtriser design + modèle de données + mesures DAX de base — livrable junior opérationnel.",
   tracks: [
     {
       id: "fondations",
@@ -13,8 +14,8 @@ window.ATELIER = {
     {
       id: "design",
       title: "Design de dashboard pro",
-      subtitle: "Architecture, hiérarchie, choix des visuels, style.",
-      goal: "Composer un dashboard digne d’un livrable métier."
+      subtitle: "Architecture, hiérarchie, visuels, modèle, DAX, épreuve.",
+      goal: "Composer et justifier un dashboard digne d’un livrable métier."
     }
   ],
   method: {
@@ -51,7 +52,11 @@ window.ATELIER = {
     { term: "KPI / Carte", def: "Indicateur unique mis en avant (total, %, n)." },
     { term: "Segment (slicer)", def: "Filtre interactif visible sur la page." },
     { term: "Modèle de données", def: "Tables reliées (comme ventes–clients) qui alimentent les visuels." },
-    { term: "Mesure (DAX)", def: "Calcul réutilisable (ex. Total Montant)." },
+    { term: "Mesure (DAX)", def: "Calcul réutilisable (ex. Total Montant = SUM(...))." },
+    { term: "Colonne calculée", def: "Valeur stockée par ligne ; différente d’une mesure (agrégée au filtre)." },
+    { term: "Modèle en étoile", def: "Table de faits (ventes) + tables de dimensions (clients, dates, produits)." },
+    { term: "CALCULATE", def: "Fonction DAX qui modifie le contexte de filtre d’une expression." },
+    { term: "Time intelligence", def: "Calculs liés au temps (mois précédent, YTD) via une table Date." },
     { term: "Hiérarchie visuelle", def: "Ordre de lecture guidé par taille, position, contraste." },
     { term: "Grille / Alignement", def: "Organisation en colonnes/lignes pour un rendu pro." },
     { term: "Densité", def: "Quantité d’information par écran — trop dense = illisible." },
@@ -503,52 +508,218 @@ window.ATELIER = {
       ]
     },
     {
+      id: "m7",
+      title: "Modèle & DAX opérationnel",
+      track: "design",
+      level: "Maîtrise",
+      image: "assets/illu-conditions.jpg",
+      summary: "Étoile, mesures vs colonnes, CALCULATE, time intelligence minimale.",
+      lessons: [
+        {
+          id: "m7-l1",
+          title: "Modèle en étoile (faits + dimensions)",
+          goal: "Relier correctement ventes (fait) et clients (dimension).",
+          image: "assets/illu-donnees.jpg",
+          caption: "Sans modèle propre, les visuels mentent.",
+          voir: {
+            paragraphs: [
+              "Table de faits = événements (ventes : montant, quantité, clés).",
+              "Dimensions = contextes (clients, produits, dates). Relation : clients[client_id] → ventes[client_id] (1→*)."
+            ],
+            analogy: {
+              title: "Analogie du registre et des fiches patients",
+              text: "Le journal des actes (faits) pointe vers la fiche patient (dimension) — on ne recopie pas toute la fiche à chaque ligne."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Checklist modèle junior :"],
+            bullets: [
+              "1 table faits (ventes) + dimensions utiles",
+              "Clés propres (pas de doublons côté 1)",
+              "Cardinalité 1→*",
+              "Filtre qui coule dimension → fait",
+              "Éviter les tables « fourre-tout » non reliées"
+            ],
+            code: {
+              label: "modele",
+              lines: "clients (1) ──< ventes (*)\n[option] Date (1) ──< ventes (*)\nMesures sur ventes, attributs sur dimensions"
+            },
+            annotation: "Dans PBI Desktop : Vue modèle après import CSV."
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : table fait, dimension, clé de relation, 1 erreur de modèle à éviter.",
+            placeholder: "1) Fait : …\n2) Dimension : …\n3) Clé : …\n4) Erreur : …",
+            hint: "fait / dimension",
+            checkType: "keywords",
+            keywords: ["fait"],
+            success: "Modèle mental en étoile posé.",
+            fail: "Nommez la table de faits."
+          },
+          verifier: {
+            question: "Dans un modèle en étoile, les ventes sont surtout…",
+            options: ["Une dimension géographique", "La table de faits", "Un thème de couleur", "Un segment décoratif"],
+            answer: 1,
+            explain: "Faits = transactions."
+          },
+          retenir: [
+            "Faits + dimensions.",
+            "Relation 1→*.",
+            "Clés propres."
+          ]
+        },
+        {
+          id: "m7-l2",
+          title: "Mesure vs colonne · CALCULATE",
+          goal: "Écrire des mesures SUM / COUNTROWS et comprendre CALCULATE.",
+          image: "assets/illu-variables.jpg",
+          caption: "La mesure réagit aux filtres ; la colonne est figée par ligne.",
+          voir: {
+            paragraphs: [
+              "Mesure : Total CA = SUM(ventes[montant_cdf]) — se recalcule selon segments.",
+              "CALCULATE(expression, filtres…) change le contexte : ex. CA Kinshasa sans changer le modèle."
+            ],
+            analogy: {
+              title: "Analogie de la balance et de l’étiquette",
+              text: "L’étiquette collée sur chaque sac (colonne) ne change pas ; la balance (mesure) donne un poids selon les sacs filtrés."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Minimum DAX junior :"],
+            bullets: [
+              "Total CA = SUM(ventes[montant_cdf])",
+              "Nb ventes = COUNTROWS(ventes)",
+              "CALCULATE(Total CA, clients[ville]=\"Kinshasa\") — idée",
+              "Ne pas tout mettre en colonnes calculées « pour aller vite »",
+              "Nommer les mesures en langage métier"
+            ],
+            code: {
+              label: "dax",
+              lines: "Total CA = SUM(ventes[montant_cdf])\nNb lignes = COUNTROWS(ventes)\nCA Kinshasa =\nCALCULATE([Total CA], ventes[ville]=\"Kinshasa\")"
+            },
+            annotation: "Reproduisez 2 mesures dans Power BI Desktop."
+          },
+          pratiquer: {
+            prompt: "Écrivez 3 lignes DAX (Total CA, Nb lignes, 1 CALCULATE commenté en français).",
+            placeholder: "Total CA = …\nNb = …\nCALCULATE : …",
+            hint: "SUM / CALCULATE",
+            checkType: "keywords",
+            keywords: ["sum"],
+            success: "Socle DAX opérationnel.",
+            fail: "Incluez SUM (mesure de total)."
+          },
+          verifier: {
+            question: "CALCULATE sert surtout à…",
+            options: ["Changer le thème du rapport", "Modifier le contexte de filtre d’un calcul", "Importer un CSV", "Aligner les pixels"],
+            answer: 1,
+            explain: "Contexte de filtre."
+          },
+          retenir: [
+            "Mesure > colonne pour les agrégats.",
+            "SUM / COUNTROWS.",
+            "CALCULATE = contexte."
+          ]
+        },
+        {
+          id: "m7-l3",
+          title: "Time intelligence minimale",
+          goal: "Utiliser une logique mois / période pour un KPI temporel.",
+          image: "assets/illu-analyste.jpg",
+          caption: "Sans table Date, le temps reste un texte fragile.",
+          voir: {
+            paragraphs: [
+              "Idéal : table Date reliée à ventes[date], puis comparaison mois courant vs précédent.",
+              "MVP junior : au minimum segmenter par mois et une mesure de total ; viser ensuite PREVIOUSMONTH / DATEADD quand le modèle Date existe."
+            ],
+            analogy: {
+              title: "Analogie du calendrier mural",
+              text: "On ne compare pas « mardi » écrit en vrac : on pointe une case du calendrier (table Date)."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Niveau maîtrise junior :"],
+            bullets: [
+              "Créer ou marquer une colonne Mois (AAAA-MM)",
+              "Courbe : axe = mois, valeur = Total CA",
+              "Comparer deux mois dans le récit (absolu + %)",
+              "Objectif suivant : table Date + time intelligence native",
+              "Ne pas inventer un YTD sans Dates correctes"
+            ],
+            code: {
+              label: "temps",
+              lines: "Axe : Mois\nMesure : [Total CA]\nRécit : mars vs février = … %\n(Plus tard) CALCULATE([Total CA], PREVIOUSMONTH(Date[Date]))"
+            },
+            annotation: "Studio → layout Transfert : brief logistique sur une période."
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : comment vous construisez une courbe mensuelle + 1 comparaison février/mars + 1 limite.",
+            placeholder: "1) …\n2) …\n3) …\n4) …",
+            hint: "mois / total",
+            checkType: "keywords",
+            keywords: ["mois"],
+            success: "Temps sous contrôle.",
+            fail: "Mentionnez l’axe mois."
+          },
+          verifier: {
+            question: "Pour une évolution mensuelle fiable, on privilégie…",
+            options: ["12 camemberts", "Courbe sur un axe temps cohérent", "Une image décorative", "Supprimer les dates"],
+            answer: 1,
+            explain: "Temps → courbe."
+          },
+          retenir: [
+            "Axe temps explicite.",
+            "Comparer deux périodes.",
+            "Table Date = niveau suivant."
+          ]
+        }
+      ]
+    },
+    {
       id: "m6",
       title: "Projet dashboard ventes",
       track: "design",
       level: "Projet",
       image: "assets/hero-atelier.jpg",
-      summary: "Brief → wireframe → visuels → critique → Power BI.",
+      summary: "Brief → modèle → wireframe → visuels → critique → Power BI.",
       lessons: [
         {
           id: "m6-l1",
           title: "Livrable complet",
-          goal: "Concevoir puis planifier la réalisation dans Power BI Desktop.",
+          goal: "Concevoir puis planifier la réalisation dans Power BI Desktop (niveau junior).",
           image: "assets/illu-analyste.jpg",
-          caption: "Design d’abord, clic ensuite.",
+          caption: "Design + modèle d’abord, clic ensuite.",
           voir: {
             paragraphs: [
-              "Mission : dashboard exécutif ventes santé (mêmes CSV).",
-              "Livrables : brief, wireframe zones, 4 KPI, 1 visuel héros, 1 secondaire, 1 limite qualité, 3 recommandations."
+              "Mission : dashboard exécutif ventes santé (mêmes CSV) avec modèle relié et 2 mesures DAX.",
+              "Livrables : brief, modèle (fait/dimension), wireframe, 4 KPI, héros, limite qualité, 3 reco, justifications."
             ],
             analogy: {
               title: "Analogie du plan de bâtiment",
-              text: "On ne pose pas les fenêtres avant les murs. Wireframe → données → style."
+              text: "On ne pose pas les fenêtres avant les murs. Wireframe → modèle → visuels → style."
             }
           },
           comprendre: {
             paragraphs: ["Enchaînement recommandé :"],
             bullets: [
-              "Studio : choisir layout Exécutif",
-              "Valider matching visuels",
-              "Importer CSV dans Power BI",
-              "Construire dans le même ordre de zones",
-              "Revue des 4 scores de design"
+              "Studio : Exécutif puis Transfert",
+              "Modèle ventes–clients + 2 mesures",
+              "Matching visuels",
+              "Construire zones dans PBI",
+              "Revue design + carnet D"
             ],
             code: {
               label: "reco",
               lines: "1. Prioriser la ville leader\n2. Investiguer les faibles volumes\n3. Suivre la qualité (quantités manquantes)"
             },
-            annotation: "Le dashboard doit finir sur l’action."
+            annotation: "Quiz bilan seuil 80 %. Carnet D = épreuve transfert."
           },
           pratiquer: {
-            prompt: "Rédigez votre plan de livraison en 6 lignes (brief → wireframe → KPI → héros → PBI → revue).",
-            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …\n6) …",
+            prompt: "Plan de livraison en 7 lignes (brief → modèle → wireframe → mesures → héros → PBI → revue).",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …\n6) …\n7) …",
             hint: "une action par ligne",
             checkType: "minLines",
-            minLines: 6,
-            success: "Plan de pro. Passez au quiz bilan.",
-            fail: "6 étapes minimum."
+            minLines: 7,
+            success: "Plan junior complet. Carnet D puis quiz bilan.",
+            fail: "7 étapes minimum."
           },
           verifier: {
             question: "Dans un projet dashboard pro, on commence par…",
@@ -557,8 +728,8 @@ window.ATELIER = {
             explain: "Intention et structure d’abord."
           },
           retenir: [
-            "Design avant décoration.",
-            "Reproduire le wireframe dans PBI.",
+            "Design + modèle avant décoration.",
+            "Mesures nommées.",
             "Finir par recommandations."
           ]
         }
@@ -567,7 +738,7 @@ window.ATELIER = {
   ],
   carnet: {
     title: "Carnet — Power BI & design dashboard",
-    subtitle: "Exercices papier + Studio + Power BI Desktop",
+    subtitle: "Studio + Desktop + épreuve de maîtrise",
     sections: [
       {
         title: "A. Brief & architecture",
@@ -584,8 +755,8 @@ window.ATELIER = {
         exercises: [
           { id: "pB1", prompt: "Studio : comparez Exécutif vs Chaos (scores)." },
           { id: "pB2", prompt: "Matching : 5 questions → 5 visuels." },
-          { id: "pB3", prompt: "Importez ventes.csv + clients.csv dans Power BI." },
-          { id: "pB4", prompt: "Créez 4 cartes + 1 barre + 1 courbe." },
+          { id: "pB3", prompt: "Importez ventes.csv + clients.csv ; reliez client_id." },
+          { id: "pB4", prompt: "Créez mesures Total CA et Nb lignes + 4 cartes + 1 barre + 1 courbe." },
           { id: "pB5", prompt: "Ajoutez 3 segments max, alignés." },
           { id: "pB6", prompt: "Réécrivez tous les titres en langage métier." }
         ]
@@ -597,13 +768,40 @@ window.ATELIER = {
           { id: "pC2", prompt: "Corrigez le plus gros défaut de layout." },
           { id: "pC3", prompt: "Ajoutez 3 recommandations sous le dashboard." }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          {
+            id: "pD1",
+            prompt:
+              "Studio layout Transfert : brief responsable logistique (pas exécutif ventes). Redessinez wireframe + 4 KPI adaptés sans copier le tutoriel ventes."
+          },
+          {
+            id: "pD2",
+            prompt: "Justifiez 3 choix : (1) visuel héros, (2) relation modèle, (3) une mesure DAX vs une colonne."
+          },
+          {
+            id: "pD3",
+            prompt:
+              "Détectez 2 erreurs dans ce faux dashboard : « 12 camemberts, pas de relation clients, Total CA en colonne calculée figée, titres Graphique 1–12 »."
+          },
+          {
+            id: "pD4",
+            prompt: "Dans PBI Desktop : page transfert avec 2 mesures + 1 CALCULATE simple + courbe mensuelle. Joindre capture ou description zone par zone."
+          },
+          {
+            id: "pD5",
+            prompt: "Auto-éval (0–2) : transfert · justification · détection erreurs · quiz ≥80 %."
+          }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Power BI & design dashboard",
-    subtitle: "20 questions : outil + architecture + choix des visuels + style.",
-    passScore: 70,
+    subtitle: "26 questions — design, modèle, DAX, maîtrise junior (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "brief", themeLabel: "Brief", question: "Avant Power BI, on définit surtout…", options: ["La 3D", "Public et décision", "Le fond noir obligatoire", "Le nombre max de camemberts"], answer: 1, explain: "Intention d’abord." },
       { id: "b2", theme: "archi", themeLabel: "Architecture", question: "Les KPI principaux se placent…", options: ["En bas", "En haut", "Uniquement en infobulle", "Hors page"], answer: 1, explain: "Zone prioritaire." },
@@ -624,7 +822,13 @@ window.ATELIER = {
       { id: "b17", theme: "access", themeLabel: "Accessibilité", question: "Coder une alerte seulement en rouge/vert…", options: ["Est parfait pour tous", "Pose problème (contraste/daltonisme)", "Remplace les titres", "Est imposé par Power BI"], answer: 1, explain: "Prévoir forme/texte aussi." },
       { id: "b18", theme: "projet", themeLabel: "Projet", question: "Ordre pro recommandé…", options: ["Couleurs → données → brief", "Brief → wireframe → données/visuels → revue", "Chaos → plus de chaos", "Publier sans titres"], answer: 1, explain: "Structure d’abord." },
       { id: "b19", theme: "filtre", themeLabel: "Filtres", question: "Les segments se placent idéalement…", options: ["De façon aléatoire", "En bandeau haut ou panneau gauche", "Derrière chaque barre", "Uniquement en bas tout petit"], answer: 1, explain: "Zone attendue." },
-      { id: "b20", theme: "projet", themeLabel: "Projet", question: "Un dashboard abouti se termine par…", options: ["Aucun message", "Des recommandations / actions", "Un fond animé", "La suppression des KPI"], answer: 1, explain: "Décision." }
+      { id: "b20", theme: "projet", themeLabel: "Projet", question: "Un dashboard abouti se termine par…", options: ["Aucun message", "Des recommandations / actions", "Un fond animé", "La suppression des KPI"], answer: 1, explain: "Décision." },
+      { id: "b21", theme: "modele", themeLabel: "Modèle", question: "Dans un modèle en étoile, ventes est…", options: ["Toujours une dimension Date", "La table de faits", "Un thème", "Un slicer"], answer: 1, explain: "Faits." },
+      { id: "b22", theme: "dax", themeLabel: "DAX", question: "Mesure vs colonne calculée…", options: ["Identiques toujours", "La mesure s’agrège selon le filtre ; la colonne est par ligne", "La colonne remplace CALCULATE", "Interdit SUM"], answer: 1, explain: "Contexte." },
+      { id: "b23", theme: "dax", themeLabel: "DAX", question: "CALCULATE…", options: ["Change le thème", "Modifie le contexte de filtre", "Importe CSV", "Supprime le modèle"], answer: 1, explain: "Filtres." },
+      { id: "b24", theme: "temps", themeLabel: "Temps", question: "Évolution mensuelle fiable…", options: ["12 secteurs", "Courbe sur axe temps cohérent", "Sans dates", "Uniquement une image"], answer: 1, explain: "Courbe." },
+      { id: "b25", theme: "maitrise", themeLabel: "Maîtrise", question: "L’épreuve transfert change surtout…", options: ["Le système d’exploitation", "Le public / brief (ex. logistique) à reconcevoir", "L’interdiction des mesures", "Le format PDF"], answer: 1, explain: "Nouveau brief." },
+      { id: "b26", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz bilan maîtrise junior…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." }
     ]
   },
   visualQuiz: [

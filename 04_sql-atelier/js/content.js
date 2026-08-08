@@ -2,7 +2,7 @@
 
 window.ATELIER = {
   brand: "SQL Atelier",
-  mission: "Devenir un Data Analyst SQL digne et complet — en partant de zéro.",
+  mission: "Maîtriser SQL en autonomie junior — HAVING, CTE, fenêtre, transfert multi-tables.",
   tracks: [
     {
       id: "fondations",
@@ -600,39 +600,180 @@ window.ATELIER = {
       ]
     },
     {
+      id: "m8",
+      title: "Approfondissement SQL",
+      track: "data-analyst",
+      level: "Maîtrise",
+      image: "assets/illu-conditions.jpg",
+      summary: "HAVING, sous-requêtes/CTE, fenêtre simple — avant l’épreuve transfert.",
+      lessons: [
+        {
+          id: "m8-l1",
+          title: "HAVING — filtrer après agrégation",
+          goal: "Distinguer WHERE (lignes) et HAVING (groupes).",
+          image: "assets/illu-donnees.jpg",
+          caption: "WHERE avant le groupe ; HAVING après SUM/COUNT.",
+          voir: {
+            paragraphs: [
+              "WHERE filtre les lignes brutes. HAVING filtre les résultats de GROUP BY (ex. villes avec total > 1 000 000).",
+              "Erreur classique : mettre SUM(...) dans WHERE — SQL refuse ou se trompe de niveau."
+            ]
+          },
+          comprendre: {
+            paragraphs: ["Réflexe :"],
+            bullets: [
+              "WHERE = avant agrégat",
+              "HAVING = après GROUP BY",
+              "Exemple : GROUP BY ville HAVING SUM(montant_cdf) > 1000000",
+              "Tester dans Atelier SQL"
+            ],
+            code: {
+              label: "having.sql",
+              lines: "SELECT ville, SUM(montant_cdf) AS total\nFROM ventes\nGROUP BY ville\nHAVING SUM(montant_cdf) > 1000000\nORDER BY total DESC;"
+            },
+            annotation: "Exécutez, puis comparez sans HAVING."
+          },
+          pratiquer: {
+            prompt: "Écrivez une requête GROUP BY + HAVING (seuil au choix) ou décrivez-la en 3 lignes.",
+            placeholder: "SELECT … HAVING …",
+            hint: "HAVING",
+            checkType: "keywords",
+            keywords: ["having"],
+            success: "HAVING maîtrisé.",
+            fail: "Incluez HAVING."
+          },
+          verifier: {
+            question: "HAVING filtre…",
+            options: ["Les lignes avant GROUP BY", "Les groupes après agrégation", "Uniquement les NULL", "Les noms de tables"],
+            answer: 1,
+            explainOk: "Après agrégat.",
+            explainKo: "WHERE = lignes ; HAVING = groupes."
+          },
+          retenir: ["WHERE ≠ HAVING.", "HAVING après GROUP BY.", "Seuil sur agrégat."]
+        },
+        {
+          id: "m8-l2",
+          title: "Sous-requête ou CTE",
+          goal: "Découper une question en étapes lisibles (WITH / sous-SELECT).",
+          image: "assets/illu-variables.jpg",
+          caption: "Une CTE rend le raisonnement visible.",
+          voir: {
+            paragraphs: [
+              "Sous-requête : SELECT … WHERE montant_cdf > (SELECT AVG(montant_cdf) FROM ventes).",
+              "CTE : WITH totaux AS (…) SELECT … FROM totaux — plus lisible pour un junior en revue de code."
+            ]
+          },
+          comprendre: {
+            bullets: [
+              "Sous-requête scalaire pour un seuil",
+              "WITH nom AS (requête) SELECT …",
+              "Une idée par CTE",
+              "Contrôler le résultat intermédiaire (SELECT * FROM cte LIMIT 5)"
+            ],
+            code: {
+              label: "cte.sql",
+              lines: "WITH totaux AS (\n  SELECT ville, SUM(montant_cdf) AS total\n  FROM ventes GROUP BY ville\n)\nSELECT * FROM totaux\nWHERE total > (SELECT AVG(total) FROM totaux);"
+            },
+            annotation: "SQLite dans l’atelier supporte WITH."
+          },
+          pratiquer: {
+            prompt: "Écrivez ou décrivez une CTE (WITH …) en 4 lignes minimum.",
+            placeholder: "WITH … AS (\n…\n)\nSELECT …",
+            hint: "WITH",
+            checkType: "keywords",
+            keywords: ["with"],
+            success: "Raisonnement en étapes.",
+            fail: "Mentionnez WITH."
+          },
+          verifier: {
+            question: "WITH … AS (…) sert surtout à…",
+            options: ["Supprimer une table", "Nommer une sous-requête réutilisable", "Remplacer JOIN toujours", "Créer un PDF"],
+            answer: 1,
+            explainOk: "CTE = étape nommée.",
+            explainKo: "Lisibilité + réutilisation."
+          },
+          retenir: ["Découper.", "WITH pour lire.", "Contrôler l’étape."]
+        },
+        {
+          id: "m8-l3",
+          title: "Fenêtre simple (RANK)",
+          goal: "Classer des lignes sans écraser le détail (window).",
+          image: "assets/illu-analyste.jpg",
+          caption: "GROUP BY agrège ; WINDOW conserve les lignes + un rang.",
+          voir: {
+            paragraphs: [
+              "RANK() OVER (ORDER BY montant_cdf DESC) numérote les ventes du plus grand montant au plus petit.",
+              "Utile pour « top N par ville » plus tard ; ici : top global avec détail conservé."
+            ]
+          },
+          comprendre: {
+            bullets: [
+              "PARTITION BY optionnel (ex. par ville)",
+              "ORDER BY dans OVER obligatoire pour RANK",
+              "Ne remplace pas GROUP BY — autre besoin",
+              "SQLite : window functions disponibles"
+            ],
+            code: {
+              label: "rank.sql",
+              lines: "SELECT date, ville, montant_cdf,\n  RANK() OVER (ORDER BY montant_cdf DESC) AS rang\nFROM ventes\nORDER BY rang\nLIMIT 10;"
+            },
+            annotation: "Épreuve : requête multi-tables sans guide (carnet D)."
+          },
+          pratiquer: {
+            prompt: "Écrivez une requête avec RANK() OVER (…) ou décrivez le résultat attendu en 3 lignes.",
+            placeholder: "SELECT … RANK() OVER …",
+            hint: "RANK",
+            checkType: "keywords",
+            keywords: ["rank"],
+            success: "Fenêtre abordée.",
+            fail: "Incluez RANK."
+          },
+          verifier: {
+            question: "RANK() OVER (…) …",
+            options: ["Supprime les lignes", "Ajoute un classement en gardant le détail", "Remplace FROM", "Interdit ORDER BY"],
+            answer: 1,
+            explainOk: "Window = détail + calcul.",
+            explainKo: "Pas un GROUP BY."
+          },
+          retenir: ["Window ≠ GROUP BY.", "OVER (ORDER BY…).", "Détail conservé."]
+        }
+      ]
+    },
+    {
       id: "m7",
       title: "Projet Data Analyst SQL",
       track: "data-analyst",
       level: "Projet",
       image: "assets/illu-analyste.jpg",
-      summary: "Brief complet : qualité, tops, jointure, recommandations.",
+      summary: "Brief complet : qualité, tops, jointure, HAVING/CTE, recommandations.",
       lessons: [
         {
           id: "m7-l1",
           title: "Brief et requêtes de mission",
-          goal: "Enchaîner les requêtes d’un mini-rapport SQL.",
+          goal: "Enchaîner les requêtes d’un mini-rapport SQL (niveau junior).",
           image: "assets/hero-atelier.jpg",
           caption: "Une mission SQL se livre en chiffres actionnables.",
           voir: {
             paragraphs: [
-              "Mission : piloter les ventes santé. Livrables : manquants, top villes, top produits, total par type_client, 3 recommandations."
+              "Mission : piloter les ventes santé. Livrables : manquants, top villes, HAVING sur totaux, total par type_client, 3 reco + justifications.",
+              "Puis carnet D (transfert) sans recopier le tutoriel."
             ]
           },
           comprendre: {
             code: {
               label: "mission.sql",
-              lines: "-- 1) Qualité\nSELECT COUNT(*) AS nb_null_q\nFROM ventes WHERE quantite IS NULL;\n\n-- 2) Top villes\nSELECT ville, SUM(montant_cdf) AS total\nFROM ventes GROUP BY ville ORDER BY total DESC;\n\n-- 3) Par type_client\nSELECT c.type_client, SUM(v.montant_cdf) AS total\nFROM ventes v\nJOIN clients c ON v.client_id = c.client_id\nGROUP BY c.type_client\nORDER BY total DESC;"
+              lines: "-- 1) Qualité\nSELECT COUNT(*) AS nb_null_q\nFROM ventes WHERE quantite IS NULL;\n\n-- 2) Top villes + HAVING\nSELECT ville, SUM(montant_cdf) AS total\nFROM ventes GROUP BY ville\nHAVING SUM(montant_cdf) > 500000\nORDER BY total DESC;\n\n-- 3) Par type_client\nSELECT c.type_client, SUM(v.montant_cdf) AS total\nFROM ventes v\nJOIN clients c ON v.client_id = c.client_id\nGROUP BY c.type_client\nORDER BY total DESC;"
             },
-            annotation: "Exécutez ces blocs dans Atelier SQL, puis rédigez vos recommandations."
+            annotation: "Quiz bilan seuil 80 %. Carnet D = épreuve."
           },
           pratiquer: {
-            prompt: "Listez vos 3 recommandations métier (une par ligne) après analyse.",
-            placeholder: "1. ...\n2. ...\n3. ...",
+            prompt: "Listez 3 recommandations + 1 justification de choix de requête (4 lignes).",
+            placeholder: "1. ...\n2. ...\n3. ...\nJustification : ...",
             checkType: "minLines",
-            minLines: 3,
-            success: "Mission accomplie : vous concluez comme un analyste.",
-            fail: "Trois recommandations numérotées sont attendues.",
-            hint: "Stock, ciblage géographique, qualité des quantités…"
+            minLines: 4,
+            success: "Mission junior. Passez au carnet D.",
+            fail: "4 lignes attendues.",
+            hint: "Stock, ciblage, qualité…"
           },
           verifier: {
             question: "Un Data Analyst SQL complet doit surtout…",
@@ -643,13 +784,13 @@ window.ATELIER = {
               "Ne jamais regarder les NULL"
             ],
             answer: 1,
-            explainOk: "C’est exactement le métier visé par SQL Atelier.",
-            explainKo: "Le cycle complet définit l’analyste."
+            explainOk: "Cycle complet.",
+            explainKo: "Le cycle définit l’analyste."
           },
           retenir: [
             "SQL sert la décision.",
             "Qualité → KPI → récit.",
-            "Passez le quiz bilan pour valider."
+            "Quiz ≥ 80 %."
           ]
         }
       ]
@@ -657,7 +798,7 @@ window.ATELIER = {
   ],
   carnet: {
     title: "Carnet d’exercices — SQL Atelier",
-    subtitle: "Entraînement imprimable sur la base ventes / clients",
+    subtitle: "Base ventes/clients + épreuve de maîtrise",
     sections: [
       {
         title: "A. Fondations",
@@ -677,7 +818,7 @@ window.ATELIER = {
           { id: "sB3", prompt: "COUNT par produit." },
           { id: "sB4", prompt: "JOIN ventes/clients : organisation + montant." },
           { id: "sB5", prompt: "Total par type_client." },
-          { id: "sB6", prompt: "Top 5 ventes (date, ville, produit, montant)." }
+          { id: "sB6", prompt: "HAVING : villes avec total > 1e6." }
         ]
       },
       {
@@ -685,15 +826,39 @@ window.ATELIER = {
         exercises: [
           { id: "sC1", prompt: "Rédigez 3 recommandations basées sur vos requêtes." },
           { id: "sC2", prompt: "Expliquez INNER vs LEFT JOIN en 4 phrases simples." },
-          { id: "sC3", prompt: "Proposez une requête de contrôle qualité supplémentaire." }
+          { id: "sC3", prompt: "Proposez une CTE de contrôle qualité." }
+        ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          {
+            id: "sD1",
+            prompt:
+              "Sans rouvrir les leçons : 1 requête JOIN multi-tables + HAVING + ORDER BY pour un brief « villes au-dessus de la moyenne des totaux » (CTE bienvenue)."
+          },
+          {
+            id: "sD2",
+            prompt: "Justifiez 3 choix : (1) INNER vs LEFT, (2) WHERE vs HAVING, (3) CTE vs sous-requête seule."
+          },
+          {
+            id: "sD3",
+            prompt:
+              "Détectez 2 erreurs : « WHERE SUM(montant)>X ; JOIN sans ON ; RANK sans OVER ; GROUP BY oublié avec ville + SUM »."
+          },
+          {
+            id: "sD4",
+            prompt: "Livrable : 4 requêtes + note 6 lignes (constat, limite, 2 reco) — coller SQL dans le carnet."
+          },
+          { id: "sD5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." }
         ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Data Analyst SQL",
-    subtitle: "20 questions pour mesurer vos acquis SQL orientés métier.",
-    passScore: 70,
+    subtitle: "26 questions — SQL métier + HAVING/CTE/fenêtre (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "bases", themeLabel: "Bases", question: "SELECT sert à…", options: ["Supprimer une table", "Choisir les colonnes à afficher", "Créer un utilisateur", "Fermer la base"], answer: 1, explain: "SELECT projette les colonnes." },
       { id: "b2", theme: "bases", themeLabel: "Bases", question: "FROM indique…", options: ["Le tri", "La table source", "La clé primaire uniquement", "Un graphique"], answer: 1, explain: "FROM = source." },
@@ -714,7 +879,13 @@ window.ATELIER = {
       { id: "b17", theme: "bases", themeLabel: "Bases", question: "Alias de colonne :", options: ["AS", "IS", "ON", "BY"], answer: 0, explain: "AS nom." },
       { id: "b18", theme: "filtre", themeLabel: "Filtres", question: "Texte SQL entre…", options: ["Guillemets doubles obligatoires seulement", "Quotes simples '…'", "Parenthèses seules", "Crochets seuls"], answer: 1, explain: "'Kinshasa'." },
       { id: "b19", theme: "agg", themeLabel: "Agrégats", question: "AVG calcule…", options: ["La somme", "La moyenne", "Le minimum seulement", "Le schéma"], answer: 1, explain: "Moyenne." },
-      { id: "b20", theme: "metier", themeLabel: "Métier", question: "SQL Atelier et Python Atelier…", options: ["S’opposent", "Se complètent (extraire / analyser)", "Sont identiques", "Remplacent Excel à eux seuls sans méthode"], answer: 1, explain: "Duo extract-analyze." }
+      { id: "b20", theme: "metier", themeLabel: "Métier", question: "SQL Atelier et Python Atelier…", options: ["S’opposent", "Se complètent (extraire / analyser)", "Sont identiques", "Remplacent Excel à eux seuls sans méthode"], answer: 1, explain: "Duo extract-analyze." },
+      { id: "b21", theme: "having", themeLabel: "HAVING", question: "HAVING filtre…", options: ["Lignes avant GROUP BY", "Groupes après agrégation", "Noms de colonnes", "Uniquement DISTINCT"], answer: 1, explain: "Post-agrégat." },
+      { id: "b22", theme: "cte", themeLabel: "CTE", question: "WITH … AS (…) …", options: ["Supprime FROM", "Nomme une sous-requête", "Interdit SELECT", "Remplace la clé"], answer: 1, explain: "CTE." },
+      { id: "b23", theme: "window", themeLabel: "Fenêtre", question: "RANK() OVER (…) …", options: ["Agrège en une ligne par groupe seulement", "Classe en gardant le détail des lignes", "Efface ORDER BY", "Remplace JOIN"], answer: 1, explain: "Window." },
+      { id: "b24", theme: "having", themeLabel: "HAVING", question: "WHERE SUM(montant) …", options: ["Est le pattern standard", "Est incorrect — utiliser HAVING", "Remplace GROUP BY", "Crée une CTE"], answer: 1, explain: "HAVING." },
+      { id: "b25", theme: "maitrise", themeLabel: "Maîtrise", question: "Épreuve transfert SQL…", options: ["Recopie le tutoriel", "Écrit JOIN+HAVING/CTE sans guide", "Évite les agrégats", "Ignore le schéma"], answer: 1, explain: "Autonomie." },
+      { id: "b26", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz bilan…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." }
     ]
   }
 };

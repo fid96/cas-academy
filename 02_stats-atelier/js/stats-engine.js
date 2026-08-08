@@ -158,6 +158,48 @@ window.StatsEngine = (function () {
     return [...new Set(VENTES.map((r) => r[field]))].sort();
   }
 
+  function monthOf(row) {
+    return row.date.slice(0, 7);
+  }
+
+  function months() {
+    return [...new Set(VENTES.map(monthOf))].sort();
+  }
+
+  function filterByMonth(ym) {
+    return (r) => monthOf(r) === ym;
+  }
+
+  function transferBrief(ym) {
+    const o = overview(filterByMonth(ym));
+    const groups = groupByFiltered("ville", "montant_cdf", filterByMonth(ym));
+    const leader = groups[0] || null;
+    const fragile = groups.filter((g) => g.n < 5);
+    return { ym, overview: o, groups, leader, fragile };
+  }
+
+  function groupByFiltered(field, valueField, filterFn) {
+    const map = {};
+    const rows = filterFn ? VENTES.filter(filterFn) : VENTES;
+    for (const row of rows) {
+      const key = row[field];
+      if (!map[key]) map[key] = [];
+      const v = row[valueField];
+      if (typeof v === "number") map[key].push(v);
+    }
+    return Object.entries(map)
+      .map(([name, values]) => ({
+        name,
+        n: values.length,
+        total: sum(values),
+        mean: mean(values),
+        median: median(values),
+        min: min(values),
+        max: max(values)
+      }))
+      .sort((a, b) => b.total - a.total);
+  }
+
   return {
     VENTES,
     sum,
@@ -174,6 +216,10 @@ window.StatsEngine = (function () {
     groupBy,
     compare,
     unique,
-    getSeries
+    getSeries,
+    months,
+    filterByMonth,
+    transferBrief,
+    groupByFiltered
   };
 })();

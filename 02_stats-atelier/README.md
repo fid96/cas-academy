@@ -1,26 +1,35 @@
 # Statistiques Atelier
 
-Parcours pédagogique **pour lire les chiffres et décider** — complément de Python, SQL et Excel Atelier.
+Parcours **maîtrise opérationnelle junior** — lire les chiffres sous incertitude et décider.
 
 ## Objectif
 
 - Choisir le bon indicateur (total, moyenne, médiane, %)
-- Comparer des groupes sans se tromper
-- Repérer les pièges (extrêmes, NULL, % sans dénominateur)
-- Rédiger une note de décision courte
+- Comparer des groupes sans se tromper (n, écart, fragilité)
+- Cadre d’échantillon, corrélation ≠ causalité
+- Réussir l’**épreuve de transfert** (mois filtré) + quiz bilan **≥ 80 %**
 
 ## Lancer
 
 1. Ouvrir `index.html`  
    ou : `python -m http.server 8768`
-2. Suivre **Parcours**
-3. Explorer **Labo chiffres**
-4. Relire **Pièges**
-5. Passer le **Quiz bilan**
+2. Suivre **Parcours** (fondations → DA → approfondissement → projet)
+3. Explorer **Labo chiffres** (mode **Transfert**)
+4. Compléter **Carnet D** (épreuve)
+5. Passer le **Quiz bilan** (seuil 80 %)
 
 ## Données
 
-Même jeu métier : `data/ventes.csv` et `data/clients.csv`.
+`data/ventes.csv` et `data/clients.csv` — labo embarqué + filtre par mois pour le transfert.
+
+## Barre de maîtrise
+
+| Critère | Attendu |
+|---------|---------|
+| Transfert | Analyser un mois sans rouvrir le tutoriel |
+| Justification | 3 choix défendus |
+| Détection d’erreurs | 2 pièges dans un récit faux |
+| Quiz | ≥ 80 % |
 
 ## Suite du parcours Data Analyst
 
@@ -29,5 +38,5 @@ Même jeu métier : `data/ventes.csv` et `data/clients.csv`.
 | SQL | Extraire |
 | Excel | Explorer / présenter |
 | Python | Automatiser |
-| **Statistiques** | **Interpréter / se méfier** |
-| (suivant) Power BI | Tableaux de bord |
+| **Statistiques** | **Interpréter / maîtriser la prudence** |
+| Power BI | Tableaux de bord |

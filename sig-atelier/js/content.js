@@ -368,6 +368,90 @@ window.SIG_CONTENT = (function () {
         }),
       ],
     },
+    
+    {
+      id: "m7",
+      title: "07 · Maîtrise spatiale",
+      track: "metier",
+      level: "Maîtrise",
+      packs: ["data-analyst"],
+      summary: "CRS en pratique, couverture/jointure, épreuve transfert.",
+      lessons: [
+        L({
+          id: "m7-l1",
+          title: "CRS & projections en pratique",
+          goal: "Choisir et documenter un CRS sans mélanger les couches.",
+          caption: "Un mauvais CRS déplace les points de kilomètres.",
+          voir: {
+            paragraphs: [
+              "GPS Kobo → EPSG:4326 (lon/lat). Pour distances/surfaces locales, projeter (UTM) puis documenter.",
+              "Règle : jamais superposer deux couches sans vérifier le CRS dans QGIS."
+            ],
+          },
+          comprendre: {
+            paragraphs: ["Checklist :"],
+            bullets: [
+              "Documenter EPSG source",
+              "X=lon Y=lat pour CSV GPS",
+              "Reprojeter si calcul de distance",
+              "Noter le CRS sur la carte / métadonnées"
+            ],
+            code: { label: "crs", lines: "Source GPS: EPSG:4326\nCarte locale: UTM zone documentée\nJamais « on verra »" },
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : CRS source Kalunga, risque si inversé, quand reprojeter, où documenter.",
+            placeholder: "1) …\n2) …\n3) …\n4) …",
+            checkType: "keywords",
+            keywords: ["4326"],
+            success: "CRS maîtrisé.",
+            fail: "Mentionnez 4326 / EPSG.",
+          },
+          verifier: {
+            question: "CSV GPS Kobo → en pratique…",
+            options: ["Sans CRS", "EPSG:4326 documenté (lon/lat)", "Toujours Web Mercator sans vérifier", "CRS inventé"],
+            answer: 1,
+            explain: "WGS 84.",
+          },
+          retenir: ["Documenter EPSG.", "Lon/lat.", "Reprojeter si besoin."],
+        }),
+        L({
+          id: "m7-l2",
+          title: "Analyse spatiale légère — couverture",
+          goal: "Joindre et lire une couverture vs cible sans surcharger.",
+          caption: "Une jointure aire_code + une mesure = décision.",
+          voir: {
+            paragraphs: [
+              "Après QC : joindre sites → aires, calculer couverture, comparer à la cible (ex. 80 %).",
+              "Livrer : tableau par aire + 5 lignes de lecture (pas 12 couches décoratives)."
+            ],
+          },
+          comprendre: {
+            bullets: [
+              "Clé aire_code",
+              "Numérateur / dénominateur clairs",
+              "Écart vs cible",
+              "Limite des données GPS"
+            ],
+          },
+          pratiquer: {
+            prompt: "5 lignes : jointure utilisée, 2 aires critiques, écart vs cible, 1 limite, 1 suite.",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            checkType: "minLines",
+            minLines: 5,
+            success: "Analyse spatiale légère OK.",
+            fail: "5 lignes.",
+          },
+          verifier: {
+            question: "Une analyse spatiale junior utile…",
+            options: ["Ignore la cible", "Joint, mesure, compare à une cible, lit les écarts", "Maximise les couleurs", "Évite le QC"],
+            answer: 1,
+            explain: "Mesure + cible.",
+          },
+          retenir: ["Joindre.", "Mesurer.", "Comparer à la cible."],
+        }),
+      ],
+    },
+
     {
       id: "m6",
       title: "06 · Carte & lecture analytique",
@@ -488,6 +572,90 @@ window.SIG_CONTENT = (function () {
         }),
       ],
     },
+    
+    {
+      id: "m7",
+      title: "07 · Maîtrise spatiale",
+      track: "metier",
+      level: "Maîtrise",
+      packs: ["se"],
+      summary: "CRS en pratique, couverture/jointure, épreuve transfert.",
+      lessons: [
+        L({
+          id: "m7-l1",
+          title: "CRS & projections en pratique",
+          goal: "Choisir et documenter un CRS sans mélanger les couches.",
+          caption: "Un mauvais CRS déplace les points de kilomètres.",
+          voir: {
+            paragraphs: [
+              "GPS Kobo → EPSG:4326 (lon/lat). Pour distances/surfaces locales, projeter (UTM) puis documenter.",
+              "Règle : jamais superposer deux couches sans vérifier le CRS dans QGIS."
+            ],
+          },
+          comprendre: {
+            paragraphs: ["Checklist :"],
+            bullets: [
+              "Documenter EPSG source",
+              "X=lon Y=lat pour CSV GPS",
+              "Reprojeter si calcul de distance",
+              "Noter le CRS sur la carte / métadonnées"
+            ],
+            code: { label: "crs", lines: "Source GPS: EPSG:4326\nCarte locale: UTM zone documentée\nJamais « on verra »" },
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : CRS source Kalunga, risque si inversé, quand reprojeter, où documenter.",
+            placeholder: "1) …\n2) …\n3) …\n4) …",
+            checkType: "keywords",
+            keywords: ["4326"],
+            success: "CRS maîtrisé.",
+            fail: "Mentionnez 4326 / EPSG.",
+          },
+          verifier: {
+            question: "CSV GPS Kobo → en pratique…",
+            options: ["Sans CRS", "EPSG:4326 documenté (lon/lat)", "Toujours Web Mercator sans vérifier", "CRS inventé"],
+            answer: 1,
+            explain: "WGS 84.",
+          },
+          retenir: ["Documenter EPSG.", "Lon/lat.", "Reprojeter si besoin."],
+        }),
+        L({
+          id: "m7-l2",
+          title: "Analyse spatiale légère — couverture",
+          goal: "Joindre et lire une couverture vs cible sans surcharger.",
+          caption: "Une jointure aire_code + une mesure = décision.",
+          voir: {
+            paragraphs: [
+              "Après QC : joindre sites → aires, calculer couverture, comparer à la cible (ex. 80 %).",
+              "Livrer : tableau par aire + 5 lignes de lecture (pas 12 couches décoratives)."
+            ],
+          },
+          comprendre: {
+            bullets: [
+              "Clé aire_code",
+              "Numérateur / dénominateur clairs",
+              "Écart vs cible",
+              "Limite des données GPS"
+            ],
+          },
+          pratiquer: {
+            prompt: "5 lignes : jointure utilisée, 2 aires critiques, écart vs cible, 1 limite, 1 suite.",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            checkType: "minLines",
+            minLines: 5,
+            success: "Analyse spatiale légère OK.",
+            fail: "5 lignes.",
+          },
+          verifier: {
+            question: "Une analyse spatiale junior utile…",
+            options: ["Ignore la cible", "Joint, mesure, compare à une cible, lit les écarts", "Maximise les couleurs", "Évite le QC"],
+            answer: 1,
+            explain: "Mesure + cible.",
+          },
+          retenir: ["Joindre.", "Mesurer.", "Comparer à la cible."],
+        }),
+      ],
+    },
+
     {
       id: "m6",
       title: "06 · Décision & redevabilité",
@@ -574,7 +742,17 @@ window.SIG_CONTENT = (function () {
           { id: "C2", prompt: "5 lignes de lecture pour une note / slide Power BI." },
           { id: "C3", prompt: "Listez 3 risques si on publie sans QC GPS." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Nouveau jeu (autre zone ou extrait) : QC GPS sans guide — journal 5 anomalies." },
+          { id: "D2", prompt: "Justifiez 3 choix : CRS, clé de jointure, symbologie." },
+          { id: "D3", prompt: "Détectez 2 erreurs : carte sans QC ; X=lat ; jointure sur libellé libre ; légende absente." },
+          { id: "D4", prompt: "Livrable : couverture vs cible + 5 lignes lecture + 1 limite." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
@@ -605,14 +783,24 @@ window.SIG_CONTENT = (function () {
           { id: "C2", prompt: "Formulez 2 questions évaluatives à dimension spatiale." },
           { id: "C3", prompt: "Checklist S&E SIG cochée (écran Labo)." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Note spatiale sur extrait inconnu : faits → écarts → 3 décisions assignées." },
+          { id: "D2", prompt: "Justifiez 3 choix : indicateur, priorisation d’aire, niveau d’agrégation GPS." },
+          { id: "D3", prompt: "Détectez 2 erreurs : publier sans QC ; reco sans responsable ; cible absente." },
+          { id: "D4", prompt: "Go/no-go publication carte (critères qualité + éthique)." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
   const bilanDa = {
     title: "Quiz bilan — SIG Data Analyst",
-    subtitle: "10 questions — technique spatiale et QC.",
-    passScore: 75,
+    subtitle: "12 questions — technique, couverture, maîtrise (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour un DA, le SIG sert surtout à…", options: ["Remplacer SQL", "Fiabiliser et analyser des données territoriales", "Faire du graphisme seul", "Remplacer la collecte"], answer: 1, explain: "Analyse territoriale." },
       { id: "b2", theme: "crs", themeLabel: "CRS", question: "CSV GPS Kobo → en général…", options: ["EPSG:4326, X=lon Y=lat", "Pas de CRS", "Toujours UTM sans vérifier", "X=lat Y=lon par défaut"], answer: 0, explain: "WGS 84." },
@@ -624,13 +812,15 @@ window.SIG_CONTENT = (function () {
       { id: "b8", theme: "tool", themeLabel: "Outil", question: "Outil principal recommandé ici…", options: ["QGIS", "Photoshop", "Word Art", "Un SCR inventé"], answer: 0, explain: "QGIS." },
       { id: "b9", theme: "map", themeLabel: "Carte", question: "Une carte DA doit…", options: ["Poser une question claire", "Avoir 20 couches décoratives", "Cacher la légende", "Ignorer les unités"], answer: 0, explain: "Clarté." },
       { id: "b10", theme: "qc", themeLabel: "QC", question: "Deux sites même lat/lon…", options: ["Toujours OK", "Doublon logique à investiguer", "Preuve de raster", "CRS parfait"], answer: 1, explain: "Doublon." },
+      { id: "b11", theme: "spatial", themeLabel: "Analyse", question: "Couverture vs cible sert à…", options: ["Décorer", "Mesurer l’écart et prioriser", "Remplacer le QC", "Éviter les jointures"], answer: 1, explain: "Écarts." },
+      { id: "b12", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz maîtrise junior…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." },
     ],
   };
 
   const bilanSe = {
     title: "Quiz bilan — SIG Expert S&E",
-    subtitle: "10 questions — pilotage spatial et décision.",
-    passScore: 75,
+    subtitle: "12 questions — pilotage, décision, maîtrise (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour le S&E, la carte sert surtout à…", options: ["Décorer le rapport", "Éclairer des décisions de priorisation / couverture", "Remplacer le cadre de résultats", "Éviter les indicateurs"], answer: 1, explain: "Pilotage." },
       { id: "b2", theme: "kpi", themeLabel: "Indicateur", question: "Couverture spatiale utile implique…", options: ["Numérateur, dénominateur, cible", "Seulement une couleur", "Aucun QC", "Un total sans zone"], answer: 0, explain: "Définition complète." },
@@ -642,6 +832,8 @@ window.SIG_CONTENT = (function () {
       { id: "b8", theme: "dossier", themeLabel: "Dossier", question: "La carte dans le dossier S&E…", options: ["Remplace le plan de suivi", "Complète note / reporting avec preuves spatiales", "Est optionnelle sans lecture", "Interdit les cibles"], answer: 1, explain: "Pièce utile." },
       { id: "b9", theme: "tool", themeLabel: "Outil", question: "QGIS pour S&E…", options: ["Est un outil au service du système S&E", "Remplace MEAL", "Rend le QC inutile", "Interdit Excel"], answer: 0, explain: "Outil servant le système." },
       { id: "b10", theme: "read", themeLabel: "Lecture", question: "Faits spatiaux sans recommandation…", options: ["Suffisent au pilotage", "Restent incomplets pour un Expert S&E", "Valent une évaluation finale", "Remplacent la baseline"], answer: 1, explain: "Décision manquante." },
+      { id: "b11", theme: "spatial", themeLabel: "Analyse", question: "Une jointure aire_code permet surtout…", options: ["Colorier sans mesure", "Relier sites et zones pour la couverture", "Supprimer la cible", "Éviter QGIS"], answer: 1, explain: "Lien spatial." },
+      { id: "b12", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz maîtrise junior…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." },
     ],
   };
 

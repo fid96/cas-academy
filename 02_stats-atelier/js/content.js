@@ -2,7 +2,8 @@
 
 window.ATELIER = {
   brand: "Statistiques Atelier",
-  mission: "Lire les chiffres sans se tromper — pour décider comme un Data Analyst.",
+  mission:
+    "Maîtriser la lecture des chiffres sous incertitude — pour décider comme un Data Analyst junior opérationnel.",
   tracks: [
     {
       id: "fondations",
@@ -13,8 +14,8 @@ window.ATELIER = {
     {
       id: "data-analyst",
       title: "Stats pour Data Analyst",
-      subtitle: "Comparer, interpréter, éviter les pièges.",
-      goal: "Comparaisons, parts, qualité des données, récit métier."
+      subtitle: "Comparer, interpréter, approfondir, décider.",
+      goal: "Comparaisons, échantillonnage, pièges, note défendable, épreuve de transfert."
     }
   ],
   method: {
@@ -56,7 +57,11 @@ window.ATELIER = {
     { term: "Biais", def: "Déformation du résultat par une mauvaise méthode ou un mauvais échantillon." },
     { term: "Comparaison relative", def: "Écart en % par rapport à une référence." },
     { term: "Outlier / Extrême", def: "Valeur très éloignée des autres, qui tire la moyenne." },
-    { term: "Interprétation", def: "Traduction du chiffre en constat utile à un décideur." }
+    { term: "Interprétation", def: "Traduction du chiffre en constat utile à un décideur." },
+    { term: "Échantillon", def: "Sous-ensemble observé ; ses conclusions ne valent que si le tirage est représentatif." },
+    { term: "Distribution", def: "Façon dont les valeurs se répartissent (centrées, étirées, asymétriques…)." },
+    { term: "Causalité", def: "Lien cause → effet ; une simple corrélation ne la prouve pas." },
+    { term: "Transfert", def: "Capacité à analyser un jeu / période nouveau sans refaire le tutoriel guidé." }
   ],
   pieges: [
     {
@@ -82,6 +87,14 @@ window.ATELIER = {
     {
       title: "Graphique trompeur",
       text: "Un axe qui ne commence pas à zéro peut exagérer une petite différence."
+    },
+    {
+      title: "Généraliser hors échantillon",
+      text: "Conclure pour « tout le pays » à partir d’un mois ou d’une ville sans le dire est un biais de couverture."
+    },
+    {
+      title: "Petit n, grande histoire",
+      text: "Avec n=2 ou n=3, un écart de revue peut être du bruit. Exigez l’effectif avant l’alarme."
     }
   ],
   modules: [
@@ -550,23 +563,203 @@ window.ATELIER = {
       ]
     },
     {
+      id: "m8",
+      title: "Approfondissement — maîtrise",
+      track: "data-analyst",
+      level: "Maîtrise",
+      image: "assets/illu-conditions.jpg",
+      summary: "Échantillonnage, causalité opérationnelle, comparaison sous pièges — avant l’épreuve.",
+      lessons: [
+        {
+          id: "m8-l1",
+          title: "Échantillon, couverture, distribution",
+          goal: "Limiter les conclusions à ce que l’échantillon permet vraiment.",
+          image: "assets/illu-donnees.jpg",
+          caption: "Vos 30 ventes ne sont pas « tout le pays ».",
+          voir: {
+            paragraphs: [
+              "Un fichier est toujours un échantillon d’une réalité plus large : période, zones, canaux couverts.",
+              "La distribution des montants (min, max, moyenne vs médiane) dit si le portrait est stable ou tiré par des extrêmes."
+            ],
+            analogy: {
+              title: "Analogie du puits de village",
+              text: "Goûter l’eau d’un seul puits ne prouve pas que tous les puits du territoire sont potables."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Avant toute généralisation, notez :"],
+            bullets: [
+              "Période couverte (ex. jan–mars)",
+              "Unités / zones présentes (et absentes)",
+              "n effectif vs n souhaité",
+              "Forme : moyenne ≈ médiane ou non",
+              "Phrase type : « Sur cet échantillon… »"
+            ],
+            code: {
+              label: "cadre",
+              lines: "Périmètre : ventes santé, 3 mois, 5 villes\nn = 30\nLimite : pas de zone rurale hors liste\n→ conclusions valables dans ce cadre"
+            },
+            annotation: "Labo → mode Transfert : filtrez un mois et bornez votre récit."
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : période, n, 1 zone absente possible, 1 phrase « Sur cet échantillon… ».",
+            placeholder: "1) Période : …\n2) n : …\n3) Absente : …\n4) Sur cet échantillon…",
+            hint: "échantillon / période / n",
+            checkType: "keywords",
+            keywords: ["échantillon"],
+            success: "Cadre d’inférence posé.",
+            fail: "Mentionnez explicitement l’échantillon."
+          },
+          verifier: {
+            question: "Généraliser à tout le pays à partir d’un mois et de 5 villes…",
+            options: [
+              "Est toujours valide si la moyenne est belle",
+              "Dépasse le cadre sauf preuve de représentativité",
+              "Est obligatoire pour un KPI",
+              "Remplace le calcul de n"
+            ],
+            answer: 1,
+            explain: "Couverture et représentativité d’abord."
+          },
+          retenir: [
+            "Fichier = échantillon.",
+            "Nommer le périmètre.",
+            "Distribution complète le total."
+          ]
+        },
+        {
+          id: "m8-l2",
+          title: "Corrélation ≠ causalité (terrain)",
+          goal: "Écrire un constat prudent quand deux indicateurs bougent ensemble.",
+          image: "assets/illu-variables.jpg",
+          caption: "Deux courbes qui montent ≠ une cause prouvée.",
+          voir: {
+            paragraphs: [
+              "Exemple : plus de tests rapides et plus de CA diagnostic le même mois — lien possible, pas preuve que les tests « causent » le CA sans autre facteur.",
+              "L’analyste junior maîtrise le langage : association, hypothèse, besoin d’enquête — pas d’affirmation magique."
+            ],
+            analogy: {
+              title: "Analogie des parapluies et de la pluie",
+              text: "On voit plus de parapluies les jours de pluie ; ce n’est pas le parapluie qui fait pleuvoir."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Réflexe opérationnel :"],
+            bullets: [
+              "Dire « associé à » plutôt que « causé par »",
+              "Lister 2 autres explications possibles (saison, campagne, stock)",
+              "Proposer une vérif (période, zone témoin, donnée manquante)",
+              "Garder une recommandation d’investigation, pas une fausse certitude"
+            ],
+            code: {
+              label: "phrase-type",
+              lines: "Les ventes Diagnostic et le volume de tests\nmontanent ensemble en février.\nHypothèse : campagne de dépistage.\nÀ vérifier : stocks, prix, autres catégories."
+            },
+            annotation: "Dans la note : 1 association + 1 hypothèse + 1 vérif."
+          },
+          pratiquer: {
+            prompt: "Rédigez 3 lignes : association observée, hypothèse, vérif proposée (sans affirmer la cause).",
+            placeholder: "Association : …\nHypothèse : …\nVérif : …",
+            hint: "associé / hypothèse",
+            checkType: "keywords",
+            keywords: ["hypoth"],
+            success: "Posture causale maîtrisée.",
+            fail: "Incluez une hypothèse (pas une cause affirmée)."
+          },
+          verifier: {
+            question: "Deux indicateurs qui montent ensemble…",
+            options: [
+              "Prouvent toujours la causalité",
+              "Suggèrent une association à investiguer",
+              "Interdisent toute recommandation",
+              "Remplacent n et l’unité"
+            ],
+            answer: 1,
+            explain: "Association ≠ cause."
+          },
+          retenir: [
+            "Association d’abord.",
+            "Hypothèses alternatives.",
+            "Vérifier avant d’affirmer."
+          ]
+        },
+        {
+          id: "m8-l3",
+          title: "Comparer sous pièges",
+          goal: "Détecter les comparaisons fragiles (petit n, bases différentes).",
+          image: "assets/illu-analyste.jpg",
+          caption: "Un écart sans n solide est une anecdote.",
+          voir: {
+            paragraphs: [
+              "Comparer Goma (peu de lignes) à Kinshasa (beaucoup) sans le dire crée une fausse alerte ou une fausse victoire.",
+              "Checklist : même mesure, même période, n des deux côtés, écart absolu + relatif, seuil de prudence si n < 5."
+            ],
+            analogy: {
+              title: "Analogie des deux files d’attente",
+              text: "Comparer le temps moyen d’une file de 2 personnes à une file de 200 sans le dire trompe le chef de poste."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Avant de crier à l’écart :"],
+            bullets: [
+              "Afficher n_A et n_B",
+              "Préférer médiane si extrêmes",
+              "Écart relatif = (A−B)/B × 100",
+              "Si n < 5 d’un côté : « signal fragile »",
+              "Action : investiguer ou collecter plus, pas décider sur le bruit"
+            ],
+            code: {
+              label: "checklist",
+              lines: "Mesure OK ? Période OK ?\nn_A=… n_B=…\nÉcart % = …\nFragile si n<5 → le dire"
+            },
+            annotation: "Labo → Comparer + mode Transfert (mois filtré)."
+          },
+          pratiquer: {
+            prompt: "Rédigez 4 lignes de revue d’une comparaison (mesure, n A/B, écart, verdict fragile ou solide).",
+            placeholder: "1) Mesure : …\n2) n : …\n3) Écart : …\n4) Verdict : …",
+            hint: "n / fragile",
+            checkType: "keywords",
+            keywords: ["n"],
+            success: "Comparaison sous contrôle.",
+            fail: "Rappelez les effectifs (n)."
+          },
+          verifier: {
+            question: "Un écart de moyenne avec n=2 d’un côté…",
+            options: [
+              "Est une preuve définitive",
+              "Doit être signalé comme fragile",
+              "Autorise à cacher n",
+              "Remplace le total"
+            ],
+            answer: 1,
+            explain: "Petit n = prudence."
+          },
+          retenir: [
+            "Toujours n des deux côtés.",
+            "Absolu + relatif.",
+            "Fragile ≠ décision ferme."
+          ]
+        }
+      ]
+    },
+    {
       id: "m7",
       title: "Projet : note de décision",
       track: "data-analyst",
       level: "Projet",
       image: "assets/illu-analyste.jpg",
-      summary: "Du labo à 5 lignes pour un coordonnateur.",
+      summary: "Du labo à une note défendable pour un coordonnateur.",
       lessons: [
         {
           id: "m7-l1",
           title: "Constat → recommandation",
-          goal: "Enchaîner KPI, comparaison, piège évité, action.",
+          goal: "Enchaîner KPI, comparaison, piège évité, action — livrable junior.",
           image: "assets/hero-atelier.jpg",
           caption: "Le décideur veut une action, pas 30 statistiques.",
           voir: {
             paragraphs: [
-              "Livrable type : total, part de la ville leader, comparaison utile, 1 limite (manquants/extrêmes), 3 recommandations.",
-              "Vos outils : labo chiffres + CSV + (plus tard) Excel/SQL/Python."
+              "Livrable type : total, part de la ville leader, comparaison utile, 1 limite (manquants/extrêmes/échantillon), 3 recommandations.",
+              "Enchaînez labo (y compris Transfert sur un mois) puis rédigez sans rouvrir le tutoriel."
             ],
             analogy: {
               title: "Analogie du briefing terrain",
@@ -574,28 +767,29 @@ window.ATELIER = {
             }
           },
           comprendre: {
-            paragraphs: ["Structure de note :"],
+            paragraphs: ["Structure de note (maîtrise) :"],
             bullets: [
-              "1. Contexte (période, n)",
-              "2. 3 KPI",
-              "3. 1 comparaison",
+              "1. Contexte (période, n, périmètre)",
+              "2. 3 KPI avec unité",
+              "3. 1 comparaison (n des deux côtés)",
               "4. 1 limite / prudence",
-              "5. 3 actions recommandées"
+              "5. 3 actions recommandées",
+              "6. 3 justifications de choix (indicateur, comparaison, limite)"
             ],
             code: {
               label: "plan",
-              lines: "Total / moyenne / part Kinshasa\nComparer 2 villes\nSignaler quantite manquante\nReco : prioriser, investiguer, suivre"
+              lines: "Total / moyenne / part Kinshasa\nComparer 2 villes (n!)\nSignaler manquants + cadre échantillon\nReco : prioriser, investiguer, suivre"
             },
-            annotation: "Les stats servent le dernier paragraphe : l’action."
+            annotation: "Carnet D = épreuve de maîtrise. Quiz bilan seuil 80 %."
           },
           pratiquer: {
-            prompt: "Rédigez une mini-note en 5 lignes (contexte, 2 KPI, 1 limite, 1 recommandation).",
-            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            prompt: "Rédigez une mini-note en 6 lignes (contexte+n, 2 KPI, comparaison, limite, reco, 1 justification).",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …\n6) …",
             hint: "Une idée par ligne",
             checkType: "minLines",
-            minLines: 5,
-            success: "Note structurée. Passez au quiz bilan.",
-            fail: "Il faut 5 lignes."
+            minLines: 6,
+            success: "Note de niveau junior. Passez au carnet D puis au quiz bilan.",
+            fail: "Il faut 6 lignes."
           },
           verifier: {
             question: "La fin d’une analyse data…",
@@ -614,7 +808,7 @@ window.ATELIER = {
   ],
   carnet: {
     title: "Carnet d’exercices — Statistiques Atelier",
-    subtitle: "Calculs à la main + labo chiffres (ventes santé)",
+    subtitle: "Calculs + labo + épreuve de maîtrise (transfert)",
     sections: [
       {
         title: "A. Fondations",
@@ -644,13 +838,42 @@ window.ATELIER = {
           { id: "sC2", prompt: "Corrigez : « les ventes ont augmenté de 50 % » (phrase complète)." },
           { id: "sC3", prompt: "Expliquez « corrélation ≠ causalité » en 3 phrases simples." }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          {
+            id: "sD1",
+            prompt:
+              "Labo mode Transfert — mois mars uniquement. Sans rouvrir les leçons : total, moyenne, médiane, n, part Kinshasa."
+          },
+          {
+            id: "sD2",
+            prompt:
+              "Justifiez 3 choix : (1) moyenne vs médiane pour mars, (2) 2 villes comparées, (3) une limite d’échantillon."
+          },
+          {
+            id: "sD3",
+            prompt:
+              "Détectez 2 erreurs dans ce récit faux : « Mars prouve que Goma est la meilleure ville du pays (moyenne plus haute) ; les tests causent le CA ; n inutile. »"
+          },
+          {
+            id: "sD4",
+            prompt:
+              "Note défendable 8 lignes pour un coordonnateur (contexte mars, KPI, comparaison, limite, 2 reco, go/no-go sur une alerte)."
+          },
+          {
+            id: "sD5",
+            prompt: "Auto-évaluez (0–2 chacun) : transfert sans guide · justification · détection d’erreurs · seuil quiz ≥80 %."
+          }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Statistiques pour Data Analyst",
-    subtitle: "20 questions pour ancrer lecture et prudence des chiffres.",
-    passScore: 70,
+    subtitle: "26 questions — lecture, prudence, échantillonnage, maîtrise junior (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "bases", themeLabel: "Bases", question: "Un bon KPI commence par…", options: ["Un effet visuel", "Une question claire", "Supprimer n", "Cacher l’unité"], answer: 1, explain: "Question d’abord." },
       { id: "b2", theme: "bases", themeLabel: "Bases", question: "n désigne…", options: ["La moyenne", "L’effectif", "Le maximum", "Un filtre Excel"], answer: 1, explain: "Nombre d’observations." },
@@ -671,7 +894,13 @@ window.ATELIER = {
       { id: "b17", theme: "pieges", themeLabel: "Pièges", question: "Un axe tronqué sur un graphique peut…", options: ["Clarifier sans risque", "Exagérer une petite différence", "Calculer n", "Remplacer la médiane"], answer: 1, explain: "Effet visuel trompeur." },
       { id: "b18", theme: "moyenne", themeLabel: "Moyenne", question: "Moyenne de 10, 20, 30…", options: ["10", "20", "30", "60"], answer: 1, explain: "60/3 = 20." },
       { id: "b19", theme: "metier", themeLabel: "Métier", question: "Stats + SQL + Excel + Python…", options: ["Se contredisent", "Se complètent pour un profil Data Analyst", "Sont inutiles", "Remplacent le métier santé"], answer: 1, explain: "Chaîne complète." },
-      { id: "b20", theme: "pct", themeLabel: "Pourcentages", question: "2 sur 8 vaut…", options: ["2 %", "25 %", "80 %", "8 %"], answer: 1, explain: "2/8×100 = 25." }
+      { id: "b20", theme: "pct", themeLabel: "Pourcentages", question: "2 sur 8 vaut…", options: ["2 %", "25 %", "80 %", "8 %"], answer: 1, explain: "2/8×100 = 25." },
+      { id: "b21", theme: "echantillon", themeLabel: "Échantillon", question: "Un CSV de 30 ventes sur 3 mois…", options: ["Représente forcément tout le pays", "Est un échantillon à borner dans le récit", "Interdit toute moyenne", "Remplace l’unité"], answer: 1, explain: "Cadre d’inférence." },
+      { id: "b22", theme: "echantillon", themeLabel: "Échantillon", question: "Avant de généraliser, on précise surtout…", options: ["La police du slide", "Période, zones couvertes, n", "Le dégradé", "Le nom du fichier seul"], answer: 1, explain: "Périmètre." },
+      { id: "b23", theme: "causalite", themeLabel: "Causalité", question: "Langage junior correct…", options: ["« X cause Y » dès que les courbes montent", "« X est associé à Y ; hypothèse à vérifier »", "« n est inutile »", "« La médiane prouve la cause »"], answer: 1, explain: "Association + vérif." },
+      { id: "b24", theme: "comparaison", themeLabel: "Comparaison", question: "n=2 d’un côté dans une comparaison…", options: ["Preuve définitive", "Signal souvent fragile à déclarer", "Autorise à cacher l’effectif", "Remplace le %"], answer: 1, explain: "Petit n." },
+      { id: "b25", theme: "maitrise", themeLabel: "Maîtrise", question: "L’épreuve de transfert sert à…", options: ["Recopier le tutoriel", "Analyser un mois/jeu sans guide et justifier", "Éviter les KPI", "Supprimer le carnet"], answer: 1, explain: "Autonomie." },
+      { id: "b26", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil de validation du quiz bilan (maîtrise junior)…", options: ["50 %", "70 %", "80 %", "100 % obligatoire dès la 1re fois"], answer: 2, explain: "80 %." }
     ]
   }
 };

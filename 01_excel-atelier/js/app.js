@@ -435,9 +435,9 @@
     return `
       <div class="wrap">
         <h1 class="section-title">Atelier formules</h1>
-        <p class="section-lead">Mini-feuille pédagogique. Cliquez une cellule, écrivez une formule (=…), validez avec <strong>Ctrl+Entrée</strong>.</p>
+        <p class="section-lead">Mini-feuille pédagogique. Formules (=…), y compris refs absolues <code>$E$1</code>. Validez avec <strong>Ctrl+Entrée</strong>.</p>
         <div class="playground-help">
-          <span>Fonctions : SOMME, MOYENNE, NB, SI, MIN, MAX…</span>
+          <span>Fonctions : SOMME, MOYENNE, NB, SI, MIN, MAX… · refs <code>$</code> supportées</span>
           <span>Cellule active : <strong id="active-cell-label">${escapeHtml(state.selectedCell)}</strong></span>
         </div>
         <div class="formula-bar">
@@ -447,13 +447,18 @@
           <button type="button" class="btn btn-ghost" id="reset-sheet">Réinitialiser</button>
         </div>
         <div id="sheet-host">${renderSheetTable()}</div>
-        <div id="formula-feedback" class="formula-result">Astuce : en D2 essayez <code>=B2*C2</code>, puis en B10 <code>=SOMME(B2:B7)</code>.</div>
+        <div id="formula-feedback" class="formula-result">Astuce : placez un taux en E1, puis en D2 <code>=B2*$E$1</code> — le $ ne se décale pas à la recopie.</div>
         <div class="excel-examples">
           <h3>Exemples</h3>
           <button type="button" class="btn btn-ghost btn-small" data-formula-example="=B2*C2" data-target-cell="D2">Montant D2</button>
           <button type="button" class="btn btn-ghost btn-small" data-formula-example="=SOMME(B2:B7)" data-target-cell="B10">Total quantités</button>
           <button type="button" class="btn btn-ghost btn-small" data-formula-example="=MOYENNE(C2:C7)" data-target-cell="C11">Moyenne prix</button>
           <button type="button" class="btn btn-ghost btn-small" data-formula-example='=SI(SOMME(B2:B7)>150,"OK","Bas")' data-target-cell="B12">Alerte SI</button>
+          <button type="button" class="btn btn-ghost btn-small" data-formula-example="=B2*$E$1" data-target-cell="D2">Absolu $E$1</button>
+        </div>
+        <div class="phase-actions">
+          <button type="button" class="btn btn-secondary" data-nav-inline="carnet">Carnet D — épreuve</button>
+          <button type="button" class="btn btn-primary" data-open-lesson="m8-l1">Autonomie analyste</button>
         </div>
       </div>`;
   }

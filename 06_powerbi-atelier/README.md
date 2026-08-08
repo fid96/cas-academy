@@ -1,42 +1,39 @@
 # Power BI Atelier
 
-Parcours **tableaux de bord + design dashboard professionnel**, complément de SQL, Excel, Python et Statistiques Atelier.
+Parcours **maîtrise opérationnelle junior** — design dashboard + modèle + DAX de base.
 
 ## Objectif
 
 - Brief (public, décision, questions)
-- Architecture de page (zones, grille, hiérarchie, tailles)
-- Matching données → visuels (cartes, barres, courbes, tableaux, segments)
-- Style sobre, titres métier, cohérence, accessibilité
-- Mise en œuvre dans **Power BI Desktop** avec `data/ventes.csv` et `data/clients.csv`
+- Architecture de page (zones, grille, hiérarchie)
+- Modèle en étoile, mesures vs colonnes, `CALCULATE`, temps minimal
+- Matching visuels + style sobre
+- **Épreuve transfert** (brief logistique) + quiz bilan **≥ 80 %**
 
 ## Lancer l’atelier web
 
 1. Ouvrir `index.html`  
    ou : `python -m http.server 8769`
-2. Suivre **Parcours**
-3. Explorer **Studio dashboard** (layouts Exécutif / Analytique / Chaos + scores)
-4. Pratiquer **Choix des visuels**
-5. Passer le **Quiz bilan**
+2. Suivre **Parcours** (design → modèle/DAX → projet)
+3. **Studio** : Exécutif / Analytique / Chaos / **Transfert**
+4. **Carnet D** puis **Quiz bilan** (seuil 80 %)
 
 ## Power BI Desktop (pratique réelle)
 
 1. Obtenir des données → CSV (`ventes`, `clients`)
 2. Relier `clients[client_id]` → `ventes[client_id]`
-3. Créer des mesures (`SUM`, `COUNTROWS`)
-4. Reproduire le wireframe du Studio :
-   - Haut : KPI + segments
-   - Centre : visuel héros
-   - Bas : secondaire / détail / reco
+3. Mesures : `Total CA`, `Nb lignes`, 1 `CALCULATE` simple
+4. Reproduire le wireframe + page transfert logistique
 
-## Design pro (rappel)
+## Barre de maîtrise
 
-| Zone | Contenu | Taille |
-|------|---------|--------|
-| Haut | Titre, 3–4 KPI, 2–4 segments | Compact, aligné |
-| Centre | Message principal (barres ou courbe) | Plus grand bloc |
-| Bas / côté | Secondaire, tableau, qualité | Plus petit |
+| Critère | Attendu |
+|---------|---------|
+| Transfert | Reconcevoir pour un autre public (logistique) |
+| Justification | Héros, relation, mesure vs colonne |
+| Détection d’erreurs | 2 défauts sur un faux dashboard |
+| Quiz | ≥ 80 % |
 
 ## Suite du parcours Data Analyst
 
-SQL → Excel → Python → Statistiques → **Power BI** → (ensuite) Storytelling data
+SQL → Excel → Python → Statistiques → **Power BI** → Storytelling

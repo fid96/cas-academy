@@ -1,52 +1,31 @@
 # Excel Atelier
 
-Parcours pédagogique **de zéro à Data Analyst Excel** — même finalité que Python Atelier et SQL Atelier.
+Parcours **maîtrise opérationnelle junior** — formules, jointures, nettoyage, TCD, livrable défendable.
 
 ## Objectif
 
-Former un débutant à :
-
-- lire une feuille et des en-têtes
-- écrire des formules (`=B2*C2`, `SOMME`, `MOYENNE`, `SI`)
-- filtrer et préparer des données
-- comprendre les **tableaux croisés dynamiques** (esprit `GROUP BY`)
-- produire graphique + recommandations métier
+- Formules fiables (y compris références `$`)
+- RECHERCHEX / jointure, Power Query mental model
+- TCD multi-champs, graphiques, recommandations
+- **Épreuve transfert** (fichier sale → livrable) + quiz **≥ 80 %**
 
 ## Lancer
 
-1. Ouvrir `index.html` dans le navigateur  
-   ou : `python -m http.server 8767` dans ce dossier
-2. Suivre **Parcours**
-3. Pratiquer dans **Atelier formules**
-4. Pour TCD / graphiques Excel réels : importer les CSV de `data/`
-5. Passer le **Quiz bilan**
+1. Ouvrir `index.html`  
+   ou : `python -m http.server 8766`
+2. **Parcours** → autonomie (m8) → projet
+3. **Atelier formules** (refs absolues)
+4. **Carnet D** puis **Quiz bilan**
 
 ## Données
 
-- `data/ventes.csv`
-- `data/clients.csv`
+`data/ventes.csv`, `data/clients.csv` — pratique réelle dans Excel Desktop / Microsoft 365.
 
-Alignées avec `sql-atelier` et `python-atelier`.
+## Barre de maîtrise
 
-## Trio Data Analyst
-
-| Atelier | Rôle |
-|---------|------|
-| SQL | Extraire / agréger |
-| Excel | Explorer / présenter / décider |
-| Python | Automatiser / analyser en profondeur |
-
-## Structure
-
-```
-excel-atelier/
-├── index.html
-├── README.md
-├── assets/
-├── data/
-├── css/styles.css
-└── js/
-    ├── content.js
-    ├── formula-engine.js
-    └── app.js
-```
+| Critère | Attendu |
+|---------|---------|
+| Transfert | Pipeline Query sur fichier sale sans guide |
+| Justification | `$`, RECHERCHEX, TCD multi |
+| Détection d’erreurs | 2 pièges sur un récit faux |
+| Quiz | ≥ 80 % |

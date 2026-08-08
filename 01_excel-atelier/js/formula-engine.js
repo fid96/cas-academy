@@ -57,7 +57,10 @@ window.ExcelEngine = (function () {
   }
 
   function parseRef(ref) {
-    const m = String(ref).toUpperCase().match(/^([A-Z]+)(\d+)$/);
+    const clean = String(ref || "")
+      .toUpperCase()
+      .replace(/\$/g, "");
+    const m = clean.match(/^([A-Z]+)(\d+)$/);
     if (!m) return null;
     return { col: m[1], row: Number(m[2]), key: m[1] + m[2] };
   }
@@ -83,7 +86,10 @@ window.ExcelEngine = (function () {
   }
 
   function expandRange(range) {
-    const m = String(range).toUpperCase().match(/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/);
+    const m = String(range || "")
+      .toUpperCase()
+      .replace(/\$/g, "")
+      .match(/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/);
     if (!m) return null;
     const c1 = colToIndex(m[1]);
     const r1 = Number(m[2]);
@@ -171,13 +177,13 @@ window.ExcelEngine = (function () {
         i = j;
         continue;
       }
-      if (/[A-Z]/.test(ch)) {
-        let j = i + 1;
-        while (j < s.length && /[A-Z0-9]/.test(s[j])) j++;
-        const word = s.slice(i, j);
+      if (ch === "$" || /[A-Z]/.test(ch)) {
+        let j = i;
+        while (j < s.length && /[A-Z0-9$]/.test(s[j])) j++;
+        const word = s.slice(i, j).replace(/\$/g, "");
         if (/^[A-Z]+\d+$/.test(word)) tokens.push({ type: "ref", value: word });
         else if (/^[A-Z]+\d+:[A-Z]+\d+$/.test(word)) tokens.push({ type: "range", value: word });
-        else tokens.push({ type: "ident", value: word });
+        else tokens.push({ type: "ident", value: word.replace(/\$/g, "") });
         i = j;
         continue;
       }

@@ -412,13 +412,23 @@ window.ATELIER = {
           { id: "iC2", prompt: "Faites recaler un total par un collègue / vous-même hors IA." },
           { id: "iC3", prompt: "Décidez : quels outils IA sont autorisés dans votre org ?" }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "xD1", prompt: "Sans guide : protocole prompt → vérification → usage sur un cas métier nouveau." },
+          { id: "xD2", prompt: "Justifiez 3 garde-fous (source, PII, validation humaine)." },
+          { id: "xD3", prompt: "Chasse aux hallucinations : détectez 2 affirmations non sourcées dans un texte fourni par vous." },
+          { id: "xD4", prompt: "Checklist IA responsable cochée + 1 amélioration." },
+          { id: "xD5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — IA pour Data Analyst",
     subtitle: "12 questions — levier après maîtrise, exigences élevées sur l’éthique.",
-    passScore: 75,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "L’IA est…", options: ["La source de vérité", "Un levier / copilote à vérifier après maîtrise", "Un remplacement de la collecte", "Un type SQL"], answer: 1, explain: "Levier après maîtrise." },
       { id: "b2", theme: "or", themeLabel: "Règle d’or", question: "Avant de publier un chiffre…", options: ["Demander confirmation à l’IA seulement", "Le vérifier dans un outil / calcul réel", "Changer l’unité au hasard", "Retirer n"], answer: 1, explain: "Vérifier." },

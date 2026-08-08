@@ -520,13 +520,23 @@ window.ATELIER = {
           { id: "tC2", prompt: "Racontez un cas où Stats corrige une mauvaise moyenne." },
           { id: "tC3", prompt: "Décrivez votre processus perso bout en bout (10 lignes)." }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "xD1", prompt: "Brief nouveau (autre public) : note de décision 4 blocs sans rouvrir les leçons." },
+          { id: "xD2", prompt: "Justifiez 3 choix narratifs (attaque, preuve, reco)." },
+          { id: "xD3", prompt: "Détectez 2 erreurs : jargon sans action ; graphique sans constat ; cacher n." },
+          { id: "xD4", prompt: "Livrable oral 90 secondes écrit (script)." },
+          { id: "xD5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Storytelling Data Analyst",
     subtitle: "20 questions pour clôturer le pack.",
-    passScore: 70,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "cadre", themeLabel: "Cadrage", question: "On commence par…", options: ["Les couleurs", "Public et décision", "Un camembert", "Python obligatoire"], answer: 1, explain: "Cadrage." },
       { id: "b2", theme: "structure", themeLabel: "Structure", question: "Ordre utile…", options: ["Reco → rien", "Constat → preuve → limite → reco", "Limite seulement", "Preuve sans constat"], answer: 1, explain: "4 blocs." },

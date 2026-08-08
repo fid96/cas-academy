@@ -453,6 +453,9 @@ ORDER BY total DESC;</textarea>
           <button type="button" class="btn btn-ghost btn-small" data-sql="SELECT * FROM clients;">Clients</button>
           <button type="button" class="btn btn-ghost btn-small" data-sql="SELECT * FROM ventes WHERE quantite IS NULL;">NULL quantite</button>
           <button type="button" class="btn btn-ghost btn-small" data-sql="SELECT v.ville, c.type_client, v.montant_cdf\nFROM ventes v\nJOIN clients c ON v.client_id = c.client_id\nLIMIT 10;">JOIN</button>
+          <button type="button" class="btn btn-ghost btn-small" data-sql="SELECT ville, SUM(montant_cdf) AS total FROM ventes GROUP BY ville HAVING SUM(montant_cdf) > 1000000 ORDER BY total DESC;">HAVING</button>
+          <button type="button" class="btn btn-ghost btn-small" data-sql="WITH totaux AS (SELECT ville, SUM(montant_cdf) AS total FROM ventes GROUP BY ville) SELECT * FROM totaux ORDER BY total DESC;">CTE</button>
+          <button type="button" class="btn btn-ghost btn-small" data-sql="SELECT date, ville, montant_cdf, RANK() OVER (ORDER BY montant_cdf DESC) AS rang FROM ventes ORDER BY rang LIMIT 10;">RANK</button>
         </div>
       </div>`;
   }

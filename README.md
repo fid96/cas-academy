@@ -2,6 +2,8 @@
 
 **Campus Analyse & Suivi** — plateforme unique de formation professionnelle.
 
+Objectif pédagogique : **maîtrise opérationnelle junior** (pas seulement la compréhension guidée) — transfert sur cas nouveau, justifications, détection d’erreurs, quiz approfondi (≥ 80 % sur les modules renforcés Vagues 1–3 : Excel, Stats, Power BI, SQL, Collecte, SIG, Python, Qualité, Éthique, Storytelling, IA).
+
 L’apprenant choisit :
 
 1. **Data Analyst** (DA)  

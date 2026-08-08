@@ -491,7 +491,17 @@ window.ETHIQUE_CONTENT = (function () {
           { id: "C2", prompt: "Modèle de nommage fichier partageable." },
           { id: "C3", prompt: "Politique perso : que je ne colle jamais dans un prompt." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Scénario dataset inconnu : classer sensibilité + décision de partage go/no-go." },
+          { id: "D2", prompt: "Justifiez 3 choix (minimisation, consentement/finalité, PII hors prompt)." },
+          { id: "D3", prompt: "Détectez 2 erreurs éthiques dans un export « tout partager »." },
+          { id: "D4", prompt: "Rédigez une justification éthique de 8 lignes pour un coordonnateur." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
@@ -522,14 +532,24 @@ window.ETHIQUE_CONTENT = (function () {
           { id: "C2", prompt: "Qui valide les exports sensibles ?" },
           { id: "C3", prompt: "1 incident fictif + mesures correctives." },
         ],
-      },
+      },,
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "D1", prompt: "Cas AAP / consentement : go/no-go de partage + 2 mesures de mitigation." },
+          { id: "D2", prompt: "Justifiez 3 choix éthiques S&E." },
+          { id: "D3", prompt: "Détectez 2 erreurs : PII dans un canal public ; absence de finalité." },
+          { id: "D4", prompt: "Note redevabilité éthique 6 lignes." },
+          { id: "D5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." },
+        ],
+      }
     ],
   };
 
   const bilanDa = {
     title: "Quiz bilan — Éthique Data Analyst",
     subtitle: "8 questions — exports, PII, IA.",
-    passScore: 75,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour un DA, l’éthique data sert surtout à…", options: ["Ralentir Excel", "Traiter et partager sans nuire", "Remplacer le QC", "Éviter SQL"], answer: 1, explain: "Sans nuire." },
       { id: "b2", theme: "class", themeLabel: "Classement", question: "Un numéro de téléphone est…", options: ["Publique", "Sensible", "Un CRS", "Une cible"], answer: 1, explain: "PII sensible." },
@@ -545,7 +565,7 @@ window.ETHIQUE_CONTENT = (function () {
   const bilanSe = {
     title: "Quiz bilan — Éthique Expert S&E",
     subtitle: "8 questions — consentement, AAP, partage.",
-    passScore: 75,
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour le S&E, l’éthique data sert surtout à…", options: ["Allonger les annexes", "Protéger les populations dans le système d’information", "Remplacer le cadre de résultats", "Éviter les cibles"], answer: 1, explain: "Protection." },
       { id: "b2", theme: "consent", themeLabel: "Consentement", question: "Ajouter photos enfants sans mettre à jour le consentement…", options: ["Est acceptable", "Est à éviter / corriger avant collecte", "Est obligatoire cluster", "Remplace AAP"], answer: 1, explain: "Consentement adapté." },

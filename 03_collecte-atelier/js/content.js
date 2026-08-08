@@ -376,17 +376,144 @@ window.ATELIER = {
       ]
     },
     {
+      id: "m7",
+      title: "Maîtrise collecte",
+      track: "data-analyst",
+      level: "Maîtrise",
+      image: "assets/illu-conditions.jpg",
+      summary: "Échantillonnage, XLSForm, déploiement / QC source.",
+      lessons: [
+        {
+          id: "m7-l1",
+          title: "Plan d’échantillonnage léger",
+          goal: "Borner qui est enquêté, où, combien — avant le formulaire.",
+          image: "assets/illu-donnees.jpg",
+          caption: "Un beau formulaire sur un mauvais échantillon ment.",
+          voir: {
+            paragraphs: [
+              "Définir population cible, unités, taille indicative, zones, période.",
+              "Dire les limites : commodité ≠ représentativité nationale."
+            ],
+            analogy: {
+              title: "Analogie du filet",
+              text: "Le filet (formulaire) ne corrige pas un coup lancé au mauvais endroit."
+            }
+          },
+          comprendre: {
+            paragraphs: ["Cadre minimal :"],
+            bullets: [
+              "Population / unité d’échantillonnage",
+              "Taille et zones couvertes",
+              "Inclusion / exclusion",
+              "Phrase « Sur cet échantillon… »"
+            ],
+            code: { label: "cadre", lines: "Cible : …\nn : …\nZones : …\nLimite : …" }
+          },
+          pratiquer: {
+            prompt: "Cadre d’échantillon en 4 lignes (population, n, zones, limite).",
+            placeholder: "1) …\n2) …\n3) …\n4) …",
+            hint: "échantillon",
+            checkType: "minLines",
+            minLines: 4,
+            success: "Échantillon cadré.",
+            fail: "4 lignes."
+          },
+          verifier: {
+            question: "Sans plan d’échantillon…",
+            options: ["Les KPI sont toujours nationaux", "On risque de généraliser hors couverture", "Kobo refuse l’export", "Les contraintes deviennent inutiles"],
+            answer: 1,
+            explain: "Couverture d’abord."
+          },
+          retenir: ["Qui / où / combien.", "Limites explicites.", "Formulaire ≠ échantillon."]
+        },
+        {
+          id: "m7-l2",
+          title: "XLSForm : contraintes utiles",
+          goal: "Écrire required / constraint / types qui protègent l’analyse.",
+          image: "assets/illu-variables.jpg",
+          caption: "XLSForm = contrat machine entre terrain et CSV.",
+          voir: {
+            paragraphs: [
+              "name, type, label, required, constraint — minimum DA.",
+              "constraint . > 0 sur quantité ; listes pour codes stables."
+            ]
+          },
+          comprendre: {
+            paragraphs: ["Checklist :"],
+            bullets: [
+              "integer/decimal vs text",
+              "select_one pour catégories d’analyse",
+              "constraint + message",
+              "Éviter trop de texte libre"
+            ],
+            code: { label: "xlsform", lines: "quantite | integer | yes | . > 0\nville | select_one | yes" },
+            annotation: "Studio : renforcez le modèle puis exportez."
+          },
+          pratiquer: {
+            prompt: "3 lignes : name, type, constraint/required.",
+            placeholder: "1) …\n2) …\n3) …",
+            hint: "constraint",
+            checkType: "keywords",
+            keywords: ["constraint"],
+            success: "Contrôles posés.",
+            fail: "Mentionnez constraint."
+          },
+          verifier: {
+            question: "Une constraint XLSForm…",
+            options: ["Décore le PDF", "Bloque une saisie invalide à la source", "Remplace le dictionnaire", "Interdit l’export"],
+            answer: 1,
+            explain: "Validation terrain."
+          },
+          retenir: ["Types justes.", "required critique.", "constraint métier."]
+        },
+        {
+          id: "m7-l3",
+          title: "Déploiement & QC source",
+          goal: "Tester, déployer, contrôler les premières soumissions.",
+          image: "assets/illu-analyste.jpg",
+          caption: "Pilote 10 fiches > déploiement aveugle.",
+          voir: {
+            paragraphs: [
+              "Pilote → correction → déploiement → QC des premières lignes.",
+              "Go/no-go si trop d’invalides avant de scaler."
+            ]
+          },
+          comprendre: {
+            paragraphs: ["Scénario :"],
+            bullets: ["Cas limites", "Journal défauts", "Seuil d’acceptation", "Feedback enquêteurs"],
+            code: { label: "qc", lines: "Pilote → défauts → corriger → QC → go/no-go" }
+          },
+          pratiquer: {
+            prompt: "Scénario déploiement en 5 lignes.",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            hint: "pilote",
+            checkType: "minLines",
+            minLines: 5,
+            success: "Déploiement maîtrisé.",
+            fail: "5 lignes."
+          },
+          verifier: {
+            question: "Un pilote avant déploiement…",
+            options: ["Est du temps perdu", "Réduit les erreurs massives terrain", "Remplace required", "Interdit Kobo"],
+            answer: 1,
+            explain: "Tester d’abord."
+          },
+          retenir: ["Piloter.", "Corriger.", "QC puis scale."]
+        }
+      ]
+    },
+{
       id: "m6",
       title: "Projet formulaire ventes",
       track: "data-analyst",
       level: "Projet",
       image: "assets/hero-atelier.jpg",
-      summary: "Concevoir un formulaire scoré prêt pour Kobo.",
+      summary: "Formulaire scoré + cadre échantillon + plan QC.",
       lessons: [
         {
           id: "m6-l1",
           title: "Mission qualité à la source",
-          goal: "Studio : formulaire ventes avec score ≥ 80.",
+          goal: "Studio score ≥ 80 + livrable maîtrise.",
           image: "assets/illu-analyste.jpg",
           caption: "Le pack DA commence ici sur le terrain.",
           voir: {
@@ -412,16 +539,16 @@ window.ATELIER = {
               label: "livrable",
               lines: "Formulaire scoré\nEn-tête CSV\nMini-dictionnaire 5 lignes\nPlan d’export"
             },
-            annotation: "Puis quiz bilan."
+            annotation: "Quiz bilan seuil 80 %. Carnet D = épreuve."
           },
           pratiquer: {
-            prompt: "Décrivez votre livrable formulaire (variables clés + 2 contraintes + outil d’analyse suivant) en 5 lignes.",
-            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …",
+            prompt: "Décrivez votre livrable formulaire (variables clés + 2 contraintes + cadre échantillon + outil d’analyse suivant) en 6 lignes.",
+            placeholder: "1) …\n2) …\n3) …\n4) …\n5) …\n6) …",
             hint: "ville, quantite, montant…",
             checkType: "minLines",
-            minLines: 5,
+            minLines: 6,
             success: "Projet collecte cadré.",
-            fail: "5 lignes."
+            fail: "6 lignes."
           },
           verifier: {
             question: "Un bon formulaire Data Analyst…",
@@ -440,7 +567,7 @@ window.ATELIER = {
   ],
   carnet: {
     title: "Carnet — Collecte & Kobo",
-    subtitle: "Du besoin d’indicateur au formulaire déployable",
+    subtitle: "Formulaire + échantillon + épreuve de maîtrise",
     sections: [
       {
         title: "A. Conception",
@@ -470,13 +597,23 @@ window.ATELIER = {
           { id: "cC2", prompt: "Quand passeriez-vous de Kobo→Excel à Kobo→Python ?" },
           { id: "cC3", prompt: "Écrivez le message storytelling si 5 % de fiches invalides." }
         ]
+      },
+      {
+        title: "D. Épreuve de maîtrise (transfert)",
+        exercises: [
+          { id: "cD1", prompt: "Brief « stock entrepôt » : 6 variables + 3 constraints + 1 select_one — sans recopier ventes." },
+          { id: "cD2", prompt: "Justifiez 3 choix : type, required, taille d’échantillon du pilote." },
+          { id: "cD3", prompt: "Détectez 2 erreurs : ville en texte libre ; quantité sans constraint ; déploiement sans pilote." },
+          { id: "cD4", prompt: "Plan go/no-go QC source (seuil + 2 actions si no-go)." },
+          { id: "cD5", prompt: "Auto-éval (0–2) : transfert · justification · erreurs · quiz ≥80 %." }
+        ]
       }
     ]
   },
   bilan: {
     title: "Quiz bilan — Collecte pour Data Analyst",
-    subtitle: "20 questions : qualité à la source, Kobo/ODK, pont vers l’analyse.",
-    passScore: 70,
+    subtitle: "26 questions — source, XLSForm, échantillon, maîtrise (seuil 80 %).",
+    passScore: 80,
     questions: [
       { id: "b1", theme: "role", themeLabel: "Rôle", question: "Pour un DA terrain, la collecte…", options: ["Est inutile", "Conditionne la qualité d’analyse", "Remplace le storytelling", "Interdit Excel"], answer: 1, explain: "Amont critique." },
       { id: "b2", theme: "vars", themeLabel: "Variables", question: "name désigne…", options: ["Le texte enquêteur seulement", "Le nom technique de variable", "Un graphique", "Un serveur"], answer: 1, explain: "Identifiant stable." },
@@ -497,7 +634,13 @@ window.ATELIER = {
       { id: "b17", theme: "qualite", themeLabel: "Qualité", question: "Qualité à la source signifie…", options: ["Corriger seulement en Python plus tard", "Prévenir les erreurs dès la saisie", "Ne jamais exporter", "Supprimer n"], answer: 1, explain: "Prévention." },
       { id: "b18", theme: "chaine", themeLabel: "Chaîne", question: "Kobo → Power BI est logique pour…", options: ["Un suivi régulier", "Éviter toute question", "Remplacer le consentement", "Interdire Stats"], answer: 0, explain: "Pilotage." },
       { id: "b19", theme: "dico", themeLabel: "Dictionnaire", question: "Sans dictionnaire…", options: ["L’équipe comprend toujours pareil", "Les définitions divergent vite", "Les contraintes sont inutiles", "SQL devient parfait"], answer: 1, explain: "Ambiguïté." },
-      { id: "b20", theme: "role", themeLabel: "Rôle", question: "Kobo est…", options: ["Toujours inutile au DA", "Essentiel surtout en contexte terrain/ONG/santé", "Un langage de stats", "Un type de jointure"], answer: 1, explain: "Contexte." }
+      { id: "b20", theme: "role", themeLabel: "Rôle", question: "Kobo est…", options: ["Toujours inutile au DA", "Essentiel surtout en contexte terrain/ONG/santé", "Un langage de stats", "Un type de jointure"], answer: 1, explain: "Contexte." },
+      { id: "b21", theme: "echantillon", themeLabel: "Échantillon", question: "Un plan d’échantillon précise surtout…", options: ["La police du slide", "Population, n, zones, limites", "Le thème Power BI", "Le mot de passe Kobo"], answer: 1, explain: "Cadre." },
+      { id: "b22", theme: "xlsform", themeLabel: "XLSForm", question: "constraint sert à…", options: ["Décorer", "Valider une saisie à la source", "Remplacer name", "Supprimer label"], answer: 1, explain: "Règle." },
+      { id: "b23", theme: "deploy", themeLabel: "Déploiement", question: "Avant de scaler…", options: ["Publier sans test", "Piloter puis corriger", "Effacer required", "Ignorer le QC"], answer: 1, explain: "Pilote." },
+      { id: "b24", theme: "deploy", themeLabel: "Déploiement", question: "Si trop de fiches invalides…", options: ["Continuer sans rien dire", "No-go / corriger le formulaire", "Supprimer le dictionnaire", "Passer en texte libre"], answer: 1, explain: "Seuil." },
+      { id: "b25", theme: "maitrise", themeLabel: "Maîtrise", question: "Épreuve transfert collecte…", options: ["Recopie ventes", "Conçoit un brief neuf (ex. stock)", "Évite les listes", "Ignore l’échantillon"], answer: 1, explain: "Transfert." },
+      { id: "b26", theme: "maitrise", themeLabel: "Maîtrise", question: "Seuil quiz…", options: ["50 %", "70 %", "80 %", "0 %"], answer: 2, explain: "80 %." }
     ]
   }
 };
