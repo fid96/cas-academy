@@ -1,0 +1,13 @@
+variable,exemple,contexte
+benef_id,B014,Identifiant interne registre nutrition
+nom_complet,Amina K.,Nom saisi par erreur dans une extraction
+telephone,0999****22,Contact ménage
+aire_sante,Nord,Zone d'agrégation
+age_mois,21,Âge enfant (mois)
+poids_kg,7.6,Mesure clinique
+statut,en_cours,Statut programme
+gps_menage,-8.91 / 24.43,Point GPS foyer
+photo_enfant,(fichier),Image prise en centre
+taux_guerison_aire,18.8%,Indicateur agrégé mensuel
+enqueteur,ENQ-01,Code agent
+commentaire_libre,Maman dit...,Texte libre terrain
