@@ -583,7 +583,7 @@ window.ETHIQUE_CONTENT = (function () {
     const modules = modulesSocle.concat(isSe ? modulesSe : modulesDa);
     return {
       packId: isSe ? "se" : "data-analyst",
-      moduleId: isSe ? "se-11-ethique" : "11-ethique",
+      moduleId: isSe ? "se-12-ethique" : "11-ethique",
       brand: isSe ? "Éthique Atelier · S&E" : "Éthique Atelier · Data Analyst",
       shortBrand: "Éthique",
       mission: isSe

@@ -1,17 +1,17 @@
 # Atelier S&E — Expert Suivi & Évaluation
 
-Pack de formation pour devenir un **Expert S&E opérationnel standard**.
+Pack de formation pour devenir un **Expert S&E opérationnel junior** (spécialisation autonome, hors parcours Data Analyst).
 
 ## Finalité
 
-Concevoir et faire vivre un système de Suivi & Évaluation utile au **pilotage** et à la **redevabilité** — pas seulement manipuler un outil.
+Concevoir et faire vivre un système de Suivi & Évaluation utile au **pilotage** et à la **redevabilité** — avec jugement (échantillon, go/no-go) et transfert de méthode.
 
 ## Cas fil rouge (exercice public)
 
-**Kalunga — Nutrition & WASH** : projet humanitaire **fictif** (style ONG / UNICEF / OMS / ECHO).  
-La méthode apprise est **transférable** à d’autres secteurs.
+**Kalunga — Nutrition & WASH** : projet humanitaire **fictif**.  
+La méthode est **transférable** à d’autres secteurs (épreuve carnet D).
 
-## Modules (8)
+## Modules (9 dans cet atelier)
 
 1. Métier S&E  
 2. Cadre de résultats  
@@ -20,7 +20,19 @@ La méthode apprise est **transférable** à d’autres secteurs.
 5. Collecte S&E  
 6. Qualité & analyse  
 7. Reporting & pilotage  
-8. Évaluation & dossier  
+8. **Maîtrise S&E** (échantillon, indicateur utile, éval légère / go-no-go)  
+9. Évaluation & dossier  
+
+Puis modules partagés plateforme : SIG · Qualité · Éthique (`?pack=se`).
+
+## Barre de maîtrise
+
+| Critère | Attendu |
+|---------|---------|
+| Transfert | Autre secteur sans guide (carnet D) |
+| Justification | 3 choix métier |
+| Détection d’erreurs | 2 pièges dans un récit faux |
+| Quiz bilan | ≥ **80 %** |
 
 ## Lancer
 
@@ -38,7 +50,5 @@ Ou directement : `se-atelier/index.html` (sous serveur local).
 ## Contenu
 
 - Parcours guidé (Voir → Comprendre → Pratiquer → Vérifier)
-- Studio S&E (trames cadre, fiche, matrice, note, évaluation)
-- **Données Kalunga** (`data/*.csv`) + QC automatique
-- Checklist dossier
-- Carnet + quiz bilan (seuil 75 %) — en cas de réussite, notifie la plateforme (`ada-pack-complete`)
+- Studio (cadre, fiche, matrice, note, éval) + QC données Kalunga
+- Carnet A–D + quiz bilan

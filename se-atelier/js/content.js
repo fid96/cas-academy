@@ -4,7 +4,8 @@
 
 window.ATELIER = {
   brand: "Atelier S&E",
-  mission: "Former un Expert S&E opérationnel standard — piloter un système de suivi et d’évaluation utile à la décision.",
+  mission:
+    "Former un Expert S&E opérationnel junior prêt à piloter un système utile — jugement, transfert, go/no-go sur l’évidence.",
   caseStudy: {
     name: "Kalunga — Nutrition & WASH",
     type: "Projet humanitaire fictif (style ONG / UNICEF / OMS / ECHO)",
@@ -70,7 +71,7 @@ window.ATELIER = {
   modules: [],
   carnet: {
     title: "Carnet Expert S&E",
-    subtitle: "Construisez le dossier Kalunga — puis transférez la méthode à un autre secteur.",
+    subtitle: "Dossier Kalunga + épreuve de maîtrise (transfert secteur).",
     sections: [
       {
         title: "A — Système",
@@ -95,12 +96,39 @@ window.ATELIER = {
           { id: "C2", prompt: "Formulez 3 questions évaluatives pour une revue à mi-parcours." },
         ],
       },
+      {
+        title: "D — Épreuve de maîtrise (transfert)",
+        exercises: [
+          {
+            id: "D1",
+            prompt:
+              "Sans rouvrir les leçons : projet éducation (ou santé primaire hors Kalunga) — 4 indicateurs + plan de suivi mini + 1 question évaluative mi-parcours.",
+          },
+          {
+            id: "D2",
+            prompt: "Justifiez 3 choix : (1) output vs outcome, (2) type d’échantillon / couverture, (3) go/no-go de publication d’un chiffre fragile.",
+          },
+          {
+            id: "D3",
+            prompt:
+              "Détectez 2 erreurs : « outcome sans baseline ; échantillon de convenance présenté comme national ; reco sans responsable ; évaluation = liste d’indicateurs seulement ».",
+          },
+          {
+            id: "D4",
+            prompt: "Note de pilotage 8 lignes (faits → lecture → 2 reco assignées → limite des données → go/no-go).",
+          },
+          {
+            id: "D5",
+            prompt: "Auto-éval (0–2) : transfert · justification · détection d’erreurs · quiz ≥80 %.",
+          },
+        ],
+      },
     ],
   },
   bilan: {
     title: "Quiz bilan — Expert S&E",
-    subtitle: "Validez la lecture métier, pas la manip d’outil.",
-    passScore: 75,
+    subtitle: "Maîtrise opérationnelle junior — métier, jugement, transfert (seuil 80 %).",
+    passScore: 80,
     questions: [],
   },
 };
@@ -852,11 +880,169 @@ window.ATELIER = {
       ],
     },
     {
-      id: "m8",
-      title: "08 · Évaluation & dossier",
+      id: "m9",
+      title: "08 · Maîtrise S&E",
       track: "operationnel",
-      level: "Opérationnel",
-      summary: "Questions évaluatives et dossier défendable.",
+      level: "Maîtrise",
+      summary: "Échantillonnage, qualité d’indicateur, méthodes d’éval légères, go/no-go de reporting.",
+      lessons: [
+        L({
+          id: "m9-l1",
+          title: "Échantillon & couverture (jugement)",
+          goal: "Borner ce que les données permettent vraiment de conclure.",
+          caption: "Un échantillon de convenance n’est pas « le pays ».",
+          voir: {
+            paragraphs: [
+              "Recensement vs échantillon ; convenance vs raisonné ; biais d’accès/sécurité à Kalunga.",
+              "Phrase type : « Sur les sites atteints ce mois… » — pas « toute la province » sans preuve.",
+            ],
+            analogy: {
+              title: "Analogie du projecteur",
+              text: "Le projecteur éclaire une zone. On ne décrit pas toute la salle comme si elle était illuminée.",
+            },
+          },
+          comprendre: {
+            paragraphs: ["Avant de généraliser :"],
+            bullets: [
+              "Population / unité (ménage, site, aire)",
+              "Couverture réelle vs souhaitée",
+              "Biais possibles (accès, refus, saison)",
+              "Niveau de confiance dans le reporting",
+            ],
+            code: {
+              label: "cadre",
+              lines: "Unité : site WASH\nn atteints : 12 / 40 prévus\nLimite : pas de tirage aléatoire\n→ conclusions bornées",
+            },
+          },
+          pratiquer: {
+            prompt: "En 4 lignes : unité, n, 1 biais, phrase « Sur cet échantillon… » pour Kalunga ou un autre secteur.",
+            placeholder: "1) …\n2) …\n3) …\n4) …",
+            hint: "échantillon / couverture",
+            checkType: "keywords",
+            keywords: ["échantillon"],
+            success: "Cadre d’inférence S&E posé.",
+            fail: "Mentionnez l’échantillon.",
+          },
+          verifier: {
+            question: "Présenter un échantillon de convenance comme représentatif national…",
+            options: [
+              "Est toujours correct",
+              "Est un risque de fausse décision",
+              "Remplace la baseline",
+              "Est exigé par le cadre de résultats",
+            ],
+            answer: 1,
+            explain: "Borner la généralisation.",
+          },
+          retenir: ["Borner la couverture.", "Nommer les biais.", "Phrase « Sur cet échantillon… »."],
+        }),
+        L({
+          id: "m9-l2",
+          title: "Indicateur utile vs indicateur « joli »",
+          goal: "Détecter les indicateurs non calculables ou qui sur-déclarent l’outcome.",
+          caption: "Mesurable, lié à une décision, baseline/cible réalistes.",
+          voir: {
+            paragraphs: [
+              "Pièges : outcome formulé comme un output ; cible sans baseline ; indicateur sans source ni calcul.",
+              "Le junior S&E refuse l’indicateur décoratif même s’il plaît au slide.",
+            ],
+            analogy: {
+              title: "Analogie du tableau de bord voiture",
+              text: "Une jauge sans capteur relié est un sticker — pas un indicateur.",
+            },
+          },
+          comprendre: {
+            paragraphs: ["Checklist qualité de conception :"],
+            bullets: [
+              "Définition + formule",
+              "Source / fréquence / responsable",
+              "Baseline et cible réalistes",
+              "Niveau (output vs outcome) cohérent",
+              "Utilisateur de l’info identifié",
+            ],
+          },
+          pratiquer: {
+            prompt: "Prenez 1 mauvais indicateur inventé et réécrivez-le en 5 lignes (définition, calcul, source, baseline/cible, usage).",
+            placeholder: "Mauvais : …\nRéécrit : …",
+            hint: "calcul / source",
+            checkType: "minLines",
+            minLines: 5,
+            success: "Conception d’indicateur sous contrôle.",
+            fail: "5 lignes.",
+          },
+          verifier: {
+            question: "Un indicateur sans méthode de calcul…",
+            options: [
+              "Reste utile pour le pilotage",
+              "Est fragile / non défendable",
+              "Remplace le cadre",
+              "Est obligatoire en annexe",
+            ],
+            answer: 1,
+            explain: "Calculable ou rien.",
+          },
+          retenir: ["Calcul + source.", "Niveau cohérent.", "Usage décisionnel."],
+        }),
+        L({
+          id: "m9-l3",
+          title: "Éval légère & go/no-go reporting",
+          goal: "Choisir une méthode d’apprentissage légère et savoir quand ne pas publier un chiffre.",
+          caption: "Questions → méthode simple ; évidence insuffisante → caveat ou silence.",
+          voir: {
+            paragraphs: [
+              "Méthodes légères : revue documentaire, KII, FGD, sondage court — selon la question, pas selon la mode.",
+              "Go/no-go reporting : peut-on piloter / publier avec ce niveau d’évidence, ou faut-il un caveat / un report ?",
+            ],
+            analogy: {
+              title: "Analogie du feu de signalisation",
+              text: "Vert = publier ; orange = publier avec limite ; rouge = ne pas prétendre savoir.",
+            },
+          },
+          comprendre: {
+            paragraphs: ["Jugement junior :"],
+            bullets: [
+              "Question évaluative d’abord",
+              "Méthode proportionnée (coût / délai / risque)",
+              "QC et couverture avant le slide",
+              "Reco assignées ou pas de reco",
+              "Go / caveat / no-go explicite",
+            ],
+            code: {
+              label: "gate",
+              lines: "Évidence OK ? Couverture OK ?\nQC documenté ?\n→ GO / CAVEAT / NO-GO\n+ 1 phrase de limite",
+            },
+            annotation: "Carnet D = épreuve de maîtrise. Quiz bilan seuil 80 %.",
+          },
+          pratiquer: {
+            prompt: "Scénario : n=8 sites, 2 indicateurs sans baseline. Décision go/caveat/no-go + 3 lignes de justification.",
+            placeholder: "Décision : …\n1) …\n2) …\n3) …",
+            hint: "go / caveat / no-go",
+            checkType: "keywords",
+            keywords: ["go"],
+            success: "Jugement de publication posé.",
+            fail: "Indiquez go, caveat ou no-go.",
+          },
+          verifier: {
+            question: "Publier un chiffre fragile sans caveat…",
+            options: [
+              "Est la bonne pratique S&E",
+              "Risque de fausse décision / perte de crédibilité",
+              "Remplace l’évaluation",
+              "Est exigé par le reporting",
+            ],
+            answer: 1,
+            explain: "Redevabilité = honnêteté sur l’évidence.",
+          },
+          retenir: ["Question → méthode.", "Proportionnalité.", "Go / caveat / no-go."],
+        }),
+      ],
+    },
+    {
+      id: "m8",
+      title: "09 · Évaluation & dossier",
+      track: "operationnel",
+      level: "Projet",
+      summary: "Questions évaluatives et dossier défendable — après maîtrise.",
       lessons: [
         L({
           id: "m8-l1",
@@ -1057,6 +1243,60 @@ window.ATELIER = {
         "Éviter les indicateurs",
       ],
       answer: 1,
+    },
+    {
+      id: "q13",
+      theme: "echantillon",
+      themeLabel: "Échantillon",
+      question: "Un échantillon de convenance présenté comme national…",
+      options: ["Est toujours valide", "Risque de fausse décision", "Remplace la baseline", "Est obligatoire"],
+      answer: 1,
+      explain: "Borner la couverture.",
+    },
+    {
+      id: "q14",
+      theme: "indicateurs",
+      themeLabel: "Indicateurs",
+      question: "Un indicateur sans méthode de calcul…",
+      options: ["Reste défendable", "Est fragile pour le pilotage", "Remplace le cadre", "Est un output"],
+      answer: 1,
+      explain: "Calculable.",
+    },
+    {
+      id: "q15",
+      theme: "evaluation",
+      themeLabel: "Évaluation",
+      question: "Avant de choisir une méthode d’évaluation légère, on…",
+      options: ["Choisit l’outil à la mode", "Pose la question évaluative et l’usage prévu", "Ignore le coût", "Remplace le suivi"],
+      answer: 1,
+      explain: "Question d’abord.",
+    },
+    {
+      id: "q16",
+      theme: "reporting",
+      themeLabel: "Reporting",
+      question: "Go / caveat / no-go sert à…",
+      options: ["Décorer la note", "Décider si l’évidence permet de publier / piloter", "Supprimer les reco", "Éviter le QC"],
+      answer: 1,
+      explain: "Jugement d’évidence.",
+    },
+    {
+      id: "q17",
+      theme: "maitrise",
+      themeLabel: "Maîtrise",
+      question: "L’épreuve de transfert S&E demande surtout…",
+      options: ["Recopier Kalunga", "Appliquer la méthode à un autre secteur sans guide", "Éviter les justifications", "Baisser le seuil"],
+      answer: 1,
+      explain: "Autonomie.",
+    },
+    {
+      id: "q18",
+      theme: "maitrise",
+      themeLabel: "Maîtrise",
+      question: "Seuil du quiz bilan (maîtrise junior)…",
+      options: ["50 %", "70 %", "80 %", "0 %"],
+      answer: 2,
+      explain: "80 %.",
     },
   ];
 })();

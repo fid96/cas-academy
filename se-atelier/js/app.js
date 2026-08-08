@@ -197,7 +197,7 @@
           </div>
         </section>
         <section class="home-path">
-          <h2 class="section-title">Parcours (8 modules)</h2>
+          <h2 class="section-title">Parcours (${data.modules.length} modules)</h2>
           <div class="path-list">${data.modules.map(renderModuleCard).join("")}</div>
         </section>
       </div>`;
@@ -257,7 +257,7 @@
     return `
       <div class="wrap">
         <h1 class="section-title">Parcours Expert S&amp;E</h1>
-        <p class="section-lead">8 modules — méthode standard, exercice sur le cas humanitaire Kalunga.</p>
+        <p class="section-lead">${data.modules.length} modules — maîtrise junior, exercice Kalunga + transfert secteur.</p>
         ${caseBanner()}
         <h2 class="section-title" style="font-size:1.5rem">1. Fondations</h2>
         <div class="module-grid">${modulesForTrack("fondations").map(renderModuleBlock).join("")}</div>
